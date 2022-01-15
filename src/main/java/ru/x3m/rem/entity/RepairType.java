@@ -17,8 +17,8 @@ public class RepairType {
 
     @OneToMany(
             mappedBy = "repairType",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+            cascade = CascadeType.ALL
+//            orphanRemoval = true
     )
 
     private List<Repair> repairs;

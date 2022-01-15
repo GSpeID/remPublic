@@ -17,8 +17,8 @@ public class Device {
 
     @OneToMany(
             mappedBy = "device",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+            cascade = CascadeType.ALL
+//            orphanRemoval = true
     )
 
     private List<Repair> repairs;

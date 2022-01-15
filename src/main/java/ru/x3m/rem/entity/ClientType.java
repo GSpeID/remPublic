@@ -16,8 +16,8 @@ public class ClientType {
 
     @OneToMany(
             mappedBy = "clientType",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+            cascade = CascadeType.ALL
+//            orphanRemoval = true
     )
 
     private List<Repair> repairs;
