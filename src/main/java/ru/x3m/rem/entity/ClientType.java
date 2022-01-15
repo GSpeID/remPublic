@@ -9,7 +9,7 @@ public class ClientType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int client_type_id;
+    private Long client_type_id;
 
     @Column(nullable = false)
     private String client_type_name;
@@ -25,11 +25,11 @@ public class ClientType {
     public ClientType(){
     }
 
-    public int getClient_type_id() {
+    public Long getClient_type_id() {
         return client_type_id;
     }
 
-    public void setClient_type_id(int client_type_id) {
+    public void setClient_type_id(Long client_type_id) {
         this.client_type_id = client_type_id;
     }
 

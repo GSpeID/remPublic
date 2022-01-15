@@ -6,7 +6,7 @@ import javax.validation.constraints.NotEmpty;
 
 public class ClientTypeDTO {
 
-    private int client_type_id;
+    private Long client_type_id;
 
     @NotEmpty
     private String client_type_name;
@@ -14,7 +14,7 @@ public class ClientTypeDTO {
     public ClientTypeDTO(){
     }
 
-    public ClientTypeDTO(int client_type_id, @NotEmpty String client_type_name) {
+    public ClientTypeDTO(Long client_type_id, @NotEmpty String client_type_name) {
         this.client_type_id = client_type_id;
         this.client_type_name = client_type_name;
     }
@@ -24,11 +24,11 @@ public class ClientTypeDTO {
         this.client_type_name = clientType.getClient_type_name();
     }
 
-    public int getClient_type_id() {
+    public Long getClient_type_id() {
         return client_type_id;
     }
 
-    public void setClient_type_id(int client_type_id) {
+    public void setClient_type_id(Long client_type_id) {
         this.client_type_id = client_type_id;
     }
 
@@ -40,7 +40,7 @@ public class ClientTypeDTO {
         this.client_type_name = client_type_name;
     }
 
-    public String getClientTypeNameById(int client_type_id){
+    public String getClientTypeNameById(Long client_type_id){
         return client_type_name;
     }
 
