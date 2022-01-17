@@ -28,10 +28,11 @@
                     <label for="client_type_name">Client Type Name</label>
                     <input type="text" class="form-control" id="client_type_name"
                            th:field="*{client_type_name}" placeholder="Enter Client Type Name">
-                    <small class="text-danger" th:each="err: ${#fields.errors('client_type_name')}"
+                    <small class="text-danger"
+                           th:each="err: ${#fields.errors('client_type_name')}"
                            th:text="${err}"></small>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-outline-primary">Submit</button>
             </form>
         </div>
     </div>

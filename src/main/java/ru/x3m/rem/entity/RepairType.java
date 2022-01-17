@@ -20,8 +20,8 @@ public class RepairType {
             cascade = CascadeType.ALL
 //            orphanRemoval = true
     )
-
     private List<Repair> repairs;
+
 
     public Long getRepair_type_id() {
         return repair_type_id;
@@ -39,11 +39,4 @@ public class RepairType {
         this.repair_type_name = repair_type_name;
     }
 
-    public List<Repair> getRepairs() {
-        return repairs;
-    }
-
-    public void setRepairs(List<Repair> repairs) {
-        this.repairs = repairs;
-    }
 }

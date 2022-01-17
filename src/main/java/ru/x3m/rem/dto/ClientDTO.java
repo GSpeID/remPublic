@@ -25,6 +25,10 @@ public class ClientDTO {
         this.client_name = client.getClient_name();
     }
 
+    public ClientDTO(ClientDTO clientDTO) {
+
+    }
+
 
     public Long getClient_id() {
         return client_id;

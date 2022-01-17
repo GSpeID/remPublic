@@ -46,4 +46,5 @@ public class Client {
     public void setRepairs(List<Repair> repairs) {
         this.repairs = repairs;
     }
+
 }

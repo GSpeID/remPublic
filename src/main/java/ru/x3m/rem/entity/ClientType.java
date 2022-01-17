@@ -19,7 +19,6 @@ public class ClientType {
             cascade = CascadeType.ALL
 //            orphanRemoval = true
     )
-
     private List<Repair> repairs;
 
     public ClientType(){
@@ -41,11 +40,4 @@ public class ClientType {
         this.client_type_name = client_type_name;
     }
 
-    public List<Repair> getRepairs() {
-        return repairs;
-    }
-
-    public void setRepairs(List<Repair> repairs) {
-        this.repairs = repairs;
-    }
 }

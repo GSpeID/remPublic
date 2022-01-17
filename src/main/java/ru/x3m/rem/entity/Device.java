@@ -20,7 +20,6 @@ public class Device {
             cascade = CascadeType.ALL
 //            orphanRemoval = true
     )
-
     private List<Repair> repairs;
 
 
@@ -40,11 +39,5 @@ public class Device {
         this.device_name = device_name;
     }
 
-    public List<Repair> getRepairs() {
-        return repairs;
-    }
 
-    public void setRepairs(List<Repair> repairs) {
-        this.repairs = repairs;
-    }
 }
