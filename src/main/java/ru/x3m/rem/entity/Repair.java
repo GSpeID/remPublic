@@ -24,20 +24,25 @@ public class Repair {
     private LocalDate repair_date;
 
     @ManyToOne
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "client_id", insertable=false, updatable=false)
     private Client client;
 
     @ManyToOne
-    @JoinColumn(name = "device_id")
+    @JoinColumn(name = "device_id", insertable=false, updatable=false)
     private Device device;
 
     @ManyToOne
-    @JoinColumn(name = "repair_type_id")
+    @JoinColumn(name = "repair_type_id", insertable=false, updatable=false)
     private RepairType repairType;
 
     @ManyToOne
-    @JoinColumn(name = "client_type_id")
+    @JoinColumn(name = "client_type_id", insertable=false, updatable=false)
     private ClientType clientType;
+
+    private Long device_id;
+    private Long client_id;
+    private Long client_type_id;
+    private Long repair_type_id;
 
     public Repair(){
     }
@@ -97,6 +102,9 @@ public class Repair {
     public void setDevice(Device device) {
         this.device = device;
     }
+    public void setDevice_id(Long device_id) {
+        this.device_id = device_id;
+    }
 
     public RepairType getRepairType() {
         return repairType;
@@ -112,5 +120,35 @@ public class Repair {
 
     public void setClientType(ClientType clientType) {
         this.clientType = clientType;
+    }
+
+    //--------
+
+    public Long getDevice_id() {
+        return device_id;
+    }
+
+    public Long getClient_id() {
+        return client_id;
+    }
+
+    public void setClient_id(Long client_id) {
+        this.client_id = client_id;
+    }
+
+    public Long getClient_type_id() {
+        return client_type_id;
+    }
+
+    public void setClient_type_id(Long client_type_id) {
+        this.client_type_id = client_type_id;
+    }
+
+    public Long getRepair_type_id() {
+        return repair_type_id;
+    }
+
+    public void setRepair_type_id(Long repair_type_id) {
+        this.repair_type_id = repair_type_id;
     }
 }

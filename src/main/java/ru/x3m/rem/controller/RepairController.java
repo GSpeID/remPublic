@@ -58,7 +58,7 @@ public class RepairController {
         }
 
         repairService.saveRepair(repairDTO);
-        return "redirect:/";
+        return "redirect:/repair-service";
     }
 
     @GetMapping("/repair-service/delete/{repair_id}")

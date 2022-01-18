@@ -23,30 +23,34 @@
         <div class="col-12">
             <form th:action="@{/repair-service/create/}" th:object="${repair}" method="post">
                 <input type="hidden" th:field="*{repair_id}">
+                <input type="hidden" th:field="*{client_id}">
+                <input type="hidden" th:field="*{devise_id}">
+                <input type="hidden" th:field="*{repair_type_id}">
+                <input type="hidden" th:field="*{client_type_id}">
                 <div class="form-group">
-                    <label for="client_id">Client Name</label>
-                    <input type="text" class="form-control" id="client_id"
-                           th:field="*{client_id}" placeholder="Choose Client">
+                    <label for="client_name">Client Name</label>
+                    <input type="text" class="form-control" id="client_name"
+                           th:field="*{client_name}" placeholder="Choose Client">
                     <small class="text-danger"
-                           th:each="err: ${#fields.errors('client_id')}"
+                           th:each="err: ${#fields.errors('client_name')}"
                            th:text="${err}">
                     </small>
                 </div>
                 <div class="form-group">
-                    <label for="client_type_id">Client Type</label>
-                    <input type="text" class="form-control" id="client_type_id"
-                           th:field="*{client_type_id}" placeholder="Choose Client Type">
+                    <label for="client_type_name">Client Type</label>
+                    <input type="text" class="form-control" id="client_type_name"
+                           th:field="*{client_type_name}" placeholder="Choose Client Type">
                     <small class="text-danger"
-                           th:each="err: ${#fields.errors('client_type_id')}"
+                           th:each="err: ${#fields.errors('client_type_name')}"
                            th:text="${err}">
                     </small>
                 </div>
                 <div class="form-group">
-                    <label for="repair_type_id">Repair Type</label>
-                    <input type="text" class="form-control" id="repair_type_id"
-                           th:field="*{repair_type_id}" placeholder="Choose Repair Type">
+                    <label for="repair_type_name">Repair Type</label>
+                    <input type="text" class="form-control" id="repair_type_name"
+                           th:field="*{repair_type_name}" placeholder="Choose Repair Type">
                     <small class="text-danger"
-                           th:each="err: ${#fields.errors('repair_type_id')}"
+                           th:each="err: ${#fields.errors('repair_type_name')}"
                            th:text="${err}">
                     </small>
                 </div>
@@ -69,9 +73,9 @@
                     </small>
                 </div>
                 <div class="form-group">
-                    <label for="device_id">Device</label>
-                    <input type="text" class="form-control" id="device_id"
-                           th:field="*{devise_id}" placeholder="Enter device id">
+                    <label for="device_name">Device</label>
+                    <input type="text" class="form-control" id="device_name"
+                           th:field="*{device_name}" placeholder="Choose device name">
 <!--                    <small class="text-danger"-->
 <!--                           th:each="err: ${#fields.errors('device_id')}"-->
 <!--                           th:text="${err}">-->

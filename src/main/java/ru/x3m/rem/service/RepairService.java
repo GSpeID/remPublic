@@ -82,10 +82,10 @@ public class RepairService {
         repair.setRepair_description(repairDTO.getRepair_description());
         repair.setRepair_cost(repairDTO.getRepair_cost());
         repair.setRepair_date(repairDTO.getRepair_date());
-        repair.setClient(repair.getClient());
-        repair.setClientType(repair.getClientType());
-        repair.setRepairType(repair.getRepairType());
-        repair.setDevice(repair.getDevice());
+        repair.setDevice_id(repairDTO.getDevise_id());
+        repair.setClient_id(repairDTO.getClient_id());
+        repair.setRepair_type_id(repairDTO.getRepair_type_id());
+        repair.setClient_type_id(repairDTO.getClient_type_id());
 
         repairRepo.save(repair);
 
