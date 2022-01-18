@@ -4,6 +4,7 @@ package ru.x3m.rem.dto;
 import ru.x3m.rem.entity.Client;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 public class ClientDTO {
 

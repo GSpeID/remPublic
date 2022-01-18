@@ -81,7 +81,7 @@ public class RepairController {
         return "management";
     }
 
-    @GetMapping("repair-service/management/client/{client_id}")
+    @GetMapping("/repair-service/management/client/{client_id}")
     public String clientPage(@PathVariable("client_id") Long client_id, Model model){
         ClientDTO clientDTO = repairService.findClientById(client_id)
                 .orElseThrow(ResourceNotFoundException::new);
