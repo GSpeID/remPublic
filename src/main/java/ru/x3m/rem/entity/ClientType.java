@@ -40,4 +40,6 @@ public class ClientType {
         this.client_type_name = client_type_name;
     }
 
+
+
 }

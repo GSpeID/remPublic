@@ -4,6 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,12 +13,29 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
-    <link type="text/css" media="all" href="../../css/index.css" th:href="@{/css/management.css}" rel="stylesheet">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.2/umd/popper.min.js"
+            integrity="sha512-aDciVjp+txtxTJWsp8aRwttA0vR2sJMk/73ZT7ExuEHv7I5E6iyyobpFOlEFkq59mWW8ToYGuVZFnwhwIUisKA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js"
+            integrity="sha512-OvBgP9A2JBgiRad/mM36mkzXSXaJE9BEIENnVEmeZdITvwT09xnxLtT4twkCa8m/loMbPHsvPl0T8lRGVBwjlQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script th:src="@{../js/clientForm.js}" src="../../static/js/clientForm.js"></script>
+
     <title>WelCome</title>
+
 </head>
 
 <body>
-<div th:insert="navBar"></div>
+<div th:insert="/custom/navBar"></div>
 
 <div class="accordion" id="accordionExample">
     <div class="accordion-item">
@@ -48,22 +66,27 @@
                             <td th:text="${client.getClient_name()}"></td>
                             <td>
                                 <div class="btn-group" role="group">
-                                <a class="btn btn-outline-warning"
-                                   th:href="@{/repair-service/management/client/{id}(id=${client.client_id})}">Edit</i></a>
-                                <a class="btn btn-outline-danger"
-                                   th:href="@{/repair-service/management/client/delete-client/{id}(id=${client.client_id})}">Delete</a>
+                                    <a th:href="@{findClient/(*{client.client_id})}" class="btn btn-outline-warning editClientBtn"
+                                       data-bs-toggle="modal" data-bs-target="#editClientModal">Edit</i></a>
+                                    <a class="btn btn-outline-danger"
+                                       th:href="@{/repair-service/management/delete-client/{id}(id=${client.client_id})}">Delete</a>
                                 </div>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                     <br>
+                    <!-- Button trigger modal  Edit Client -->
                     <div class="text-center">
-                        <a href="" th:href="@{/repair-service/management/client/create-client}">
-                            <button name="Create Client" type="button" class="btn btn-outline-success"data-bs-toggle="modal"
-                                    data-bs-target="#createClientModal">Create New Client</button>
-                        </a>
+                        <button type="button" class="btn btn-outline-primary clientModalBtn"
+                                data-bs-toggle="modal" data-bs-target="#editClientModal">
+                            Create New Client
+                        </button>
                     </div>
+                    <!-- Modal Edit Client -->
+                        <form th:action="@{/repair-service/management/create-client}" method="post">
+                            <div th:insert="modals/clientEditFragment"></div>
+                        </form>
                 </div>
             </div>
         </div>
@@ -96,21 +119,27 @@
                             <td th:text="${device.getDevice_name()}"></td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a class="btn btn-outline-warning"
-                                   th:href="@{/repair-service/management/device/{id}(id=${device.getDevice_id()})}">Edit</a>
-                                <a class="btn btn-outline-danger"
-                                   th:href="@{/repair-service/management/device/delete-device/{id}(id=${device.getDevice_id()})}">Delete</i></a>
+                                    <a th:href="@{findDevice/(*{device.getDevice_id()})}" class="btn btn-outline-warning editDeviceBtn"
+                                       data-bs-toggle="modal" data-bs-target="#editDeviceModal">Edit</i></a>
+                                    <a class="btn btn-outline-danger"
+                                       th:href="@{/repair-service/management/delete-device/{id}(id=${device.device_id})}">Delete</a>
                                 </div>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                     <br>
+                    <!-- Button trigger modal  Edit Device -->
                     <div class="text-center">
-                        <a href="" th:href="@{/repair-service/management/device/create-device}">
-                            <button name="Management" type="button" class="btn btn-outline-success">Create New Device</button>
-                        </a>
+                        <button type="button" class="btn btn-outline-primary deviceModalBtn"
+                                data-bs-toggle="modal" data-bs-target="#editDeviceModal">
+                            Create New Device
+                        </button>
                     </div>
+                    <!-- Modal Edit Device -->
+                    <form th:action="@{/repair-service/management/create-device/}" method="post">
+                        <div th:insert="modals/deviceEditFragment"></div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -143,21 +172,27 @@
                             <td th:text="${clientType.getClient_type_name()}"></td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a class="btn btn-outline-warning"
-                                   th:href="@{/repair-service/management/client-type/{id}(id=${clientType.getClient_type_id()})}">Edit</a>
-                                <a class="btn btn-outline-danger"
-                                   th:href="@{/repair-service/management/client-type/delete-client-type/{id}(id=${clientType.getClient_type_id()})}">Delete</a>
+                                    <a th:href="@{findClientType/(*{clientType.client_type_id})}" class="btn btn-outline-warning editClientTypeBtn"
+                                       data-bs-toggle="modal" data-bs-target="#editClientTypeModal">Edit</i></a>
+                                    <a class="btn btn-outline-danger"
+                                       th:href="@{/repair-service/management/delete-client-type/{id}(id=${clientType.client_type_id})}">Delete</a>
                                 </div>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                     <br>
+                    <!-- Button trigger modal  Edit Client Type -->
                     <div class="text-center">
-                        <a href="" th:href="@{/repair-service/management/client-type/create-client-type}">
-                            <button name="Management" type="button" class="btn btn-outline-success">Create New Client Type</button>
-                        </a>
+                        <button type="button" class="btn btn-outline-primary clientTypeModalBtn"
+                                data-bs-toggle="modal" data-bs-target="#editClientTypeModal">
+                            Create New Client Type
+                        </button>
                     </div>
+                    <!-- Modal Edit Edit Client Type -->
+                    <form th:action="@{/repair-service/management/create-client-type/}" method="post">
+                        <div th:insert="modals/clientTypeEditFragment"></div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -190,43 +225,32 @@
                             <td th:text="${repairType.getRepair_type_name()}"></td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a class="btn btn-outline-warning"
-                                   th:href="@{/repair-service/management/repair-type/{id}(id=${repairType.getRepair_type_id()})}">Edit</a>
-                                <a class="btn btn-outline-danger"
-                                   th:href="@{/repair-service/management/repair-type/delete-repair-type/{id}(id=${repairType.getRepair_type_id()})}">Delete</a>
+                                    <a th:href="@{findRepairType/(*{repairType.getRepair_type_id()})}" class="btn btn-outline-warning editRepairTypeBtn"
+                                       data-bs-toggle="modal" data-bs-target="#editRepairTypeModal">Edit</i></a>
+                                    <a class="btn btn-outline-danger"
+                                       th:href="@{/repair-service/management/delete-repair-type/{id}(id=${repairType.repair_type_id})}">Delete</a>
                                 </div>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                     <br>
+                    <!-- Button trigger modal  Edit Repair Type -->
                     <div class="text-center">
-                        <a href="" th:href="@{/repair-service/management/repair-type/create-repair-type}">
-                            <button name="Management" type="button" class="btn btn-outline-success">Create New Repair Type</button>
-                        </a>
+                        <button type="button" class="btn btn-outline-primary repairTypeModalBtn"
+                                data-bs-toggle="modal" data-bs-target="#editRepairTypeModal">
+                            Create New Repair Type
+                        </button>
                     </div>
-                </div>
+                    <!-- Modal Edit Edit Repair Type -->
+                    <form th:action="@{/repair-service/management/create-repair-type/}" method="post">
+                        <div th:insert="modals/repairTypeEditFragment"></div>
+                    </form>
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script
-        src="https://code.jquery.com/jquery-3.6.0.js"
-        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.2/umd/popper.min.js"
-        integrity="sha512-aDciVjp+txtxTJWsp8aRwttA0vR2sJMk/73ZT7ExuEHv7I5E6iyyobpFOlEFkq59mWW8ToYGuVZFnwhwIUisKA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js"
-        integrity="sha512-OvBgP9A2JBgiRad/mM36mkzXSXaJE9BEIENnVEmeZdITvwT09xnxLtT4twkCa8m/loMbPHsvPl0T8lRGVBwjlQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</div>
 
 </body>
 </html>

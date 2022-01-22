@@ -28,7 +28,7 @@ public class RepairDTO {
     //----------------------------
     private Long client_id;
     private Long client_type_id;
-    private Long devise_id;
+    private Long device_id;
     private Long repair_type_id;
     private String client_name;
     private String device_name;
@@ -39,21 +39,12 @@ public class RepairDTO {
     public RepairDTO(){
     }
 
-//    public RepairDTO(Long repair_id, @NotEmpty String repair_name, @NotEmpty String repair_description,
-//                     @NotEmpty float repair_cost, @NotNull LocalDate repair_date) {
-//        this.repair_id = repair_id;
-//        this.repair_name = repair_name;
-//        this.repair_description = repair_description;
-//        this.repair_cost = repair_cost;
-//        this.repair_date = repair_date;
-//
-//    }
 
 
     public RepairDTO(Long repair_id, @NotEmpty String repair_name,
                      @NotEmpty String repair_description, @NotEmpty float repair_cost,
                      @NotNull LocalDate repair_date, Long client_id, Long client_type_id,
-                     Long devise_id, Long repair_type_id, String client_name, String device_name,
+                     Long device_id, Long repair_type_id, String client_name, String device_name,
                      String client_type_name, String repair_type_name) {
         this.repair_id = repair_id;
         this.repair_name = repair_name;
@@ -62,7 +53,7 @@ public class RepairDTO {
         this.repair_date = repair_date;
         this.client_id = client_id;
         this.client_type_id = client_type_id;
-        this.devise_id = devise_id;
+        this.device_id = device_id;
         this.repair_type_id = repair_type_id;
         this.client_name = client_name;
         this.device_name = device_name;
@@ -79,7 +70,7 @@ public class RepairDTO {
         //----------------------------------------
         this.client_id = repair.getClient_id();
         this.client_type_id = repair.getClient_type_id();
-        this.devise_id = repair.getDevice_id();
+        this.device_id = repair.getDevice_id();
         this.repair_type_id = repair.getRepair_type_id();
         this.client_name = repair.getClient().getClient_name();
         this.device_name = repair.getDevice().getDevice_name();
@@ -149,12 +140,12 @@ public class RepairDTO {
         this.client_type_id = client_type_id;
     }
 
-    public Long getDevise_id() {
-        return devise_id;
+    public Long getDevice_id() {
+        return device_id;
     }
 
-    public void setDevise_id(Long devise_id) {
-        this.devise_id = devise_id;
+    public void setDevice_id(Long device_id) {
+        this.device_id = device_id;
     }
 
     public Long getRepair_type_id() {

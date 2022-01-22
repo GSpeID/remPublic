@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+<body>
+
+<nav class="navbar navbar-light bg-light" th:fragment="nav-bar">
+    <form class="container-fluid justify-content-start">
+        <a href="" th:href="@{/}">
+            <button class="btn btn-outline-success me-2" type="button">Main Page</button>
+            <a/>
+            <a href="" th:href="@{/repair-service}">
+                <button class="btn btn-outline-success me-2" type="button">Repairs Page</button>
+            </a>
+            <a href="" th:href="@{/repair-service/management}">
+                <button class="btn btn-outline-success me-2" type="button">Management</button>
+            </a>
+            <a href="" th:action="@{/logout}" method="POST">
+                <button class="btn btn-outline-danger me-2" type="button">Log Out</button>
+            </a>
+        </a>
+    </form>
+</nav>
+
+</body>
+</html>
