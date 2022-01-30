@@ -14,12 +14,14 @@ public class ClientType {
     @Column(nullable = false)
     private String client_type_name;
 
+
     @OneToMany(
             mappedBy = "clientType",
             cascade = CascadeType.ALL
 //            orphanRemoval = true
     )
-    private List<Repair> repairs;
+    private List<Client> clients;
+
 
     public ClientType(){
     }

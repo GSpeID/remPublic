@@ -13,13 +13,10 @@ public class RepairDTO {
     private Long repair_id;
 
     @NotEmpty
-    private String repair_name;
+    private String repair_address;
 
     @NotEmpty
     private String repair_description;
-
-    @NotEmpty
-    private float repair_cost;
 
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -27,57 +24,54 @@ public class RepairDTO {
 
     //----------------------------
     private Long client_id;
-    private Long client_type_id;
     private Long device_id;
     private Long repair_type_id;
+    private Long status_id;
+    private Long payment_id;
     private String client_name;
     private String device_name;
     private String client_type_name;
     private String repair_type_name;
     //---------------------------
 
-    public RepairDTO(){
+    public RepairDTO() {
     }
 
 
-
-    public RepairDTO(Long repair_id, @NotEmpty String repair_name,
-                     @NotEmpty String repair_description, @NotEmpty float repair_cost,
-                     @NotNull LocalDate repair_date, Long client_id, Long client_type_id,
-                     Long device_id, Long repair_type_id, String client_name, String device_name,
+    public RepairDTO(Long repair_id, @NotEmpty String repair_address,
+                     @NotEmpty String repair_description,
+                     @NotNull LocalDate repair_date, Long client_id,
+                     Long device_id, Long repair_type_id, Long status_id,
+                     Long payment_id, String client_name, String device_name,
                      String client_type_name, String repair_type_name) {
         this.repair_id = repair_id;
-        this.repair_name = repair_name;
+        this.repair_address = repair_address;
         this.repair_description = repair_description;
-        this.repair_cost = repair_cost;
         this.repair_date = repair_date;
         this.client_id = client_id;
-        this.client_type_id = client_type_id;
         this.device_id = device_id;
         this.repair_type_id = repair_type_id;
+        this.status_id = status_id;
+        this.payment_id = payment_id;
         this.client_name = client_name;
         this.device_name = device_name;
         this.client_type_name = client_type_name;
         this.repair_type_name = repair_type_name;
     }
 
-    public RepairDTO( Repair repair){
-        this.repair_id=repair.getRepair_id();
-        this.repair_name = repair.getRepair_name();
+    public RepairDTO(Repair repair) {
+        this.repair_id = repair.getRepair_id();
+        this.repair_address = repair.getRepair_address();
         this.repair_description = repair.getRepair_description();
-        this.repair_cost = repair.getRepair_cost();
         this.repair_date = repair.getRepair_date();
-        //----------------------------------------
         this.client_id = repair.getClient_id();
-        this.client_type_id = repair.getClient_type_id();
         this.device_id = repair.getDevice_id();
         this.repair_type_id = repair.getRepair_type_id();
+        this.status_id = repair.getStatus_id();
+        this.payment_id = repair.getPayment_id();
         this.client_name = repair.getClient().getClient_name();
         this.device_name = repair.getDevice().getDevice_name();
-        this.client_type_name = repair.getClientType().getClient_type_name();
         this.repair_type_name = repair.getRepairType().getRepair_type_name();
-        //------------------------------------------
-
     }
 
     public Long getRepair_id() {
@@ -88,12 +82,12 @@ public class RepairDTO {
         this.repair_id = repair_id;
     }
 
-    public String getRepair_name() {
-        return repair_name;
+    public String getRepair_address() {
+        return repair_address;
     }
 
-    public void setRepair_name(String repair_name) {
-        this.repair_name = repair_name;
+    public void setRepair_address(String repair_address) {
+        this.repair_address = repair_address;
     }
 
     public String getRepair_description() {
@@ -104,14 +98,6 @@ public class RepairDTO {
         this.repair_description = repair_description;
     }
 
-    public float getRepair_cost() {
-        return repair_cost;
-    }
-
-    public void setRepair_cost(float repair_cost) {
-        this.repair_cost = repair_cost;
-    }
-
     public LocalDate getRepair_date() {
         return repair_date;
     }
@@ -120,24 +106,12 @@ public class RepairDTO {
         this.repair_date = repair_date;
     }
 
-
-    //---------------------------
-
-
     public Long getClient_id() {
         return client_id;
     }
 
     public void setClient_id(Long client_id) {
         this.client_id = client_id;
-    }
-
-    public Long getClient_type_id() {
-        return client_type_id;
-    }
-
-    public void setClient_type_id(Long client_type_id) {
-        this.client_type_id = client_type_id;
     }
 
     public Long getDevice_id() {
@@ -156,6 +130,21 @@ public class RepairDTO {
         this.repair_type_id = repair_type_id;
     }
 
+    public Long getStatus_id() {
+        return status_id;
+    }
+
+    public void setStatus_id(Long status_id) {
+        this.status_id = status_id;
+    }
+
+    public Long getPayment_id() {
+        return payment_id;
+    }
+
+    public void setPayment_id(Long payment_id) {
+        this.payment_id = payment_id;
+    }
 
     public String getClient_name() {
         return client_name;

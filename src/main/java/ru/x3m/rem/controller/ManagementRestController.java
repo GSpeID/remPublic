@@ -45,5 +45,17 @@ public class ManagementRestController {
         return repairService.findClientTypeById(client_type_id);
     }
 
+    @RequestMapping(value = "/findClientByName", method = RequestMethod.GET)
+    public String getClientByNameRest(HttpServletRequest request,
+                                      @PathVariable("client_name") String client_name){
+        return  repairService.findClientByName(client_name);
+    }
+
+    @RequestMapping(value = "/findStatus/{status_id}", method = RequestMethod.GET)
+    public Optional<RepairStatusDTO> getStatusByIdRest(HttpServletRequest request,
+                                                         @PathVariable("status_id") Long status_id){
+        return repairService.findRepairStatusById(status_id);
+    }
+
 
 }

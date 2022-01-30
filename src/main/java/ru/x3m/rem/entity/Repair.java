@@ -12,13 +12,10 @@ public class Repair {
     private Long repair_id;
 
     @Column(nullable = false)
-    private String repair_name;
+    private String repair_address;
 
     @Column
     private String repair_description;
-
-    @Column(nullable = false)
-    private float repair_cost;
 
     @Column
     private LocalDate repair_date;
@@ -36,12 +33,17 @@ public class Repair {
     private RepairType repairType;
 
     @ManyToOne
-    @JoinColumn(name = "client_type_id", insertable=false, updatable=false)
-    private ClientType clientType;
+    @JoinColumn(name = "status_id", insertable=false, updatable=false)
+    private RepairStatuses repairStatuses;
+
+    @ManyToOne
+    @JoinColumn(name = "payment_id", insertable=false, updatable=false)
+    private RepairPayments repairPayments;
 
     private Long device_id;
     private Long client_id;
-    private Long client_type_id;
+    private Long status_id;
+    private Long payment_id;
     private Long repair_type_id;
 
     public Repair(){
@@ -55,12 +57,12 @@ public class Repair {
         this.repair_id = repair_id;
     }
 
-    public String getRepair_name() {
-        return repair_name;
+    public String getRepair_address() {
+        return repair_address;
     }
 
-    public void setRepair_name(String repair_name) {
-        this.repair_name = repair_name;
+    public void setRepair_address(String repair_address) {
+        this.repair_address = repair_address;
     }
 
     public String getRepair_description() {
@@ -69,14 +71,6 @@ public class Repair {
 
     public void setRepair_description(String repair_description) {
         this.repair_description = repair_description;
-    }
-
-    public float getRepair_cost() {
-        return repair_cost;
-    }
-
-    public void setRepair_cost(float repair_cost) {
-        this.repair_cost = repair_cost;
     }
 
     public LocalDate getRepair_date() {
@@ -114,15 +108,21 @@ public class Repair {
         this.repairType = repairType;
     }
 
-    public ClientType getClientType() {
-        return clientType;
+    public RepairStatuses getRepairStatuses() {
+        return repairStatuses;
     }
 
-    public void setClientType(ClientType clientType) {
-        this.clientType = clientType;
+    public void setRepairStatuses(RepairStatuses repairStatuses) {
+        this.repairStatuses = repairStatuses;
     }
 
-    //--------
+    public RepairPayments getRepairPayments() {
+        return repairPayments;
+    }
+
+    public void setRepairPayments(RepairPayments repairPayments) {
+        this.repairPayments = repairPayments;
+    }
 
     public Long getDevice_id() {
         return device_id;
@@ -136,12 +136,12 @@ public class Repair {
         this.client_id = client_id;
     }
 
-    public Long getClient_type_id() {
-        return client_type_id;
+    public Long getStatus_id() {
+        return status_id;
     }
 
-    public void setClient_type_id(Long client_type_id) {
-        this.client_type_id = client_type_id;
+    public void setStatus_id(Long status_id) {
+        this.status_id = status_id;
     }
 
     public Long getRepair_type_id() {
@@ -150,5 +150,13 @@ public class Repair {
 
     public void setRepair_type_id(Long repair_type_id) {
         this.repair_type_id = repair_type_id;
+    }
+
+    public Long getPayment_id() {
+        return payment_id;
+    }
+
+    public void setPayment_id(Long payment_id) {
+        this.payment_id = payment_id;
     }
 }

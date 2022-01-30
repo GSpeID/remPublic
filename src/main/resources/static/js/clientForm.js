@@ -36,6 +36,7 @@ $(document).ready(function (){
             success: function (client) {
                 $('#editClientModal #client_id').val(client.client_id);
                 $('#editClientModal #client_name').val(client.client_name);
+                $('#editClientModal #client_type_id').val(client.client_type_id);
             }
         });
 
@@ -83,9 +84,47 @@ $(document).ready(function (){
                 $('#editRepairTypeModal #repair_type_name').val(repair_type.repair_type_name);
             }
         });
-
     });
 
+    $('table .editStatusBtn') .on('click', function (event) {
+        event.preventDefault();
+        const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
+        console.log(id);
+        $.ajax({
+            type:'GET',
+            url:'/rem/repair-service/management/api/findStatus/' + id,
+            success: function (status) {
+                $('#editStatusModal #status_id').val(status.status_id);
+                $('#editStatusModal #status_name').val(status.status_name);
+            }
+        });
+    });
+
+    window.update1 = function() {
+        const select = document.getElementById('dropClient');
+        const option = select.options[select.selectedIndex];
+        document.getElementById('client').value = option.value;
+    }
+
+    window.update2 = function() {
+        const select = document.getElementById('dropClientType');
+        const option = select.options[select.selectedIndex];
+        document.getElementById('clientType').value = option.value;
+    }
+
+    window.update3 = function() {
+        const select = document.getElementById('dropRepairType');
+        const option = select.options[select.selectedIndex];
+        document.getElementById('repairType').value = option.value;
+    }
+
+    window.update4 = function() {
+        const select = document.getElementById('dropDevice');
+        const option = select.options[select.selectedIndex];
+        document.getElementById('device').value = option.value;
+    }
+
 });
+
 
 

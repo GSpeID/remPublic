@@ -2,6 +2,7 @@ package ru.x3m.rem.entity;
 
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -15,6 +16,10 @@ public class Client {
     @Column(unique = true, nullable = false)
     private String client_name;
 
+    @ManyToOne
+    @JoinColumn(name = "client_type_id", insertable=false, updatable=false)
+    private ClientType clientType;
+
     @OneToMany(
             mappedBy = "client",
             cascade = CascadeType.ALL
@@ -22,6 +27,11 @@ public class Client {
     )
 
     private List<Repair> repairs;
+
+    private Long client_type_id;
+
+    public Client(){
+    }
 
     public Long getClient_id() {
         return client_id;
@@ -39,13 +49,19 @@ public class Client {
         this.client_name = client_name;
     }
 
-    public List<Repair> getRepairs() {
-        return repairs;
+    public ClientType getClientType() {
+        return clientType;
     }
 
-    public void setRepairs(List<Repair> repairs) {
-        this.repairs = repairs;
+    public void setClientType(ClientType clientType) {
+        this.clientType = clientType;
     }
 
+    public Long getClient_type_id() {
+        return client_type_id;
+    }
 
+    public void setClient_type_id(Long client_type_id) {
+        this.client_type_id = client_type_id;
+    }
 }
