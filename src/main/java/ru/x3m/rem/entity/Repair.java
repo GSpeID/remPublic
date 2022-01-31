@@ -20,6 +20,21 @@ public class Repair {
     @Column
     private LocalDate repair_date;
 
+    @Column
+    private Float full_cost;
+
+    @Column
+    private Float paid;
+
+    @Column
+    private Float arrears;
+
+    @Column
+    private Float outlay;
+
+    @Column
+    private Float profit;
+
     @ManyToOne
     @JoinColumn(name = "client_id", insertable=false, updatable=false)
     private Client client;
@@ -36,14 +51,9 @@ public class Repair {
     @JoinColumn(name = "status_id", insertable=false, updatable=false)
     private RepairStatuses repairStatuses;
 
-    @ManyToOne
-    @JoinColumn(name = "payment_id", insertable=false, updatable=false)
-    private RepairPayments repairPayments;
-
     private Long device_id;
     private Long client_id;
     private Long status_id;
-    private Long payment_id;
     private Long repair_type_id;
 
     public Repair(){
@@ -96,6 +106,7 @@ public class Repair {
     public void setDevice(Device device) {
         this.device = device;
     }
+
     public void setDevice_id(Long device_id) {
         this.device_id = device_id;
     }
@@ -114,14 +125,6 @@ public class Repair {
 
     public void setRepairStatuses(RepairStatuses repairStatuses) {
         this.repairStatuses = repairStatuses;
-    }
-
-    public RepairPayments getRepairPayments() {
-        return repairPayments;
-    }
-
-    public void setRepairPayments(RepairPayments repairPayments) {
-        this.repairPayments = repairPayments;
     }
 
     public Long getDevice_id() {
@@ -152,11 +155,43 @@ public class Repair {
         this.repair_type_id = repair_type_id;
     }
 
-    public Long getPayment_id() {
-        return payment_id;
+    public Float getFull_cost() {
+        return full_cost;
     }
 
-    public void setPayment_id(Long payment_id) {
-        this.payment_id = payment_id;
+    public void setFull_cost(Float full_cost) {
+        this.full_cost = full_cost;
+    }
+
+    public Float getPaid() {
+        return paid;
+    }
+
+    public void setPaid(Float paid) {
+        this.paid = paid;
+    }
+
+    public Float getArrears() {
+        return arrears;
+    }
+
+    public void setArrears(Float arrears) {
+        this.arrears = arrears;
+    }
+
+    public Float getOutlay() {
+        return outlay;
+    }
+
+    public void setOutlay(Float outlay) {
+        this.outlay = outlay;
+    }
+
+    public Float getProfit() {
+        return profit;
+    }
+
+    public void setProfit(Float profit) {
+        this.profit = profit;
     }
 }

@@ -36,8 +36,6 @@ public class RepairController {
         model.addAttribute("clientTypes", clientTypes);
         List<RepairType> repairTypes = repairService.findAllRepairTypes();
         model.addAttribute("repairTypes", repairTypes);
-        List<RepairPayments> repairPayments = repairService.findAllRepairPayments();
-        model.addAttribute("repairPayments", repairPayments);
         List<RepairStatuses> repairStatuses = repairService.findAllRepairStatuses();
         model.addAttribute("repairStatuses", repairStatuses);
         return "repair-service";
@@ -75,8 +73,6 @@ public class RepairController {
         model.addAttribute("clientTypes", clientTypes);
         List<RepairType> repairTypes = repairService.findAllRepairTypes();
         model.addAttribute("repairTypes", repairTypes);
-        List<RepairPayments> repairPayments = repairService.findAllRepairPayments();
-        model.addAttribute("repairPayments", repairPayments);
         List<RepairStatuses> repairStatuses = repairService.findAllRepairStatuses();
         model.addAttribute("repairStatuses", repairStatuses);
         return "/management";

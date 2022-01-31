@@ -20,18 +20,16 @@ public class RepairService {
     private DeviceRepo deviceRepo;
     private RepairTypeRepo repairTypeRepo;
     private RepairStatusesRepo repairStatusesRepo;
-    private RepairPaymentsRepo repairPaymentsRepo;
 
     @Autowired
     public RepairService(RepairRepo repairRepo, ClientRepo clientRepo, ClientTypeRepo clientTypeRepo,
                          DeviceRepo deviceRepo, RepairTypeRepo repairTypeRepo,
-                         RepairStatusesRepo repairStatusesRepo, RepairPaymentsRepo repairPaymentsRepo) {
+                         RepairStatusesRepo repairStatusesRepo) {
         this.repairRepo = repairRepo;
         this.clientRepo = clientRepo;
         this.clientTypeRepo = clientTypeRepo;
         this.deviceRepo = deviceRepo;
         this.repairTypeRepo = repairTypeRepo;
-        this.repairPaymentsRepo = repairPaymentsRepo;
         this.repairStatusesRepo = repairStatusesRepo;
     }
 
@@ -84,16 +82,6 @@ public class RepairService {
         return (List<RepairType>) repairTypeRepo.findAll();
     }
 
-
-    public Optional<RepairPaymentDTO> findRepairPaymentById(Long payment_id){
-        return repairPaymentsRepo.findById(payment_id)
-                .map(RepairPaymentDTO::new);
-    }
-
-    public List<RepairPayments> findAllRepairPayments(){
-        return (List<RepairPayments>) repairPaymentsRepo.findAll();
-    }
-
     public Optional<RepairStatusDTO> findRepairStatusById(Long status_id){
         return repairStatusesRepo.findById(status_id)
                 .map(RepairStatusDTO::new);
@@ -113,8 +101,12 @@ public class RepairService {
         repair.setDevice_id(repairDTO.getDevice_id());
         repair.setClient_id(repairDTO.getClient_id());
         repair.setRepair_type_id(repairDTO.getRepair_type_id());
-        repair.setPayment_id(repairDTO.getPayment_id());
         repair.setStatus_id(repairDTO.getStatus_id());
+        repair.setFull_cost(repairDTO.getFull_cost());
+        repair.setPaid(repairDTO.getPaid());
+        repair.setArrears(repairDTO.getArrears());
+        repair.setOutlay(repairDTO.getOutlay());
+        repair.setProfit(repairDTO.getProfit());
 
         repairRepo.save(repair);
 
@@ -179,20 +171,6 @@ public class RepairService {
                 .ifPresent(repairType -> repairTypeRepo.delete(repairType));
     }
 
-    public void savePayment(RepairPaymentDTO repairPaymentDTO){
-        RepairPayments repairPayments = new RepairPayments();
-        repairPayments.setPayment_id(repairPaymentDTO.getPayment_id());
-        repairPayments.setFull_cost(repairPaymentDTO.getFull_cost());
-        repairPayments.setPaid(repairPaymentDTO.getPaid());
-        repairPayments.setArrears(repairPaymentDTO.getArrears());
-
-        repairPaymentsRepo.save(repairPayments);
-    }
-
-    public void deletePayment(Long payment_id){
-        repairPaymentsRepo.findById(payment_id)
-                .ifPresent(repairPayments -> repairPaymentsRepo.delete(repairPayments));
-    }
 
     public  void saveStatus(RepairStatusDTO repairStatusDTO){
         RepairStatuses repairStatus = new RepairStatuses();
@@ -256,11 +234,4 @@ public class RepairService {
         this.repairStatusesRepo = repairStatusesRepo;
     }
 
-    public RepairPaymentsRepo getRepairPaymentsRepo() {
-        return repairPaymentsRepo;
-    }
-
-    public void setRepairPaymentsRepo(RepairPaymentsRepo repairPaymentsRepo) {
-        this.repairPaymentsRepo = repairPaymentsRepo;
-    }
 }

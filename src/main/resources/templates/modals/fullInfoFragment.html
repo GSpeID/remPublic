@@ -1,53 +1,26 @@
 <!doctype html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Edit Repair</title>
 </head>
 <body>
-<!-- Modal Edit\Add Client-->
-<div th:fragment="repairEditFragment">
-    <div id="editRepairModal" class="modal fade" tabindex="-1" aria-labelledby="editRepairModal" aria-hidden="true">
+<!-- Modal Full Info-->
+<div th:fragment="fullInfoFragment">
+    <div id="fullInfoModal" class="modal fade" tabindex="-1" aria-labelledby="fullInfoModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editRepairModalLabel">Edit Repair</h5>
+                    <h5 class="modal-title" id="fullInfoLabel">Full Information</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class id="editRepair">
+                <div class id="fullInfo">
                     <div class="modal-body">
                         <div class="container">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <input type="hidden" class="form-control"
-                                           id="repair_id" name="repair_id" value=""/>
-                                </div>
-                                <div class="form-group">
-                                    <input type="hidden" class="form-control"
-                                           id="client_id" name="client_id" value=""/>
-                                </div>
-                                <div class="form-group">
-                                    <input type="hidden" class="form-control"
-                                           id="device_id" name="device_id" value=""/>
-                                </div>
-                                <div class="form-group">
-                                    <input type="hidden" class="form-control"
-                                           id="repair_type_id" name="repair_type_id" value=""/>
-                                </div>
-                                <div class="form-group">
-                                    <input type="hidden" class="form-control"
-                                           id="status_id" name="status_id" value=""/>
-                                </div>
-                                <div class="form-group">
                                     <label for="client_name">Client</label>
                                     <input type="text" class="form-control" required="required"
                                            id="client_name" name="client_name" value="" disabled/>
-                                </div>
-                                <br>
-                                <div class="form-group">
-                                    <label for="device_name">Device</label>
-                                    <input type="text" class="form-control" required="required"
-                                           id="device_name" name="device_name" value="" disabled/>
                                 </div>
                                 <br>
                                 <div class="form-group">
@@ -57,36 +30,64 @@
                                 </div>
                                 <br>
                                 <div class="form-group">
-                                    <label for="repair_description">Repair Description</label>
-                                    <input type="text" class="form-control" required="required"
-                                           id="repair_description" name="repair_description" value=""/>
-                                </div>
-                                <br>
-                                <div class="form-group">
                                     <label for="repair_address">Repair Address</label>
                                     <input type="text" class="form-control" required="required"
-                                           id="repair_address" name="repair_address" value=""/>
+                                           id="repair_address" name="repair_address" value="" disabled/>
                                 </div>
                                 <br>
                                 <div class="form-group">
-                                    <label for="full_cost">Repair Cost</label>
+                                    <label for="repair_description">Repair Description</label>
                                     <input type="text" class="form-control" required="required"
-                                           id="full_cost" name="full_cost" value=""/>
+                                           id="repair_description" name="repair_description" value="" disabled/>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <label for="device_name">Device</label>
+                                    <input type="text" class="form-control" required="required"
+                                           id="device_name" name="device_name" value="" disabled/>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <label for="full_cost">Обьявленная стомость работ</label>
+                                    <input type="text" class="form-control" required="required"
+                                           id="full_cost" name="full_cost" value="" disabled/>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <label for="outlay">Затраты</label>
+                                    <input type="text" class="form-control" required="required"
+                                           id="outlay" name="outlay" value="" disabled/>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <label for="paid">Получено</label>
+                                    <input type="text" class="form-control" required="required"
+                                           id="paid" name="paid" value="" disabled/>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <label for="arrears">Задолжность</label>
+                                    <input type="text" class="form-control" required="required"
+                                           id="arrears" name="arrears" value="" disabled/>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <label for="profit">Прибыль</label>
+                                    <input type="text" class="form-control" required="required"
+                                           id="profit" name="profit" value="" disabled/>
                                 </div>
                                 <br>
                                 <div class="form-group">
                                     <label for="repair_date">Repair Date</label>
                                     <input type="date" class="form-control" required="required"
-                                           id="repair_date" name="repair_date" value=""/>
+                                           id="repair_date" name="repair_date" value="" disabled/>
                                 </div>
                                 <br>
                                 <div class="form-group">
-                                    <label for="status_name">Status</label>
+                                    <label for="status_name">Статус</label>
                                     <input type="text" class="form-control" required="required"
-                                           id="status_name" name="status_name" value=""/>
+                                           id="status_name" name="status_name" value="" disabled/>
                                 </div>
-                                <br>
-                                <button type="submit" class="btn btn-outline-primary" value="save">Submit</button>
                             </div>
                         </div>
                     </div>

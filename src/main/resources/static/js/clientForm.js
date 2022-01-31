@@ -3,24 +3,58 @@ $(document).ready(function (){
     $('table .editRepairBtn') .on('click', function (event) {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
-        console.log(id);
         $.ajax({
             type:'GET',
             url:'/rem/repair-service/api/findRepair/' + id,
             success: function (repair) {
                 $('#editRepairModal #repair_id').val(repair.repair_id);
-                $('#editRepairModal #repair_name').val(repair.repair_name);
+                $('#editRepairModal #repair_address').val(repair.repair_address);
                 $('#editRepairModal #repair_description').val(repair.repair_description);
-                $('#editRepairModal #repair_cost').val(repair.repair_cost);
                 $('#editRepairModal #repair_date').val(repair.repair_date);
                 $('#editRepairModal #client_id').val(repair.client_id);
-                $('#editRepairModal #client_type_id').val(repair.client_type_id);
                 $('#editRepairModal #device_id').val(repair.device_id);
                 $('#editRepairModal #repair_type_id').val(repair.repair_type_id);
+                $('#editRepairModal #client_type_id').val(repair.client_type_id);
+                $('#editRepairModal #status_id').val(repair.status_id);
+                $('#editRepairModal #full_cost').val(repair.full_cost);
+                $('#editRepairModal #paid').val(repair.paid);
+                $('#editRepairModal #outlay').val(repair.outlay);
+                $('#editRepairModal #arrears').val(repair.arrears);
+                $('#editRepairModal #profit').val(repair.profit);
                 $('#editRepairModal #client_name').val(repair.client_name);
                 $('#editRepairModal #device_name').val(repair.device_name);
-                $('#editRepairModal #client_type_name').val(repair.client_type_name);
                 $('#editRepairModal #repair_type_name').val(repair.repair_type_name);
+                $('#editRepairModal #status_name').val(repair.status_name);
+            }
+        });
+
+    });
+
+    $('table .fullInfoBtn') .on('click', function (event) {
+        event.preventDefault();
+        const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
+        $.ajax({
+            type:'GET',
+            url:'/rem/repair-service/api/findRepair/' + id,
+            success: function (repair) {
+                $('#fullInfoModal #repair_id').val(repair.repair_id);
+                $('#fullInfoModal #repair_address').val(repair.repair_address);
+                $('#fullInfoModal #repair_description').val(repair.repair_description);
+                $('#fullInfoModal #repair_date').val(repair.repair_date);
+                $('#fullInfoModal #client_id').val(repair.client_id);
+                $('#fullInfoModal #device_id').val(repair.device_id);
+                $('#fullInfoModal #repair_type_id').val(repair.repair_type_id);
+                $('#fullInfoModal #client_type_id').val(repair.client_type_id);
+                $('#fullInfoModal #status_id').val(repair.status_id);
+                $('#fullInfoModal #full_cost').val(repair.full_cost);
+                $('#fullInfoModal #paid').val(repair.paid);
+                $('#fullInfoModal #outlay').val(repair.outlay);
+                $('#fullInfoModal #arrears').val(repair.arrears);
+                $('#fullInfoModal #profit').val(repair.profit);
+                $('#fullInfoModal #client_name').val(repair.client_name);
+                $('#fullInfoModal #device_name').val(repair.device_name);
+                $('#fullInfoModal #repair_type_name').val(repair.repair_type_name);
+                $('#fullInfoModal #status_name').val(repair.status_name);
             }
         });
 
@@ -29,7 +63,6 @@ $(document).ready(function (){
     $('table .editClientBtn') .on('click', function (event) {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
-        console.log(id);
         $.ajax({
             type:'GET',
             url:'/rem/repair-service/management/api/findClient/' + id,
@@ -45,7 +78,6 @@ $(document).ready(function (){
     $('table .editDeviceBtn') .on('click', function (event) {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
-        console.log(id);
         $.ajax({
             type:'GET',
             url:'/rem/repair-service/management/api/findDevice/' + id,
@@ -60,7 +92,6 @@ $(document).ready(function (){
     $('table .editClientTypeBtn') .on('click', function (event) {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
-        console.log(id);
         $.ajax({
             type:'GET',
             url:'/rem/repair-service/management/api/findClientType/' + id,
@@ -75,7 +106,6 @@ $(document).ready(function (){
     $('table .editRepairTypeBtn') .on('click', function (event) {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
-        console.log(id);
         $.ajax({
             type:'GET',
             url:'/rem/repair-service/management/api/findRepairType/' + id,
@@ -89,7 +119,6 @@ $(document).ready(function (){
     $('table .editStatusBtn') .on('click', function (event) {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
-        console.log(id);
         $.ajax({
             type:'GET',
             url:'/rem/repair-service/management/api/findStatus/' + id,
@@ -122,6 +151,11 @@ $(document).ready(function (){
         const select = document.getElementById('dropDevice');
         const option = select.options[select.selectedIndex];
         document.getElementById('device').value = option.value;
+    }
+    window.update5 = function() {
+        const select = document.getElementById('dropStatus');
+        const option = select.options[select.selectedIndex];
+        document.getElementById('status').value = option.value;
     }
 
 });
