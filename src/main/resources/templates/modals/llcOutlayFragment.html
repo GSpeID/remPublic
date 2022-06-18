@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <title>Статьи расходов</title>
+    <link rel="stylesheet" href="../../static/css/stat.css">
+</head>
+<body>
+<div th:fragment="llcOutlayFragment">
+    <div id="llcOutlayModal" class="modal fade" tabindex="-1"
+         aria-labelledby="llcOutlayModal" aria-hidden="true"
+         th:action="@{/statistic/saveCostItem}" method="post">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"
+                        id="llcOutlayModalLabel">
+                        Добавление статей расходов/список статей расходов</h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class id="llcOutlay">
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="col-12">
+
+                                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                    <input type="radio"
+                                           class="btn-check"
+                                           name="btnradio"
+                                           id="btnradio1"
+                                           autocomplete="off"
+                                           value="costItem">
+                                    <label class="btn btn-outline-primary"
+                                           for="btnradio1">Добавить Статью</label>
+
+                                    <input type="radio" class="btn-check"
+                                           name="btnradio"
+                                           id="btnradio2"
+                                           autocomplete="off"
+                                           value="subCostItem">
+                                    <label class="btn btn-outline-primary"
+                                           for="btnradio2">Добавить Подстатью</label>
+                                </div>
+
+                                <br>
+                                <br>
+
+                                <div class="subCostItem box">
+                                    <div>
+                                        <div class="form-group">
+                                            <label for="subCostItemName">Добавить статью расхода
+                                                (Введите название новой статьи расходов)</label>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   required="required"
+                                                   id="subCostItemName"
+                                                   name="subCostItemName"
+                                                   value=""/>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="hidden"
+                                                   class="form-control"
+                                                   id="subCostItemId"
+                                                   name="subCostItemId"
+                                                   value=""/>
+                                        </div>
+                                        <br>
+                                        <button type="submit"
+                                                class="btn btn-outline-primary"
+                                                value="save">
+                                            Добавить статью
+                                        </button>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="subCostItem box">
+                                    <div>
+                                        <div class="form-group">
+                                            <label for="subCostItemName">Выберите основную статью</label>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   required="required"
+                                                   id="subCostItemName"
+                                                   name="subCostItemId"
+                                                   value=""/>
+                                        </div>
+                                        <br>
+                                        <div class="form-group">
+                                            <label for="costItemName">Название подстатьи</label>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="costItemName"
+                                                   name="cosItemName"
+                                                   value=""/>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="hidden"
+                                                   class="form-control"
+                                                   id="subCostItemId"
+                                                   name="subCostItemId"
+                                                   value=""/>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="hidden"
+                                                   class="form-control"
+                                                   id="costItemId"
+                                                   name="costItemId"
+                                                   value=""/>
+                                        </div>
+                                        <br>
+                                        <button type="submit"
+                                                class="btn btn-outline-primary"
+                                                value="save">
+                                            Добавить подстатью
+                                        </button>
+                                        <br>
+                                    </div>
+                                </div>
+                                <br>
+                                <br>
+                                <br>
+                                <strong>Статьи расходов: </strong>
+                                <br>
+                                <br>
+                                <div class="accordion"
+                                     th:each="subCostItem : ${subCostItems}"
+                                     th:id="|subCostItemId-${subCostItem.subCostItemId}|">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingCostItems">
+                                        <button class="accordion-button"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#collapseCostItems"
+                                                aria-expanded="false"
+                                                aria-controls="collapseCostItems"
+                                                th:text="${subCostItem.subCostItemName}">
+                                        </button>
+                                    </h2>
+                                    <div id="collapseCostItems"
+                                         class="accordion-collapse collapse show"
+                                         aria-labelledby="headingCostItems"
+                                         data-bs-parent="#accordionCostItems">
+                                        <div class="accordion-body">
+                                            <!-- ------------------------------- -->
+                                            <div class="accordion"
+                                                 id="subCostItem">
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="headingSubCostItems">
+                                                        <button class="accordion-button"
+                                                                type="button"
+                                                                data-bs-toggle="collapse"
+                                                                data-bs-target="#collapseSubCostItems"
+                                                                aria-expanded="false"
+                                                                aria-controls="collapseSubCostItems">
+                                                            Подстатьи расходов
+                                                        </button>
+                                                    </h2>
+                                                    <div id="collapseSubCostItems"
+                                                         class="accordion-collapse collapse show"
+                                                         aria-labelledby="headingSubCostItems"
+                                                         data-bs-parent="#accordionSubCostItems" >
+                                                        <div class="accordion-body" >
+                                                            <span th:text="${subCostItem.subCostItemId}"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-outline-secondary"
+                        data-bs-dismiss="modal">Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

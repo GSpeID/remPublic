@@ -31,38 +31,45 @@
 
 <body>
 
-            <img th:src="@{/images/logo.jpg}" class="center">
-                <br>
-                <div class="indexFont">
-                <div style="text-align: center;">Welcome!</div>
-                    <br>
-                <div style="text-align: center;">Please LogIn!</div>
-                </div>
-                    <br>
-            <br>
-                <div class="text-center" sec:authorize="isAnonymous()">
-                <a href="login.html" th:href="@{/login}">
-                    <button name="LogIn" type="button" class="btn btn-primary">LogIn</button>
-                </a>
-                </div>
-            <br>
-            <div class="text-center" sec:authorize="isAuthenticated()">
-                <a href="login.html" th:href="@{/register}">
-                    <button name="Register" type="button" class="btn btn-warning">Register</button>
-                </a>
-            </div>
-            <br>
-            <div class="text-center" sec:authorize="isAuthenticated()">
-                <a href="login.html" th:href="@{/repair-service}">
-                    <button name="Register" type="button" class="btn btn-warning">Services List</button>
-                </a>
-            </div>
-            <br>
-            <div class="text-center" sec:authorize="isAuthenticated()">
-                <a href="login.html" th:href="@{/repair-service/management}">
-                    <button name="Register" type="button" class="btn btn-warning">Management</button>
-                </a>
-            </div>
-
+<img th:src="@{/images/logo.jpg}" class="center">
+<br>
+<div class="indexFont">
+    <div style="text-align: center;">Welcome!</div>
+    <br>
+    <div style="text-align: center;" sec:authorize="isAnonymous()">
+        Please LogIn!
+    </div>
+</div>
+<br>
+<br>
+<div class="text-center" sec:authorize="isAnonymous()">
+    <a href="login.html" th:href="@{/login}">
+        <button name="LogIn" type="button" class="btn btn-primary">LogIn</button>
+    </a>
+</div>
+<br>
+<div class="text-center" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+    <a href="login.html" th:href="@{/register}">
+        <button name="Register" type="button" class="btn btn-warning">Register</button>
+    </a>
+</div>
+<br>
+<div class="text-center" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+    <a href="login.html" th:href="@{/statistic}">
+        <button name="Register" type="button" class="btn btn-warning">Statistic</button>
+    </a>
+</div>
+<br>
+<div class="text-center" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')">
+    <a href="login.html" th:href="@{/repair-service}">
+        <button name="Register" type="button" class="btn btn-warning">Services List</button>
+    </a>
+</div>
+<br>
+<div class="text-center" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')">
+    <a href="login.html" th:href="@{/repair-service/management}">
+        <button name="Register" type="button" class="btn btn-warning">Management</button>
+    </a>
+</div>
 </body>
 </html>

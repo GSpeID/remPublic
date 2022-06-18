@@ -15,6 +15,12 @@ public class Role {
     @Column(nullable = false)
     private String role_name;
 
+    @OneToMany(
+            mappedBy = "role",
+            cascade = CascadeType.ALL
+    )
+    private List<User> users;
+
     public Role(){
     }
 
@@ -37,4 +43,5 @@ public class Role {
     public void setRole_name(String role_name) {
         this.role_name = role_name;
     }
+
 }

@@ -11,13 +11,13 @@ public class ClientTypeDTO {
     @NotEmpty
     private String client_type_name;
 
-    public ClientTypeDTO(){
-    }
-
-    public ClientTypeDTO(Long client_type_id, @NotEmpty String client_type_name) {
-        this.client_type_id = client_type_id;
-        this.client_type_name = client_type_name;
-    }
+//    public ClientTypeDTO(){
+//    }
+//
+//    public ClientTypeDTO(Long client_type_id, @NotEmpty String client_type_name) {
+//        this.client_type_id = client_type_id;
+//        this.client_type_name = client_type_name;
+//    }
 
     public ClientTypeDTO(ClientType clientType){
         this.client_type_id = clientType.getClient_type_id();

@@ -17,26 +17,27 @@ import java.util.List;
 public class RepairController {
 
     private RepairService repairService;
+    private ManagementService managementService;
 
     @Autowired
-    public RepairController(RepairService repairService) {
+    public RepairController(RepairService repairService, ManagementService managementService) {
         this.repairService = repairService;
+        this.managementService = managementService;
     }
-
 
     @GetMapping("/repair-service")
     public String allRepairsPage(Model model) {
         List<Repair> repairs = repairService.findAllRepairs();
         model.addAttribute("repairs", repairs);
-        List<Client> clients = repairService.findAllClients();
+        List<Client> clients = managementService.findAllClients();
         model.addAttribute("clients", clients);
-        List<Device> devices = repairService.findAllDevices();
+        List<Device> devices = managementService.findAllDevices();
         model.addAttribute("devices", devices);
-        List<ClientType> clientTypes = repairService.findAllClientTypes();
+        List<ClientType> clientTypes = managementService.findAllClientTypes();
         model.addAttribute("clientTypes", clientTypes);
-        List<RepairType> repairTypes = repairService.findAllRepairTypes();
+        List<RepairType> repairTypes = managementService.findAllRepairTypes();
         model.addAttribute("repairTypes", repairTypes);
-        List<RepairStatuses> repairStatuses = repairService.findAllRepairStatuses();
+        List<RepairStatuses> repairStatuses = managementService.findAllRepairStatuses();
         model.addAttribute("repairStatuses", repairStatuses);
         return "repair-service";
     }
@@ -56,121 +57,6 @@ public class RepairController {
     public String deleteRepair(@PathVariable Long repair_id) {
         repairService.deleteRepair(repair_id);
         return "redirect:/repair-service";
-    }
-
-
-    //----- Management Page
-
-    //----- For displaying all needed elements
-
-    @GetMapping("/repair-service/management")
-    public String allManagementPage(Model model) {
-        List<Client> clients = repairService.findAllClients();
-        model.addAttribute("clients", clients);
-        List<Device> devices = repairService.findAllDevices();
-        model.addAttribute("devices", devices);
-        List<ClientType> clientTypes = repairService.findAllClientTypes();
-        model.addAttribute("clientTypes", clientTypes);
-        List<RepairType> repairTypes = repairService.findAllRepairTypes();
-        model.addAttribute("repairTypes", repairTypes);
-        List<RepairStatuses> repairStatuses = repairService.findAllRepairStatuses();
-        model.addAttribute("repairStatuses", repairStatuses);
-        return "/management";
-    }
-
-    //----- Save\Delete Client
-
-    @PostMapping("/repair-service/management/create-client")
-    public String createClientPost(@ModelAttribute("client") @Valid ClientDTO clientDTO,
-                                   BindingResult result) {
-        if (result.hasErrors()) {
-            return "/management";
-        }
-        repairService.saveClient(clientDTO);
-        return "redirect:/repair-service/management";
-    }
-
-    @GetMapping("/repair-service/management/delete-client/{client_id}")
-    public String deleteClient(@PathVariable Long client_id) {
-        repairService.deleteClient(client_id);
-        return "redirect:/repair-service/management";
-    }
-
-    //----- Save\Delete Client Type
-
-
-    @PostMapping("/repair-service/management/create-client-type")
-    public String createClientTypePost(@ModelAttribute("clientType")
-                                       @Valid ClientTypeDTO clientTypeDTO,
-                                       BindingResult result) {
-        if (result.hasErrors()) {
-            return "/management";
-        }
-        repairService.saveClientType(clientTypeDTO);
-        return "redirect:/repair-service/management";
-    }
-
-    @GetMapping("/repair-service/management/delete-client-type/{client_type_id}")
-    public String deleteClientType(@PathVariable Long client_type_id) {
-        repairService.deleteClientType(client_type_id);
-        return "redirect:/repair-service/management";
-    }
-
-    //----- Save\Delete Device
-
-    @PostMapping("/repair-service/management/create-device")
-    public String createDevicePost(@ModelAttribute("device")
-                                   @Valid DeviceDTO deviceDTO,
-                                   BindingResult result) {
-        if (result.hasErrors()) {
-            return "/management";
-        }
-        repairService.saveDevice(deviceDTO);
-        return "redirect:/repair-service/management";
-    }
-
-    @GetMapping("/repair-service/management/delete-device/{device_id}")
-    public String deleteDevice(@PathVariable Long device_id) {
-        repairService.deleteDevice(device_id);
-        return "redirect:/repair-service/management";
-    }
-
-    //----- Save\Delete Repair Type
-
-    @PostMapping("/repair-service/management/create-repair-type")
-    public String createRepairTypePost(@ModelAttribute("repairType")
-                                       @Valid RepairTypeDTO repairTypeDTO,
-                                       BindingResult result) {
-        if (result.hasErrors()) {
-            return "/management";
-        }
-        repairService.saveRepairType(repairTypeDTO);
-        return "redirect:/repair-service/management";
-    }
-
-    @GetMapping("/repair-service/management/delete-repair-type/{repair_type_id}")
-    public String deleteRepairType(@PathVariable Long repair_type_id) {
-        repairService.deleteRepairType(repair_type_id);
-        return "redirect:/repair-service/management";
-    }
-
-    //----- Save\Delete Statuses
-
-    @PostMapping("/repair-service/management/create-status")
-    public String createStatus(@ModelAttribute("status")
-                               @Valid RepairStatusDTO repairStatusDTO,
-                               BindingResult result) {
-        if (result.hasErrors()) {
-            return "/management";
-        }
-        repairService.saveStatus(repairStatusDTO);
-        return "redirect:/repair-service/management";
-    }
-
-    @GetMapping("/repair-service/management/delete-status/{status_id}")
-    public String deleteStatus(@PathVariable Long status_id){
-        repairService.deleteStatus(status_id);
-        return "redirect:/repair-service/management";
     }
 
 }

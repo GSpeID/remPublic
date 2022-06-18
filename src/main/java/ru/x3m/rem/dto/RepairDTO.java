@@ -24,9 +24,17 @@ public class RepairDTO {
 
     @NotNull
     private Float full_cost;
+
+    @NotNull
     private Float paid;
+
+    @NotNull
     private Float outlay;
+
+    @NotNull
     private Float arrears;
+
+    @NotNull
     private Float profit;
 
     //----------------------------
@@ -44,31 +52,6 @@ public class RepairDTO {
 
     public RepairDTO() {
     }
-
-
-//    public RepairDTO(Long repair_id, @NotEmpty String repair_address,
-//                     @NotEmpty String repair_description,
-//                     @NotNull LocalDate repair_date, Long client_id,
-//                     Long device_id, Long repair_type_id, Long client_type_id,
-//                     Long status_id, Long payment_id, String client_name,
-//                     String device_name, String client_type_name, String repair_type_name,
-//                     String status_name) {
-//        this.repair_id = repair_id;
-//        this.repair_address = repair_address;
-//        this.repair_description = repair_description;
-//        this.repair_date = repair_date;
-//        this.client_id = client_id;
-//        this.device_id = device_id;
-//        this.repair_type_id = repair_type_id;
-//        this.client_type_id = client_type_id;
-//        this.status_id = status_id;
-//        this.payment_id = payment_id;
-//        this.client_name = client_name;
-//        this.device_name = device_name;
-//        this.client_type_name = client_type_name;
-//        this.repair_type_name = repair_type_name;
-//        this.status_name = status_name;
-//    }
 
     public RepairDTO(Repair repair) {
         this.repair_id = repair.getRepair_id();
@@ -242,6 +225,16 @@ public class RepairDTO {
 
     public void setProfit(Float profit) {
         this.profit = profit;
+    }
+
+    public float calcArrears(){
+        arrears=full_cost-paid;
+        return arrears;
+    }
+
+    public float calcProfit(){
+        profit=full_cost-outlay;
+        return profit;
     }
 
 

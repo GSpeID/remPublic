@@ -7,19 +7,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
         //TODO:
-        // - service:   simplify table(full info via "info" button)
+        // + service:   simplify table(full info via "info" button)
         // +            add search
         // +            add sort
-        // -            add info button with full information
-        // -            add modal on click "cost"(add new table with payment status and other info)
+        // +            add info button with full information
         // -            add schedule and notification
         // +            add statuses: planned, completed, done-waiting for payment(maybe some another statuses)
-        // -            add address
+        // -/+          add address
         // - management:
         // +             client type selection on creation new client
-        // -             add new positions only from admin confirmation
+        // -             add payment type (cash, bank transaction)
         // - users:     user roles(admin, manager, user)
-        // -            access to management only for admin
         // -            for user - only planed repair with date and address
 
 

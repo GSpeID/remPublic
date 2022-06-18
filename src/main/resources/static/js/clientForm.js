@@ -25,6 +25,7 @@ $(document).ready(function (){
                 $('#editRepairModal #device_name').val(repair.device_name);
                 $('#editRepairModal #repair_type_name').val(repair.repair_type_name);
                 $('#editRepairModal #status_name').val(repair.status_name);
+                console.log(repair)
             }
         });
 
@@ -55,6 +56,7 @@ $(document).ready(function (){
                 $('#fullInfoModal #device_name').val(repair.device_name);
                 $('#fullInfoModal #repair_type_name').val(repair.repair_type_name);
                 $('#fullInfoModal #status_name').val(repair.status_name);
+                console.log(repair)
             }
         });
 
@@ -129,6 +131,24 @@ $(document).ready(function (){
         });
     });
 
+    $('table .editLlcOutlayBtn') .on('click', function (event) {
+        event.preventDefault();
+        const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
+        $.ajax({
+            type:'GET',
+            url:'/rem/statistic/api/findLlcOutlay/' + id,
+            success: function (llcOutlay) {
+                $('#llcOutlayAddModal #llcOutlayId').val(llcOutlay.llcOutlayId);
+                $('#llcOutlayAddModal #description').val(llcOutlay.description);
+                $('#llcOutlayAddModal #cost').val(llcOutlay.cost);
+                $('#llcOutlayAddModal #date').val(llcOutlay.date);
+                $('#llcOutlayAddModal #costItemId').val(llcOutlay.costItemId);
+                $('#llcOutlayAddModal #subCostItemId').val(llcOutlay.subCostItemId);
+                console.log(llcOutlay)
+            }
+        });
+    });
+
     window.update1 = function() {
         const select = document.getElementById('dropClient');
         const option = select.options[select.selectedIndex];
@@ -157,6 +177,22 @@ $(document).ready(function (){
         const option = select.options[select.selectedIndex];
         document.getElementById('status').value = option.value;
     }
+
+    window.update6 = function() {
+        const select = document.getElementById('dropSubCostItem');
+        const option = select.options[select.selectedIndex];
+        document.getElementById('subCostItem0').value = option.value;
+        console.log(option.value);
+    }
+
+    window.update7 = function() {
+        const select = document.getElementById('dropCostItem');
+        const option = select.options[select.selectedIndex];
+        document.getElementById('costItem').value = option.value;
+        console.log(option.value)
+    }
+
+
 
 });
 

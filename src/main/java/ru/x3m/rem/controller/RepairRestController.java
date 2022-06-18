@@ -1,10 +1,7 @@
 package ru.x3m.rem.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.x3m.rem.dto.RepairDTO;
 import ru.x3m.rem.service.RepairService;
 
@@ -27,7 +24,5 @@ public class RepairRestController {
                                                   @PathVariable ("repair_id") Long repair_id ){
         return repairService.findRepairById(repair_id);
     }
-
-
 
 }

@@ -3,6 +3,7 @@ body {
     background: rgba(4,57,94,.1);
     padding: 0 1em 1em;
     font-family: 'Open Sans', sans-serif;
+    font-size: 1em;
 }
 h1{
     text-align:center;
@@ -36,7 +37,7 @@ input {
     background: rgba(4,57,94,.8);
     font-weight: bold;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 1em;
 }
 .accordion-label:hover {
     background: rgba(4,57,94,1);
@@ -60,7 +61,7 @@ input {
 .accordion-content p{
     margin: 0;
     color: rgba(4,57,94,.7);
-    font-size: 18px;
+    font-size: 1em;
 }
 input:checked + .accordion-label {
     background: rgba(4,57,94,1);

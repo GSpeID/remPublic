@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta charset="utf-8">
@@ -12,20 +13,41 @@
 <nav class="navbar navbar-light bg-light" th:fragment="nav-bar">
     <form class="container-fluid justify-content-start">
         <a href="" th:href="@{/}">
-            <button class="btn btn-outline-success me-2" type="button">Main Page</button>
+            <button class="btn btn-outline-primary me-2" type="button">Главная</button>
             <a/>
             <a href="" th:href="@{/repair-service}">
-                <button class="btn btn-outline-success me-2" type="button">Repairs Page</button>
+                <button class="btn btn-outline-success me-2" type="button">Заказы</button>
             </a>
             <a href="" th:href="@{/repair-service/management}">
-                <button class="btn btn-outline-success me-2" type="button">Management</button>
+                <button class="btn btn-outline-success me-2" type="button">Исходные данные для заказов</button>
             </a>
-            <a href="" th:action="@{/logout}" method="POST">
-                <button class="btn btn-outline-danger me-2" type="button">Log Out</button>
+            <a href="" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/statistic}">
+                <button class="btn btn-outline-warning me-2" type="button">Финансовая статистика</button>
+            </a>
+            <a>
+                <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/register}" method="POST">
+                    <input type="submit" class="btn btn-outline-danger"  value="Новый пользователь"
+                           data-bs-toggle="modal" data-bs-target="#registerFragmentModal"/>
+                </form>
+            </a>
+            <a>
+                <form>
+                    <button class="btn btn-outline-warning me-2" type="button">
+                        <span th:text="${#authentication.getName()}"></span>
+                        <span th:text="${#authentication.authorities}"></span>
+                    </button>
+                </form>
+            </a>
+            <a>
+                <form>
+                    <a class="btn btn-outline-primary" th:href="@{/logout}">Выход</a>
+                </form>
             </a>
         </a>
     </form>
 </nav>
+
+
 
 </body>
 </html>

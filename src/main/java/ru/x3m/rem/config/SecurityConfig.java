@@ -1,62 +1,35 @@
 package ru.x3m.rem.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private PasswordEncoder passwordEncoder;
-    private UserAuthService userAuthService;
 
 
-    @Autowired
-    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
-
-    @Autowired
-    public void setUserAuthService(UserAuthService userAuthService) {
-        this.userAuthService = userAuthService;
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(authenticationProvider());
-    }
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/*").permitAll()
-                .antMatchers("/repair-service/*").authenticated()
+                .antMatchers("/", "/authUser", "/login","/css/*", "/images/*").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .loginProcessingUrl("/authenticateTheUser")
-                .permitAll()
+                .loginProcessingUrl("/authUser")
+                .defaultSuccessUrl("/repair-service")
                 .and()
-                .logout().permitAll()
-                .logoutSuccessUrl("/index")
-                .permitAll();
-
+                .logout()
+                .logoutSuccessUrl("/");
     }
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-        auth.setUserDetailsService(userAuthService);
-        auth.setPasswordEncoder(passwordEncoder);
-        return auth;
-    }
 }

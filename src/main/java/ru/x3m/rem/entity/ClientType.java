@@ -18,7 +18,6 @@ public class ClientType {
     @OneToMany(
             mappedBy = "clientType",
             cascade = CascadeType.ALL
-//            orphanRemoval = true
     )
     private List<Client> clients;
 

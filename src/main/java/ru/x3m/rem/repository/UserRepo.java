@@ -4,12 +4,10 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import ru.x3m.rem.entity.User;
 
-import java.util.Optional;
-
 @Repository
 public interface UserRepo extends CrudRepository<User, Long> {
 
-    boolean existsUserByUsername(String username);
+    boolean existsUserByUsername(String user_name);
 
-    Optional<User>getUserByUsername(String username);
+    User getUserByUsername(String user_name);
 }

@@ -2,7 +2,6 @@ package ru.x3m.rem.entity;
 
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -23,9 +22,7 @@ public class Client {
     @OneToMany(
             mappedBy = "client",
             cascade = CascadeType.ALL
-//            orphanRemoval = true
     )
-
     private List<Repair> repairs;
 
     private Long client_type_id;

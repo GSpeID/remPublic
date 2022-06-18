@@ -17,9 +17,10 @@ public class RepairStatuses {
     @OneToMany(
             mappedBy = "repairStatuses",
             cascade = CascadeType.ALL
-//            orphanRemoval = true
     )
     private List<Repair> repairs;
+
+
 
     public Long getStatus_id() {
         return status_id;

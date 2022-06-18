@@ -2,6 +2,8 @@ package ru.x3m.rem.entity;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -13,6 +15,8 @@ public class Device {
     private Long device_id;
 
     @Column(unique = true, nullable = false)
+    @NotNull(message = "не должно быть пустым")
+    @Size(min = 3, max = 250, message = "минимум 3 символа")
     private String device_name;
 
     @OneToMany(

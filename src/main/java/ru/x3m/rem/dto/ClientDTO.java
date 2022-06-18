@@ -3,15 +3,17 @@ package ru.x3m.rem.dto;
 
 import ru.x3m.rem.entity.Client;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.*;
 
 public class ClientDTO {
 
+    @NotNull
     private Long client_id;
 
     @NotEmpty
     private String client_name;
 
+    @NotNull
     private  Long client_type_id;
 
 

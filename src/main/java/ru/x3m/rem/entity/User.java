@@ -1,8 +1,6 @@
 package ru.x3m.rem.entity;
 
-
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
 @Table(name = "users")
@@ -10,7 +8,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int user_id;
+    private Long user_id;
 
     @Column(nullable = false)
     private String username;
@@ -18,34 +16,20 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Collection<Role> roles;
+    @ManyToOne
+    @JoinColumn(name = "role_id", insertable = false, updatable = false)
+    private Role role;
 
+    private Long role_id;
 
-    public User(){
+    public User() {
     }
 
-    public User(int user_id, String username, String password) {
-        this.user_id = user_id;
-        this.username = username;
-        this.password = password;
-    }
-
-    public User(int user_id, String username, String password, Collection<Role> roles) {
-        this.user_id = user_id;
-        this.username = username;
-        this.password = password;
-        this.roles = roles;
-    }
-
-    public int getUser_id() {
+    public Long getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(Long user_id) {
         this.user_id = user_id;
     }
 
@@ -65,11 +49,19 @@ public class User {
         this.password = password;
     }
 
-    public Collection<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Collection<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Long getRole_id() {
+        return role_id;
+    }
+
+    public void setRole_id(Long role_id) {
+        this.role_id = role_id;
     }
 }

@@ -1,12 +1,11 @@
 package ru.x3m.rem.dto;
 
-import ru.x3m.rem.entity.Role;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.*;
 
 public class UserDTO {
 
-    private int user_id;
+    private Long user_id;
 
     @NotEmpty
     private String username;
@@ -14,14 +13,36 @@ public class UserDTO {
     @NotEmpty
     private String password;
 
+    @NotNull
+    private Long role_id;
+
     @NotEmpty
     private String matchingPassword;
 
-    public int getUser_id() {
+    //----------------------------
+    private String role_name;
+    //----------------------------
+
+
+    public UserDTO(Long user_id, String username, String password, Long role_id, String matchingPassword,
+                   String role_name) {
+        this.user_id = user_id;
+        this.username = username;
+        this.password = password;
+        this.role_id = role_id;
+        this.matchingPassword = matchingPassword;
+        this.role_name = role_name;
+    }
+
+    public UserDTO() {
+
+    }
+
+    public Long getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(Long user_id) {
         this.user_id = user_id;
     }
 
@@ -41,6 +62,14 @@ public class UserDTO {
         this.password = password;
     }
 
+    public Long getRole_id() {
+        return role_id;
+    }
+
+    public void setRole_id(Long role_id) {
+        this.role_id = role_id;
+    }
+
     public String getMatchingPassword() {
         return matchingPassword;
     }
@@ -49,14 +78,24 @@ public class UserDTO {
         this.matchingPassword = matchingPassword;
     }
 
+    public String getRole_name() {
+        return role_name;
+    }
+
+    public void setRole_name(String role_name) {
+        this.role_name = role_name;
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" +
                 "id=" + user_id +
                 ", username='" + username + '\'' +
+                ", username='" + role_id + '\'' +
                 ", password='" + password + '\'' +
                 ", matchingPassword='" + matchingPassword + '\'' +
                 '}';
     }
+
 
 }

@@ -36,19 +36,19 @@ public class Repair {
     private Float profit;
 
     @ManyToOne
-    @JoinColumn(name = "client_id", insertable=false, updatable=false)
+    @JoinColumn(name = "client_id", insertable = false, updatable = false)
     private Client client;
 
     @ManyToOne
-    @JoinColumn(name = "device_id", insertable=false, updatable=false)
+    @JoinColumn(name = "device_id", insertable = false, updatable = false)
     private Device device;
 
     @ManyToOne
-    @JoinColumn(name = "repair_type_id", insertable=false, updatable=false)
+    @JoinColumn(name = "repair_type_id", insertable = false, updatable = false)
     private RepairType repairType;
 
     @ManyToOne
-    @JoinColumn(name = "status_id", insertable=false, updatable=false)
+    @JoinColumn(name = "status_id", insertable = false, updatable = false)
     private RepairStatuses repairStatuses;
 
     private Long device_id;
@@ -56,7 +56,7 @@ public class Repair {
     private Long status_id;
     private Long repair_type_id;
 
-    public Repair(){
+    public Repair() {
     }
 
     public Long getRepair_id() {
