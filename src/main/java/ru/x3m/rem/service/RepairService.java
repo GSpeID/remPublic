@@ -44,15 +44,15 @@ public class RepairService {
 
     public void saveRepair(RepairDTO repairDTO){
         Repair repair = new Repair();
-        repair.setRepair_id(repairDTO.getRepair_id());
-        repair.setRepair_address(repairDTO.getRepair_address());
-        repair.setRepair_description(repairDTO.getRepair_description());
-        repair.setRepair_date(repairDTO.getRepair_date());
-        repair.setDevice_id(repairDTO.getDevice_id());
-        repair.setClient_id(repairDTO.getClient_id());
-        repair.setRepair_type_id(repairDTO.getRepair_type_id());
-        repair.setStatus_id(repairDTO.getStatus_id());
-        repair.setFull_cost(repairDTO.getFull_cost());
+        repair.setRepairId(repairDTO.getRepairId());
+        repair.setRepairAddress(repairDTO.getRepairAddress());
+        repair.setRepairDescription(repairDTO.getRepairDescription());
+        repair.setRepairDate(repairDTO.getRepairDate());
+        repair.setDeviceId(repairDTO.getDeviceId());
+        repair.setClientId(repairDTO.getClientId());
+        repair.setRepairTypeId(repairDTO.getRepairTypeId());
+        repair.setStatusId(repairDTO.getStatusId());
+        repair.setFullCost(repairDTO.getFullCost());
         repair.setPaid(repairDTO.getPaid());
         repair.setArrears(repairDTO.calcArrears());
         repair.setOutlay(repairDTO.getOutlay());
@@ -66,14 +66,5 @@ public class RepairService {
         repairRepo.findById(repair_id)
                 .ifPresent(repair -> repairRepo.delete(repair));
     }
-
-    public RepairRepo getRepairRepo() {
-        return repairRepo;
-    }
-
-    public void setRepairRepo(RepairRepo repairRepo) {
-        this.repairRepo = repairRepo;
-    }
-
 
 }

@@ -21,40 +21,34 @@ public class ManagementRestController {
         this.managementService = managementService;
     }
 
-    @RequestMapping(value = "/findClient/{client_id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/findClient/{clientId}", method = RequestMethod.GET)
     public Optional<ClientDTO> getClientByIdRest(HttpServletRequest request,
-                                                 @PathVariable("client_id") Long client_id){
-        return managementService.findClientById(client_id);
+                                                 @PathVariable("clientId") Long clientId){
+        return managementService.findClientById(clientId);
     }
 
-    @RequestMapping(value = "/findDevice/{device_id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/findDevice/{deviceId}", method = RequestMethod.GET)
     public Optional<DeviceDTO> getDeviceByIdRest(HttpServletRequest request,
-                                                 @PathVariable("device_id") Long device_id){
-        return managementService.findDeviceById(device_id);
+                                                 @PathVariable("deviceId") Long deviceId){
+        return managementService.findDeviceById(deviceId);
     }
 
-    @RequestMapping(value = "/findRepairType/{repair_type_id}",  method = RequestMethod.GET)
+    @RequestMapping(value = "/findRepairType/{repairTypeId}",  method = RequestMethod.GET)
     public Optional<RepairTypeDTO> getRepairTypeByIdRest(HttpServletRequest request,
-                                                         @PathVariable("repair_type_id") Long repair_type_id){
-        return managementService.findRepairTypeById(repair_type_id);
+                                                         @PathVariable("repairTypeId") Long repairTypeId){
+        return managementService.findRepairTypeById(repairTypeId);
     }
 
-    @RequestMapping(value = "/findClientType/{client_type_id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/findClientType/{clientTypeId}", method = RequestMethod.GET)
     public Optional<ClientTypeDTO> getClientTypeByIdRest(HttpServletRequest request,
-                                                         @PathVariable("client_type_id") Long client_type_id){
-        return managementService.findClientTypeById(client_type_id);
+                                                         @PathVariable("clientTypeId") Long clientTypeId){
+        return managementService.findClientTypeById(clientTypeId);
     }
 
-    @RequestMapping(value = "/findClientByName", method = RequestMethod.GET)
-    public String getClientByNameRest(HttpServletRequest request,
-                                      @PathVariable("client_name") String client_name){
-        return  managementService.findClientByName(client_name);
-    }
-
-    @RequestMapping(value = "/findStatus/{status_id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/findStatus/{statusId}", method = RequestMethod.GET)
     public Optional<RepairStatusDTO> getStatusByIdRest(HttpServletRequest request,
-                                                         @PathVariable("status_id") Long status_id){
-        return managementService.findRepairStatusById(status_id);
+                                                         @PathVariable("statusId") Long statusId){
+        return managementService.findRepairStatusById(statusId);
     }
 
 

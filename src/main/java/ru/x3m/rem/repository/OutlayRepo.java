@@ -2,8 +2,10 @@ package ru.x3m.rem.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import ru.x3m.rem.entity.SubCostItem;
+import ru.x3m.rem.entity.Outlay;
+
+import java.util.List;
 
 @Repository
-public interface SubCostItemRepo extends CrudRepository<SubCostItem, Long> {
+public interface OutlayRepo extends CrudRepository<Outlay, Long> {
 }

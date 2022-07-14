@@ -10,33 +10,30 @@ public class RepairType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long repair_type_id;
+    private Long repairTypeId;
 
     @Column(unique = true, nullable = false)
-    private String repair_type_name;
+    private String repairTypeName;
 
     @OneToMany(
             mappedBy = "repairType",
             cascade = CascadeType.ALL
-//            orphanRemoval = true
     )
     private List<Repair> repairs;
 
-
-    public Long getRepair_type_id() {
-        return repair_type_id;
+    public Long getRepairTypeId() {
+        return repairTypeId;
     }
 
-    public void setRepair_type_id(Long repair_type_id) {
-        this.repair_type_id = repair_type_id;
+    public void setRepairTypeId(Long repairTypeId) {
+        this.repairTypeId = repairTypeId;
     }
 
-    public String getRepair_type_name() {
-        return repair_type_name;
+    public String getRepairTypeName() {
+        return repairTypeName;
     }
 
-    public void setRepair_type_name(String repair_type_name) {
-        this.repair_type_name = repair_type_name;
+    public void setRepairTypeName(String repairTypeName) {
+        this.repairTypeName = repairTypeName;
     }
-
 }

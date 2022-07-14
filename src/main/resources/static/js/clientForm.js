@@ -1,198 +1,297 @@
-$(document).ready(function (){
+$(document).ready(function () {
 
-    $('table .editRepairBtn') .on('click', function (event) {
+
+    //редактирование заказа
+    $('table .editRepairBtn').on('click', function (event) {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
         $.ajax({
-            type:'GET',
-            url:'/rem/repair-service/api/findRepair/' + id,
+            type: 'GET',
+            url: '/rem/repair-service/api/findRepair/' + id,
             success: function (repair) {
-                $('#editRepairModal #repair_id').val(repair.repair_id);
-                $('#editRepairModal #repair_address').val(repair.repair_address);
-                $('#editRepairModal #repair_description').val(repair.repair_description);
-                $('#editRepairModal #repair_date').val(repair.repair_date);
-                $('#editRepairModal #client_id').val(repair.client_id);
-                $('#editRepairModal #device_id').val(repair.device_id);
-                $('#editRepairModal #repair_type_id').val(repair.repair_type_id);
-                $('#editRepairModal #client_type_id').val(repair.client_type_id);
-                $('#editRepairModal #status_id').val(repair.status_id);
-                $('#editRepairModal #full_cost').val(repair.full_cost);
+                $('#editRepairModal #repairId').val(repair.repairId);
+                $('#editRepairModal #repairAddress').val(repair.repairAddress);
+                $('#editRepairModal #repairDescription').val(repair.repairDescription);
+                $('#editRepairModal #repairDate').val(repair.repairDate);
+                $('#editRepairModal #clientId').val(repair.clientId);
+                $('#editRepairModal #deviceId').val(repair.deviceId);
+                $('#editRepairModal #repairTypeId').val(repair.repairTypeId);
+                $('#editRepairModal #clientTypeId').val(repair.clientTypeId);
+                $('#editRepairModal #statusId').val(repair.statusId);
+                $('#editRepairModal #fullCost').val(repair.fullCost);
                 $('#editRepairModal #paid').val(repair.paid);
                 $('#editRepairModal #outlay').val(repair.outlay);
                 $('#editRepairModal #arrears').val(repair.arrears);
                 $('#editRepairModal #profit').val(repair.profit);
-                $('#editRepairModal #client_name').val(repair.client_name);
-                $('#editRepairModal #device_name').val(repair.device_name);
-                $('#editRepairModal #repair_type_name').val(repair.repair_type_name);
-                $('#editRepairModal #status_name').val(repair.status_name);
+                $('#editRepairModal #clientName').val(repair.clientName);
+                $('#editRepairModal #deviceName').val(repair.deviceName);
+                $('#editRepairModal #repairTypeName').val(repair.repairTypeName);
+                $('#editRepairModal #statusName').val(repair.statusName);
                 console.log(repair)
             }
         });
 
     });
 
-    $('table .fullInfoBtn') .on('click', function (event) {
+    //полная информация о заказе
+    $('table .fullInfoBtn').on('click', function (event) {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
         $.ajax({
-            type:'GET',
-            url:'/rem/repair-service/api/findRepair/' + id,
+            type: 'GET',
+            url: '/rem/repair-service/api/findRepair/' + id,
             success: function (repair) {
-                $('#fullInfoModal #repair_id').val(repair.repair_id);
-                $('#fullInfoModal #repair_address').val(repair.repair_address);
-                $('#fullInfoModal #repair_description').val(repair.repair_description);
-                $('#fullInfoModal #repair_date').val(repair.repair_date);
-                $('#fullInfoModal #client_id').val(repair.client_id);
-                $('#fullInfoModal #device_id').val(repair.device_id);
-                $('#fullInfoModal #repair_type_id').val(repair.repair_type_id);
-                $('#fullInfoModal #client_type_id').val(repair.client_type_id);
-                $('#fullInfoModal #status_id').val(repair.status_id);
-                $('#fullInfoModal #full_cost').val(repair.full_cost);
+                $('#fullInfoModal #repairId').val(repair.repairId);
+                $('#fullInfoModal #repairAddress').val(repair.repairAddress);
+                $('#fullInfoModal #repairDescription').val(repair.repairDescription);
+                $('#fullInfoModal #repairDate').val(repair.repairDate);
+                $('#fullInfoModal #clientId').val(repair.clientId);
+                $('#fullInfoModal #deviceId').val(repair.deviceId);
+                $('#fullInfoModal #repairTypeId').val(repair.repairTypeId);
+                $('#fullInfoModal #clientTypeId').val(repair.clientTypeId);
+                $('#fullInfoModal #statusId').val(repair.statusId);
+                $('#fullInfoModal #fullCost').val(repair.fullCost);
                 $('#fullInfoModal #paid').val(repair.paid);
                 $('#fullInfoModal #outlay').val(repair.outlay);
                 $('#fullInfoModal #arrears').val(repair.arrears);
                 $('#fullInfoModal #profit').val(repair.profit);
-                $('#fullInfoModal #client_name').val(repair.client_name);
-                $('#fullInfoModal #device_name').val(repair.device_name);
-                $('#fullInfoModal #repair_type_name').val(repair.repair_type_name);
-                $('#fullInfoModal #status_name').val(repair.status_name);
+                $('#fullInfoModal #clientName').val(repair.clientName);
+                $('#fullInfoModal #deviceName').val(repair.deviceName);
+                $('#fullInfoModal #repairTypeName').val(repair.repairTypeName);
+                $('#fullInfoModal #statusName').val(repair.statusName);
                 console.log(repair)
             }
         });
 
     });
 
-    $('table .editClientBtn') .on('click', function (event) {
+    //редактирование клиента
+    $('table .editClientBtn').on('click', function (event) {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
         $.ajax({
-            type:'GET',
-            url:'/rem/repair-service/management/api/findClient/' + id,
+            type: 'GET',
+            url: '/rem/repair-service/management/api/findClient/' + id,
             success: function (client) {
-                $('#editClientModal #client_id').val(client.client_id);
-                $('#editClientModal #client_name').val(client.client_name);
-                $('#editClientModal #client_type_id').val(client.client_type_id);
+                $('#editClientModal #clientId').val(client.clientId);
+                $('#editClientModal #clientName').val(client.clientName);
+                $('#editClientModal #clientTypeId').val(client.clientTypeId);
             }
         });
 
     });
 
-    $('table .editDeviceBtn') .on('click', function (event) {
+    //редактирование техники
+    $('table .editDeviceBtn').on('click', function (event) {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
         $.ajax({
-            type:'GET',
-            url:'/rem/repair-service/management/api/findDevice/' + id,
+            type: 'GET',
+            url: '/rem/repair-service/management/api/findDevice/' + id,
             success: function (device) {
-                $('#editDeviceModal #device_id').val(device.device_id);
-                $('#editDeviceModal #device_name').val(device.device_name);
+                $('#editDeviceModal #deviceId').val(device.deviceId);
+                $('#editDeviceModal #deviceName').val(device.deviceName);
             }
         });
 
     });
 
-    $('table .editClientTypeBtn') .on('click', function (event) {
+    //редактирование тип клиента
+    $('table .editClientTypeBtn').on('click', function (event) {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
         $.ajax({
-            type:'GET',
-            url:'/rem/repair-service/management/api/findClientType/' + id,
-            success: function (client_type) {
-                $('#editClientTypeModal #client_type_id').val(client_type.client_type_id);
-                $('#editClientTypeModal #client_type_name').val(client_type.client_type_name);
+            type: 'GET',
+            url: '/rem/repair-service/management/api/findClientType/' + id,
+            success: function (clientType) {
+                $('#editClientTypeModal #clientTypeId').val(clientType.clientTypeId);
+                $('#editClientTypeModal #clientTypeName').val(clientType.clientTypeName);
             }
         });
 
     });
 
-    $('table .editRepairTypeBtn') .on('click', function (event) {
+    //редактирование типа ремонта
+    $('table .editRepairTypeBtn').on('click', function (event) {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
         $.ajax({
-            type:'GET',
-            url:'/rem/repair-service/management/api/findRepairType/' + id,
-            success: function (repair_type) {
-                $('#editRepairTypeModal #repair_type_id').val(repair_type.repair_type_id);
-                $('#editRepairTypeModal #repair_type_name').val(repair_type.repair_type_name);
+            type: 'GET',
+            url: '/rem/repair-service/management/api/findRepairType/' + id,
+            success: function (repairType) {
+                $('#editRepairTypeModal #repairTypeId').val(repairType.repairTypeId);
+                $('#editRepairTypeModal #repairTypeName').val(repairType.repairTypeName);
             }
         });
     });
 
-    $('table .editStatusBtn') .on('click', function (event) {
+    //редактирование статуса
+    $('table .editStatusBtn').on('click', function (event) {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
         $.ajax({
-            type:'GET',
-            url:'/rem/repair-service/management/api/findStatus/' + id,
+            type: 'GET',
+            url: '/rem/repair-service/management/api/findStatus/' + id,
             success: function (status) {
-                $('#editStatusModal #status_id').val(status.status_id);
-                $('#editStatusModal #status_name').val(status.status_name);
+                $('#editStatusModal #statusId').val(status.statusId);
+                $('#editStatusModal #statusName').val(status.statusName);
             }
         });
     });
 
-    $('table .editLlcOutlayBtn') .on('click', function (event) {
+    //редактирование затрат
+    $('table .editOutlayBtn').on('click', function (event) {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
         $.ajax({
-            type:'GET',
-            url:'/rem/statistic/api/findLlcOutlay/' + id,
-            success: function (llcOutlay) {
-                $('#llcOutlayAddModal #llcOutlayId').val(llcOutlay.llcOutlayId);
-                $('#llcOutlayAddModal #description').val(llcOutlay.description);
-                $('#llcOutlayAddModal #cost').val(llcOutlay.cost);
-                $('#llcOutlayAddModal #date').val(llcOutlay.date);
-                $('#llcOutlayAddModal #costItemId').val(llcOutlay.costItemId);
-                $('#llcOutlayAddModal #subCostItemId').val(llcOutlay.subCostItemId);
-                console.log(llcOutlay)
+            type: 'GET',
+            url: '/rem/statistic/api/findOutlay/' + id,
+            success: function (outlay) {
+                $('#editOutlayModal #outlayId').val(outlay.outlayId);
+                $('#editOutlayModal #itemId').val(outlay.itemId);
+                $('#editOutlayModal #itemsItemId').val(outlay.itemsItemId);
+                $('#editOutlayModal #itemName').val(outlay.itemName);
+                $('#editOutlayModal #subitemsSubitemId').val(outlay.subitemsSubitemId);
+                $('#editOutlayModal #subitemName').val(outlay.subitemName);
+                $('#editOutlayModal #description').val(outlay.description);
+                $('#editOutlayModal #price').val(outlay.price);
+                $('#editOutlayModal #date').val(outlay.date);
+                console.log(outlay)
             }
         });
     });
 
-    window.update1 = function() {
+    //редактирование статьи затрат
+    $('table .llcOutlayModalBtn').on('click', function (event) {
+        event.preventDefault();
+        const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
+        $.ajax({
+            type: 'GET',
+            url: '/rem/statistic/api/findItem/' + id,
+            success: function (item) {
+                $('#llcOutlayModal #itemId').val(item.itemId);
+                $('#llcOutlayModal #itemName').val(item.itemName);
+                console.log(item)
+            }
+        });
+
+    });
+
+    //назначение id при выборе из выпадающих списков
+    window.update1 = function () {
         const select = document.getElementById('dropClient');
         const option = select.options[select.selectedIndex];
-        document.getElementById('client').value = option.value;
+        document.getElementById('clientId').value = option.value;
     }
 
-    window.update2 = function() {
+    window.update2 = function () {
         const select = document.getElementById('dropClientType');
         const option = select.options[select.selectedIndex];
         document.getElementById('clientType').value = option.value;
     }
 
-    window.update3 = function() {
+    window.update3 = function () {
         const select = document.getElementById('dropRepairType');
         const option = select.options[select.selectedIndex];
-        document.getElementById('repairType').value = option.value;
+        document.getElementById('repairTypeId').value = option.value;
     }
 
-    window.update4 = function() {
+    window.update4 = function () {
         const select = document.getElementById('dropDevice');
         const option = select.options[select.selectedIndex];
-        document.getElementById('device').value = option.value;
+        document.getElementById('deviceId').value = option.value;
     }
-    window.update5 = function() {
+    window.update5 = function () {
         const select = document.getElementById('dropStatus');
         const option = select.options[select.selectedIndex];
-        document.getElementById('status').value = option.value;
+        document.getElementById('statusId').value = option.value;
     }
 
-    window.update6 = function() {
-        const select = document.getElementById('dropSubCostItem');
+    window.update6 = function () {
+        const select = document.getElementById('dropItems');
         const option = select.options[select.selectedIndex];
-        document.getElementById('subCostItem0').value = option.value;
-        console.log(option.value);
-    }
-
-    window.update7 = function() {
-        const select = document.getElementById('dropCostItem');
-        const option = select.options[select.selectedIndex];
-        document.getElementById('costItem').value = option.value;
+        document.getElementById('itemsItemId').value = option.value;
         console.log(option.value)
     }
 
+    window.update7 = function () {
+        const select = document.getElementById('dropItemsId');
+        const option = select.options[select.selectedIndex];
+        document.getElementById('itemsItemId0').value = option.value;
+    }
 
+    window.update8 = function () {
+        const select = document.getElementById('dropSubItemsId');
+        const option = select.options[select.selectedIndex];
+        document.getElementById('subitemsSubitemId').value = option.value;
+    }
+
+    //зависимый выпадающий список при создании затрат
+    getItems();
+    function getItems() {
+        const urlString0 = "/rem/statistic/api/items";
+        $.ajax({
+            method: "GET", url: urlString0,
+            dataType: 'json',
+        })
+
+            .done(function (responseJson) {
+                const itemsDD = $("#dropItemsId").change(function () {
+                    $("#dropSubItemsId").empty();
+                    console.log("<---->");
+                    const itemId = $("#dropItemsId").val();
+                    const urlString1 = "/rem/statistic/api/subItemsByItemsId?itemsItemId=" + itemId;
+                    $.ajax({
+                        method: "GET",
+                        url: urlString1,
+                        dataType: 'json',
+                    })
+                        .done(function (responseJson) {
+                            const subitemsDD = $("#dropSubItemsId")
+                            $.each(responseJson, function (index, subitems) {
+                                $("<option>").val(subitems.subitemId).text(subitems.subitemName).appendTo(subitemsDD);
+                            });
+                        });
+                });
+                $.each(responseJson, function (index, items) {
+                    $("<option>").val(items.itemId).text(items.itemName).appendTo(itemsDD);
+                });
+            });
+
+    }
+
+    //POST сохраниние затрат
+        $('#outlaySubmitBtn').on('click', function (event) {
+            event.preventDefault();
+            let description = $("#descriptionId").val();
+            let price = $("#priceId").val();
+            let date = $("#dateId").val();
+            let itemsItemId = $("#itemsItemId0").val();
+            let subitemsSubitemId = $("#subitemsSubitemId").val();
+            let data;
+            data = {
+                description,
+                price,
+                date,
+                subitemsSubitemId,
+                itemsItemId
+            }
+            console.log(data);
+            const json = JSON.stringify(data);
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: "http://localhost:8191/rem/statistic/api/saveOutlayRest",
+                type: 'POST',
+                data: json,
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                },
+            });
+        });
 
 });
 

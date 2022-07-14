@@ -39,7 +39,7 @@ public class UserService implements UserDetailsService {
     public void create(UserDTO userDTO) {
         User user = new User();
         user.setUsername(userDTO.getUsername());
-        user.setRole_id(userDTO.getRole_id());
+        user.setRoleId(userDTO.getRoleId());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         userRepo.save(user);
     }
@@ -50,7 +50,7 @@ public class UserService implements UserDetailsService {
             return null;
         }
         List<GrantedAuthority> auth = AuthorityUtils
-                .commaSeparatedStringToAuthorityList(user.getRole().getRole_name());
+                .commaSeparatedStringToAuthorityList(user.getRole().getRoleName());
         String password = user.getPassword();
         return new org.springframework.security.core.userdetails.User(userName, password, auth);
     }

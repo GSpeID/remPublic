@@ -1,15 +1,15 @@
 <!doctype html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Edit Repair</title>
 </head>
 <body>
 <!-- Modal Add Llc Outlay-->
 <div th:fragment="llcOutlayAddFragment">
+
     <div id="llcOutlayAddModal" class="modal fade" tabindex="-1"
-         aria-labelledby="llcOutlayAddModal" aria-hidden="true"
-         th:action="@{/statistic/saveLlcOutlay}" method="post">
+         aria-labelledby="llcOutlayAddModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -18,70 +18,75 @@
                             data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class id="llcOutlay">
-                    <div class="modal-body">
                         <div class="container">
                             <div class="col-12">
-                                <br>
-                                <div class="form-group mb-3">
-                                    <select class="form-select"
-                                            id="dropSubCostItem"
-                                            th:object="${subCostItems}"
-                                            onchange="update6()">
-                                        <option value="0">Выбрать статью</option>
-                                        <option th:each="subCostItem : ${subCostItems}"
-                                                th:value="${subCostItem.subCostItemId}"
-                                                th:text="${subCostItem.subCostItemName}"
-                                                selected=""></option>
-                                    </select>
-                                </div>
-                                <br>
-                                <div class="form-group mb-3">
-                                    <select class="form-select" th:object="${costItems}" id="dropCostItem"
-                                            onchange="update7()">
-                                        <option value="0">Выбрать подстатью</option>
-                                        <option th:each="costItem : ${costItems}"
-                                                th:value="${costItem.costItemId}"
-                                                th:name="${costItem.subCostItemId}"
-                                                th:text="${costItem.subCostItemName}"></option>
-                                    </select>
-                                </div>
-                                <br>
-                                <div class="form-group">
-                                    <label for="description">Описание</label>
-                                    <input type="text" class="form-control" required="required"
-                                           id="description" name="description" value=""/>
-                                </div>
-                                <br>
-                                <div class="form-group">
-                                    <label for="cost">Сумма</label>
-                                    <input type="text" class="form-control" required="required"
-                                           id="cost" name="cost" value=""/>
-                                </div>
-                                <br>
-                                <div class="form-group">
-                                    <label for="date">Дата проведения работ</label>
-                                    <input type="date" class="form-control" required="required"
-                                           id="date" name="date" value=""/>
-                                </div>
-                                <div class="form-group">
-                                    <input type="hidden" class="form-control"
-                                           id="llcOutlayId" name="llcOutlayId" value=""/>
-                                </div>
-                                <div class="form-group">
-                                    <input type="hidden" class="form-control"
-                                           id="subCostItem0" name="subCostItem" value=""/>
-                                </div>
-                                <div class="form-group">
-                                    <input type="hidden" class="form-control"
-                                           id="costItem" name="costItemId" value=""/>
-                                </div>
-                                <br>
-                                <button type="submit" class="btn btn-outline-primary"
-                                        value="save">Submit
-                                </button>
+                                <form class="row gy-2 gx-3 " action="#" th:action="@{/stat/new}" th:object="${outlay}" method="post">
+                                    <div class="col-auto" >
+                                        <select class="form-select"
+                                                id="dropItemsItemId"
+                                                name="dropItemsItemId"
+                                                th:object="${items}"
+                                                onchange="update8()"
+                                                required
+                                        >
+                                            <option value="">Выбрать статью</option>
+                                            <option th:each="item : ${items}"
+                                                    th:value="${item.itemId}"
+                                                    th:text="${item.itemName}"
+                                                    th:id="${item.itemId}"
+                                            >
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-auto">
+                                        <select class="form-select"
+                                                id="dropSubItems"
+                                                name="dropSubItems"
+                                                th:object="${subItems}"
+                                                onchange="update7()"
+                                                required
+                                        >
+                                            <option value="">Выбрать подстатью</option>
+                                            <option th:each="subItem : ${subItems}"
+                                                    th:value="${subItem.subitemId}"
+                                                    th:text="${subItem.subitemName}"
+                                                    th:rel="${subItem.itemsItemId}"
+                                            >
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-auto">
+                                        <input type="text" class="form-control"
+                                               th:field="*{description}"
+                                               id="description" placeholder="Enter description"/>
+                                        <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error"></p>
+                                    </div>
+                                    <div class="col-auto">
+                                        <input type="number" class="form-control"
+                                               th:field="*{price}"
+                                               id="price" placeholder="Enter price"/>
+                                        <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="error"></p>
+                                    </div>
+                                    <div class="col-auto">
+                                        <input type="date" class="form-control" required="required"
+                                               id="date" name="date" value=""/>
+                                    </div>
+                                    <div class="col-auto">
+                                        <input type="hidden" class="form-control"
+                                               id="itemsItemId0" name="itemsItemId" value=""/>
+                                    </div>
+                                    <div class="col-auto">
+                                        <input type="hidden" class="form-control"
+                                               id="subitemsSubitemId" name="subitemsSubitemId" value=""/>
+                                    </div>
+                                    <div class="col-auto">
+                                        <button type="submit" class="btn btn-outline-primary"
+                                                value="save">Submit
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary"

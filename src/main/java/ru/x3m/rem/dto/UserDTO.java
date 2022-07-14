@@ -1,11 +1,12 @@
 package ru.x3m.rem.dto;
 
+import ru.x3m.rem.entity.User;
 
 import javax.validation.constraints.*;
 
 public class UserDTO {
 
-    private Long user_id;
+    private Long userId;
 
     @NotEmpty
     private String username;
@@ -14,36 +15,43 @@ public class UserDTO {
     private String password;
 
     @NotNull
-    private Long role_id;
+    private Long roleId;
 
     @NotEmpty
     private String matchingPassword;
 
     //----------------------------
-    private String role_name;
+    private String roleName;
     //----------------------------
 
 
-    public UserDTO(Long user_id, String username, String password, Long role_id, String matchingPassword,
-                   String role_name) {
-        this.user_id = user_id;
+    public UserDTO() {
+    }
+
+    public UserDTO(Long userId, String username, String password,
+                   Long roleId, String matchingPassword, String roleName) {
+        this.userId = userId;
         this.username = username;
         this.password = password;
-        this.role_id = role_id;
+        this.roleId = roleId;
         this.matchingPassword = matchingPassword;
-        this.role_name = role_name;
+        this.roleName = roleName;
     }
 
-    public UserDTO() {
-
+    public UserDTO(User user) {
+        this.userId = user.getUserId();
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.roleId = user.getRoleId();
+        this.roleName = user.getRole().getRoleName();
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -62,12 +70,12 @@ public class UserDTO {
         this.password = password;
     }
 
-    public Long getRole_id() {
-        return role_id;
+    public Long getRoleId() {
+        return roleId;
     }
 
-    public void setRole_id(Long role_id) {
-        this.role_id = role_id;
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
     public String getMatchingPassword() {
@@ -78,20 +86,20 @@ public class UserDTO {
         this.matchingPassword = matchingPassword;
     }
 
-    public String getRole_name() {
-        return role_name;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setRole_name(String role_name) {
-        this.role_name = role_name;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     @Override
     public String toString() {
         return "UserDTO{" +
-                "id=" + user_id +
+                "id=" + userId +
                 ", username='" + username + '\'' +
-                ", username='" + role_id + '\'' +
+                ", username='" + roleId + '\'' +
                 ", password='" + password + '\'' +
                 ", matchingPassword='" + matchingPassword + '\'' +
                 '}';

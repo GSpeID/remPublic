@@ -3,14 +3,14 @@ package ru.x3m.rem.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.x3m.rem.dto.CostItemDTO;
-import ru.x3m.rem.dto.LlcOutlayDTO;
-import ru.x3m.rem.dto.SubCostItemDTO;
-import ru.x3m.rem.entity.CostItem;
-import ru.x3m.rem.entity.LlcOutlay;
-import ru.x3m.rem.entity.SubCostItem;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import ru.x3m.rem.dto.*;
+import ru.x3m.rem.entity.*;
 import ru.x3m.rem.repository.*;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,83 +18,108 @@ import java.util.Optional;
 @Transactional
 public class StatisticService {
 
-    private LlcOutlayRepo llcOutlayRepo;
-    private CostItemRepo costItemRepo;
-    private SubCostItemRepo subCostItemRepo;
+    private OutlayRepo outlayRepo;
+    private ItemRepo itemRepo;
+    private SubItemRepo subItemRepo;
 
     @Autowired
-    public StatisticService(LlcOutlayRepo llcOutlayRepo,
-                            CostItemRepo costItemRepo,
-                            SubCostItemRepo subCostItemRepo) {
-        this.llcOutlayRepo = llcOutlayRepo;
-        this.costItemRepo = costItemRepo;
-        this.subCostItemRepo = subCostItemRepo;
+    public StatisticService(OutlayRepo outlayRepo, ItemRepo itemRepo, SubItemRepo subItemRepo) {
+        this.outlayRepo = outlayRepo;
+        this.itemRepo = itemRepo;
+        this.subItemRepo = subItemRepo;
     }
 
-    public Optional<LlcOutlayDTO> findLlcOutlayById(Long id){
-        return llcOutlayRepo.findById(id)
-                .map(LlcOutlayDTO::new);
+    //-- Outlay
+
+    public Optional<OutlayDTO> findOutlayById(Long id){
+        return outlayRepo.findById(id)
+                .map(OutlayDTO::new);
     }
 
-    public List<LlcOutlay> findAllLlcOutlays(){
-        return (List<LlcOutlay>) llcOutlayRepo.findAll();
+    public List<Outlay> findAllOutlay(){
+        return (List<Outlay>) outlayRepo.findAll();
     }
 
-    public void saveLlcOutlay(LlcOutlayDTO llcOutlayDTO){
-        LlcOutlay llcOutlay = new LlcOutlay();
-        llcOutlay.setLlcOutlayId(llcOutlayDTO.getLlcOutlayId());
-        llcOutlay.setDescription(llcOutlayDTO.getDescription());
-        llcOutlay.setCost(llcOutlayDTO.getCost());
-        llcOutlay.setDate(llcOutlayDTO.getDate());
-        llcOutlay.setCostItemId(llcOutlayDTO.getCostItemId());
-        llcOutlayRepo.save(llcOutlay);
+
+//    public void saveOutlay(Outlay outlay){
+//        outlay.setOutlayId(outlay.getOutlayId());
+//        outlay.setDescription(outlay.getDescription());
+//        outlay.setPrice(outlay.getPrice());
+//        outlay.setDate(outlay.getDate());
+//        outlay.setItemsItemId(outlay.getItemsItemId());
+//        outlay.setSubitemsSubitemId(outlay.getSubitemsSubitemId());
+//        outlayRepo.save(outlay);
+//    }
+
+    public void saveOutlayDTO(OutlayDTO outlayDTO){
+        Outlay outlay = new Outlay();
+        outlay.setOutlayId(outlayDTO.getOutlayId());
+        outlay.setDescription(outlayDTO.getDescription());
+        outlay.setPrice(outlayDTO.getPrice());
+        outlay.setDate(outlayDTO.getDate());
+        outlay.setItemsItemId(outlayDTO.getItemsItemId());
+        outlay.setSubitemsSubitemId(outlayDTO.getSubitemsSubitemId());
+        outlayRepo.save(outlay);
     }
 
-    public void deleteLlcOutlay(Long id){
-        llcOutlayRepo.findById(id)
-                .ifPresent(llcOutlay -> llcOutlayRepo.delete(llcOutlay));
+
+
+    public void deleteOutlay(Long id){
+        outlayRepo.findById(id)
+                .ifPresent(outlay -> outlayRepo.delete(outlay));
     }
 
-    public Optional<CostItemDTO> findCostItemById(Long id){
-        return costItemRepo.findById(id)
-                .map(CostItemDTO::new);
+    //-- SubItem
+
+    public Optional<SubItemDTO> findSubItemById(Long id){
+        return subItemRepo.findById(id)
+                .map(SubItemDTO::new);
     }
 
-    public List<CostItem> findAllCostItem(){
-        return (List<CostItem>) costItemRepo.findAll();
+    public List<SubItem> findAllSubItem(){
+        return (List<SubItem>) subItemRepo.findAll();
     }
 
-    public void saveCostItem(CostItemDTO costItemDTO){
-        CostItem costItem = new CostItem();
-        costItem.setCostItemId(costItemDTO.getCostItemId());
-        costItem.setCostItemName(costItemDTO.getCostItemName());
-        costItem.setSubCostItemId(costItemDTO.getSubCostItemId());
-        costItemRepo.save(costItem);
+
+    public List<SubItem> findAllSubByItemsItemId(Long id){
+        return  (List<SubItem>) subItemRepo.findAllByItemsItemId(id);
     }
 
-    public void deleteCostItem(Long id){
-        costItemRepo.findById(id)
-                .ifPresent(costItem -> costItemRepo.delete(costItem));
+
+    public void saveSubItem(SubItemDTO subItemDTO){
+        SubItem subItem = new SubItem();
+        subItem.setSubitemId(subItemDTO.getSubitemId());
+        subItem.setSubitemName(subItemDTO.getSubitemName());
+        subItem.setItemsItemId(subItemDTO.getItemsItemId());
+        subItemRepo.save(subItem);
     }
 
-    public Optional<SubCostItemDTO> findSubCostItemById(Long id){
-        return subCostItemRepo.findById(id)
-                .map(SubCostItemDTO::new);
+    public void deleteSubItem(Long id){
+        subItemRepo.findById(id)
+                .ifPresent(subItem -> subItemRepo.delete(subItem));
     }
 
-    public List<SubCostItem> findAllSubCostItem(){
-        return (List<SubCostItem>) subCostItemRepo.findAll();
+    //-- Item
+
+    public Optional<ItemDTO> findItemById(Long id){
+        return itemRepo.findById(id)
+                .map(ItemDTO::new);
     }
 
-    public void saveSubCostItem(SubCostItemDTO subCostItemDTO){
-        SubCostItem subCostItem = new SubCostItem();
-        subCostItem.setSubCostItemId(subCostItemDTO.getSubCostItemId());
-        subCostItem.setSubCostItemName(subCostItemDTO.getSubCostItemName());
+    public List<Item> findAllItems(){
+        return (List<Item>) itemRepo.findAll();
     }
 
-    public void deleteSubCostItem(Long id){
-        subCostItemRepo.findById(id)
-                .ifPresent(subCostItem -> subCostItemRepo.delete(subCostItem));
+    public void saveItems(ItemDTO itemDTO){
+        Item item = new Item();
+        item.setItemId(itemDTO.getItemId());
+        item.setItemName(itemDTO.getItemName());
+        itemRepo.save(item);
+    }
+
+    public void deleteItem(Long id){
+        itemRepo.findById(id)
+                .ifPresent(item -> itemRepo.delete(item));
     }
 
 }

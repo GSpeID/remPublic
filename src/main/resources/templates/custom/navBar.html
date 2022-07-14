@@ -10,9 +10,9 @@
 
 <body>
 
-<nav class="navbar navbar-light bg-light" th:fragment="nav-bar">
+<nav class="navbar bg-light" th:fragment="nav-bar">
     <form class="container-fluid justify-content-start">
-        <a href="" th:href="@{/}">
+            <a href="" th:href="@{/}">
             <button class="btn btn-outline-primary me-2" type="button">Главная</button>
             <a/>
             <a href="" th:href="@{/repair-service}">
@@ -21,7 +21,7 @@
             <a href="" th:href="@{/repair-service/management}">
                 <button class="btn btn-outline-success me-2" type="button">Исходные данные для заказов</button>
             </a>
-            <a href="" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/statistic}">
+            <a href="" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/stat}">
                 <button class="btn btn-outline-warning me-2" type="button">Финансовая статистика</button>
             </a>
             <a>
@@ -32,15 +32,15 @@
             </a>
             <a>
                 <form>
-                    <button class="btn btn-outline-warning me-2" type="button">
-                        <span th:text="${#authentication.getName()}"></span>
-                        <span th:text="${#authentication.authorities}"></span>
-                    </button>
+                    <a class="btn btn-outline-primary" th:href="@{/logout}">Выход</a>
                 </form>
             </a>
             <a>
                 <form>
-                    <a class="btn btn-outline-primary" th:href="@{/logout}">Выход</a>
+                    <button class="btn btn-outline-warning me-2" type="button">
+                        <span th:text="${#authentication.getName()}"></span>
+<!--                        <span th:text="${#authentication.authorities}"></span>-->
+                    </button>
                 </form>
             </a>
         </a>

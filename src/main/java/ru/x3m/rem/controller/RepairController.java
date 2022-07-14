@@ -9,7 +9,7 @@ import ru.x3m.rem.dto.*;
 import ru.x3m.rem.entity.*;
 import ru.x3m.rem.service.*;
 
-import javax.validation.Valid;
+import javax.validation.*;
 import java.util.List;
 
 
@@ -46,16 +46,15 @@ public class RepairController {
     public String createRepairPost(@ModelAttribute("repair") @Valid RepairDTO repairDTO,
                                    BindingResult result) {
         if (result.hasErrors()) {
-            return "repair-service";
+            return "/repair-service";
         }
-
         repairService.saveRepair(repairDTO);
         return "redirect:/repair-service";
     }
 
-    @GetMapping("/repair-service/delete/{repair_id}")
-    public String deleteRepair(@PathVariable Long repair_id) {
-        repairService.deleteRepair(repair_id);
+    @GetMapping("/repair-service/delete/{repairId}")
+    public String deleteRepair(@PathVariable Long repairId) {
+        repairService.deleteRepair(repairId);
         return "redirect:/repair-service";
     }
 

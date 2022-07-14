@@ -12,15 +12,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-
-
-
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/authUser", "/login","/css/*", "/images/*").permitAll()
+                .antMatchers("/", "/authUser", "/login","/css/*", "/images/*","/favicon.ico",
+                        "/statistic/api/*", "/statistic/api/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -31,5 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutSuccessUrl("/");
     }
+
+
 
 }

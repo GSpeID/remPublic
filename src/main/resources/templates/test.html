@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css"/>
+    <link type="text/css" media="all" href="../static/css/stat.css" th:href="@{/css/stat.css}" rel="stylesheet">
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.2/umd/popper.min.js"
+            integrity="sha512-aDciVjp+txtxTJWsp8aRwttA0vR2sJMk/73ZT7ExuEHv7I5E6iyyobpFOlEFkq59mWW8ToYGuVZFnwhwIUisKA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+    <script th:src="@{/js/clientForm.js}" src="/static/js/clientForm.js"></script>
+    <script th:src="@{/js/dataTable.js}" src="/static/js/dataTable.js"></script>
+    <script th:src="@{/js/stat.js}" src="../static/js/stat.js"></script>
+
+    <title>Statistic</title>
+
+</head>
+<body>
+
+
+<!--                     Button trigger modal  Add New Outlay-->
+<div class="text-center">
+    <button type="button" class="btn btn-outline-primary llcOutlayAddModalBtn"
+            data-bs-toggle="modal"
+            data-bs-target="#llcOutlayAddModal"
+            data-backdrop="static" data-keyboard="false">
+        Новые затраты
+    </button>
+</div>
+
+
+
+<!--    <div id="llcOutlayAddModal" class="modal fade" tabindex="-1"-->
+<!--         aria-labelledby="llcOutlayAddModal" aria-hidden="true">-->
+<!--        <div class="modal-dialog">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-header">-->
+<!--                    <h5 class="modal-title" id="llcOutlayModalAddLabel">Статьи расходов</h5>-->
+<!--                    <button type="button" class="btn-close"-->
+<!--                            data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--                </div>-->
+<!--                <div class id="llcOutlay">-->
+
+
+<div class="modal fade" id="llcOutlayAddModal" tabindex="-1" role="dialog" aria-labelledby="llcOutlayAddModal" aria-hidden="true">
+
+    <form class="row gy-2 gx-3 " action="#" th:action="@{/stat/new}" th:object="${outlay}" method="post">
+        <script th:inline="javascript" th:if="${#fields.hasErrors('*')}">$("#llcOutlayAddModal").modal("show");</script>
+
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="llcOutlayAddModalLabel">Добавить Расходы</h5>
+                    <button type="button" class="btn btn-outline-secondary"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="container">
+                    <div class="col-12">
+                        <form class="row gy-2 gx-3 " >
+                            <!--                                <script th:inline="javascript" th:if="${#fields.hasErrors('*')}">$("#llcOutlayAddModal").modal("show");</script>-->
+                            <div class="col-auto" >
+                                <select class="form-select"
+                                        id="dropItemsItemId"
+                                        name="dropItemsItemId"
+                                        onchange="update8()"
+                                        required
+                                >
+                                    <option value="">Выбрать статью</option>
+                                </select>
+                            </div>
+                            <br>
+                            <div class="col-auto">
+                                <select class="form-select"
+                                        id="dropSubItems"
+                                        name="dropSubItems"
+                                        onchange="update7()"
+                                        required
+                                >
+                                    <option value="">Выбрать подстатью</option>
+                                </select>
+                            </div>
+                            <br>
+                            <div class="col-auto">
+                                <input type="text" class="form-control"
+                                       th:field="*{description}"
+                                       id="description" placeholder="Enter description"/>
+                                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error"></p>
+                            </div>
+                            <br>
+                            <div class="col-auto">
+                                <input type="number" class="form-control"
+                                       th:field="*{price}"
+                                       id="price" placeholder="Enter price"/>
+                                <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="error"></p>
+                            </div>
+                            <br>
+                            <div class="col-auto">
+                                <input type="date" class="form-control" required="required"
+                                       id="date" name="date" value=""/>
+                            </div>
+                            <br>
+                            <div class="col-auto">
+                                <input type="hidden" class="form-control"
+                                       id="itemsItemId0" name="itemsItemId" value=""/>
+                            </div>
+                            <div class="col-auto">
+                                <input type="hidden" class="form-control"
+                                       id="subitemsSubitemId" name="subitemsSubitemId" value=""/>
+                            </div>
+                            <br>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" value="Save" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

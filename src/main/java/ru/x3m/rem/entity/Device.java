@@ -1,6 +1,10 @@
 package ru.x3m.rem.entity;
 
 
+
+
+
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -12,36 +16,32 @@ public class Device {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long device_id;
+    private Long deviceId;
 
     @Column(unique = true, nullable = false)
     @NotNull(message = "не должно быть пустым")
-    @Size(min = 3, max = 250, message = "минимум 3 символа")
-    private String device_name;
+    @Size(min = 3, max = 20, message = "минимум 3 символа")
+    private String deviceName;
 
     @OneToMany(
             mappedBy = "device",
             cascade = CascadeType.ALL
-//            orphanRemoval = true
     )
     private List<Repair> repairs;
 
-
-    public Long getDevice_id() {
-        return device_id;
+    public Long getDeviceId() {
+        return deviceId;
     }
 
-    public void setDevice_id(Long device_id) {
-        this.device_id = device_id;
+    public void setDeviceId(Long deviceId) {
+        this.deviceId = deviceId;
     }
 
-    public String getDevice_name() {
-        return device_name;
+    public String getDeviceName() {
+        return deviceName;
     }
 
-    public void setDevice_name(String device_name) {
-        this.device_name = device_name;
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
     }
-
-
 }

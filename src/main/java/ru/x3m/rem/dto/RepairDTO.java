@@ -10,20 +10,20 @@ import java.time.LocalDate;
 public class RepairDTO {
 
 
-    private Long repair_id;
+    private Long repairId;
 
     @NotEmpty
-    private String repair_address;
+    private String repairAddress;
 
     @NotEmpty
-    private String repair_description;
+    private String repairDescription;
 
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate repair_date;
+    private LocalDate repairDate;
 
     @NotNull
-    private Float full_cost;
+    private Float fullCost;
 
     @NotNull
     private Float paid;
@@ -38,161 +38,110 @@ public class RepairDTO {
     private Float profit;
 
     //----------------------------
-    private Long client_id;
-    private Long device_id;
-    private Long repair_type_id;
-    private Long client_type_id;
-    private Long status_id;
-    private String client_name;
-    private String device_name;
-    private String client_type_name;
-    private String repair_type_name;
-    private String status_name;
+    private Long clientId;
+    private Long deviceId;
+    private Long repairTypeId;
+    private Long clientTypeId;
+    private Long statusId;
+    private String clientName;
+    private String deviceName;
+    private String clientTypeName;
+    private String repairTypeName;
+    private String statusName;
     //---------------------------
+
 
     public RepairDTO() {
     }
 
+    public RepairDTO(Long repairId, String repairAddress, String repairDescription,
+                     LocalDate repairDate, Float fullCost, Float paid,
+                     Float outlay, Float arrears, Float profit, Long clientId,
+                     Long deviceId, Long repairTypeId, Long clientTypeId,
+                     Long statusId, String clientName, String deviceName,
+                     String clientTypeName, String repairTypeName,
+                     String statusName) {
+        this.repairId = repairId;
+        this.repairAddress = repairAddress;
+        this.repairDescription = repairDescription;
+        this.repairDate = repairDate;
+        this.fullCost = fullCost;
+        this.paid = paid;
+        this.outlay = outlay;
+        this.arrears = arrears;
+        this.profit = profit;
+        this.clientId = clientId;
+        this.deviceId = deviceId;
+        this.repairTypeId = repairTypeId;
+        this.clientTypeId = clientTypeId;
+        this.statusId = statusId;
+        this.clientName = clientName;
+        this.deviceName = deviceName;
+        this.clientTypeName = clientTypeName;
+        this.repairTypeName = repairTypeName;
+        this.statusName = statusName;
+    }
+
     public RepairDTO(Repair repair) {
-        this.repair_id = repair.getRepair_id();
-        this.repair_address = repair.getRepair_address();
-        this.repair_description = repair.getRepair_description();
-        this.repair_date = repair.getRepair_date();
-        this.client_id = repair.getClient_id();
-        this.device_id = repair.getDevice_id();
-        this.repair_type_id = repair.getRepair_type_id();
-        this.status_id = repair.getStatus_id();
-        this.client_name = repair.getClient().getClient_name();
-        this.device_name = repair.getDevice().getDevice_name();
-        this.repair_type_name = repair.getRepairType().getRepair_type_name();
-        this.client_type_name = repair.getClient().getClientType().getClient_type_name();
-        this.client_type_id = repair.getClient().getClientType().getClient_type_id();
-        this.status_name = repair.getRepairStatuses().getStatus_name();
-        this.full_cost = repair.getFull_cost();
+        this.repairId = repair.getRepairId();
+        this.repairAddress = repair.getRepairAddress();
+        this.repairDescription = repair.getRepairDescription();
+        this.repairDate = repair.getRepairDate();
+        this.clientId = repair.getClientId();
+        this.deviceId = repair.getDeviceId();
+        this.repairTypeId = repair.getRepairTypeId();
+        this.statusId = repair.getStatusId();
+        this.clientName = repair.getClient().getClientName();
+        this.deviceName = repair.getDevice().getDeviceName();
+        this.repairTypeName = repair.getRepairType().getRepairTypeName();
+        this.clientTypeName = repair.getClient().getClientType().getClientTypeName();
+        this.clientTypeId = repair.getClient().getClientType().getClientTypeId();
+        this.statusName = repair.getRepairStatuses().getStatusName();
+        this.fullCost = repair.getFullCost();
         this.paid = repair.getPaid();
         this.arrears = repair.getArrears();
         this.outlay = repair.getOutlay();
         this.profit = repair.getProfit();
     }
 
-    public Long getRepair_id() {
-        return repair_id;
+    public Long getRepairId() {
+        return repairId;
     }
 
-    public void setRepair_id(Long repair_id) {
-        this.repair_id = repair_id;
+    public void setRepairId(Long repairId) {
+        this.repairId = repairId;
     }
 
-    public String getRepair_address() {
-        return repair_address;
+    public String getRepairAddress() {
+        return repairAddress;
     }
 
-    public void setRepair_address(String repair_address) {
-        this.repair_address = repair_address;
+    public void setRepairAddress(String repairAddress) {
+        this.repairAddress = repairAddress;
     }
 
-    public String getRepair_description() {
-        return repair_description;
+    public String getRepairDescription() {
+        return repairDescription;
     }
 
-    public void setRepair_description(String repair_description) {
-        this.repair_description = repair_description;
+    public void setRepairDescription(String repairDescription) {
+        this.repairDescription = repairDescription;
     }
 
-    public LocalDate getRepair_date() {
-        return repair_date;
+    public LocalDate getRepairDate() {
+        return repairDate;
     }
 
-    public void setRepair_date(LocalDate repair_date) {
-        this.repair_date = repair_date;
+    public void setRepairDate(LocalDate repairDate) {
+        this.repairDate = repairDate;
     }
 
-    public Long getClient_id() {
-        return client_id;
+    public Float getFullCost() {
+        return fullCost;
     }
 
-    public void setClient_id(Long client_id) {
-        this.client_id = client_id;
-    }
-
-    public Long getDevice_id() {
-        return device_id;
-    }
-
-    public void setDevice_id(Long device_id) {
-        this.device_id = device_id;
-    }
-
-    public Long getRepair_type_id() {
-        return repair_type_id;
-    }
-
-    public void setRepair_type_id(Long repair_type_id) {
-        this.repair_type_id = repair_type_id;
-    }
-
-    public Long getStatus_id() {
-        return status_id;
-    }
-
-    public void setStatus_id(Long status_id) {
-        this.status_id = status_id;
-    }
-
-    public String getClient_name() {
-        return client_name;
-    }
-
-    public void setClient_name(String client_name) {
-        this.client_name = client_name;
-    }
-
-    public String getDevice_name() {
-        return device_name;
-    }
-
-    public void setDevice_name(String device_name) {
-        this.device_name = device_name;
-    }
-
-    public String getClient_type_name() {
-        return client_type_name;
-    }
-
-    public void setClient_type_name(String client_type_name) {
-        this.client_type_name = client_type_name;
-    }
-
-    public String getRepair_type_name() {
-        return repair_type_name;
-    }
-
-    public void setRepair_type_name(String repair_type_name) {
-        this.repair_type_name = repair_type_name;
-    }
-
-    public Long getClient_type_id() {
-        return client_type_id;
-    }
-
-    public void setClient_type_id(Long client_type_id) {
-        this.client_type_id = client_type_id;
-    }
-
-    public String getStatus_name() {
-        return status_name;
-    }
-
-    public void setStatus_name(String status_name) {
-        this.status_name = status_name;
-    }
-
-    public Float getFull_cost() {
-        return full_cost;
-    }
-
-    public void setFull_cost(Float full_cost) {
-        this.full_cost = full_cost;
+    public void setFullCost(Float fullCost) {
+        this.fullCost = fullCost;
     }
 
     public Float getPaid() {
@@ -227,15 +176,94 @@ public class RepairDTO {
         this.profit = profit;
     }
 
+    public Long getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(Long clientId) {
+        this.clientId = clientId;
+    }
+
+    public Long getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(Long deviceId) {
+        this.deviceId = deviceId;
+    }
+
+    public Long getRepairTypeId() {
+        return repairTypeId;
+    }
+
+    public void setRepairTypeId(Long repairTypeId) {
+        this.repairTypeId = repairTypeId;
+    }
+
+    public Long getClientTypeId() {
+        return clientTypeId;
+    }
+
+    public void setClientTypeId(Long clientTypeId) {
+        this.clientTypeId = clientTypeId;
+    }
+
+    public Long getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(Long statusId) {
+        this.statusId = statusId;
+    }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+    public String getDeviceName() {
+        return deviceName;
+    }
+
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
+    }
+
+    public String getClientTypeName() {
+        return clientTypeName;
+    }
+
+    public void setClientTypeName(String clientTypeName) {
+        this.clientTypeName = clientTypeName;
+    }
+
+    public String getRepairTypeName() {
+        return repairTypeName;
+    }
+
+    public void setRepairTypeName(String repairTypeName) {
+        this.repairTypeName = repairTypeName;
+    }
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
+    }
+
     public float calcArrears(){
-        arrears=full_cost-paid;
+        arrears=fullCost-paid;
         return arrears;
     }
 
     public float calcProfit(){
-        profit=full_cost-outlay;
+        profit=fullCost-outlay;
         return profit;
     }
-
 
 }

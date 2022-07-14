@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Edit Repair</title>
+</head>
+<body>
+<!-- Modal Add Llc Outlay-->
+<div th:fragment="outlayEditFragment">
+    <div id="editOutlayModal" class="modal fade" tabindex="-1"
+         aria-labelledby="editOutlayModal" aria-hidden="true"
+         th:action="@{/statistic/saveOutlay}" method="post">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editOutlayModalLabel">Статьи расходов</h5>
+                    <button type="button" class="btn-close"
+                            data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class id="outlay">
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="col-12">
+                                <br>
+                                <div class="form-group">
+                                    <label for="itemName">Статья</label>
+                                    <input type="text" class="form-control" required="required"
+                                           id="itemName" name="itemName" value="" disabled/>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <label for="subitemName">Подстатья</label>
+                                    <input type="text" class="form-control" required="required"
+                                           id="subitemName" name="subitemName"  disabled/>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <label for="description">Описание</label>
+                                    <input type="text" class="form-control" required="required"
+                                           id="description" name="description" value=""/>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <label for="price">Сумма</label>
+                                    <input type="text" class="form-control" required="required"
+                                           id="price" name="price" value=""/>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <label for="date">Дата проведения работ</label>
+                                    <input type="date" class="form-control" required="required"
+                                           id="date" name="date" value=""/>
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" class="form-control"
+                                           id="outlayId" name="outlayId" value=""/>
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" class="form-control"
+                                           id="itemsItemId" name="itemsItemId" value=""/>
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" class="form-control"
+                                           id="subitemsSubitemId" name="subitemsSubitemId" value=""/>
+                                </div>
+                                <br>
+                                <button type="submit" class="btn btn-outline-primary"
+                                        value="save">Submit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary"
+                            data-bs-dismiss="modal">Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

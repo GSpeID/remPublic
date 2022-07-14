@@ -10,10 +10,10 @@ public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long client_id;
+    private Long clientId;
 
     @Column(unique = true, nullable = false)
-    private String client_name;
+    private String clientName;
 
     @ManyToOne
     @JoinColumn(name = "client_type_id", insertable=false, updatable=false)
@@ -25,25 +25,26 @@ public class Client {
     )
     private List<Repair> repairs;
 
-    private Long client_type_id;
+    @Column(name = "client_type_id")
+    private Long clientTypeId;
 
     public Client(){
     }
 
-    public Long getClient_id() {
-        return client_id;
+    public Long getClientId() {
+        return clientId;
     }
 
-    public void setClient_id(Long client_id) {
-        this.client_id = client_id;
+    public void setClientId(Long clientId) {
+        this.clientId = clientId;
     }
 
-    public String getClient_name() {
-        return client_name;
+    public String getClientName() {
+        return clientName;
     }
 
-    public void setClient_name(String client_name) {
-        this.client_name = client_name;
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
     }
 
     public ClientType getClientType() {
@@ -54,11 +55,11 @@ public class Client {
         this.clientType = clientType;
     }
 
-    public Long getClient_type_id() {
-        return client_type_id;
+    public Long getClientTypeId() {
+        return clientTypeId;
     }
 
-    public void setClient_type_id(Long client_type_id) {
-        this.client_type_id = client_type_id;
+    public void setClientTypeId(Long clientTypeId) {
+        this.clientTypeId = clientTypeId;
     }
 }

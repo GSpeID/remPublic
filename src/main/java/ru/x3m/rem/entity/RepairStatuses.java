@@ -9,10 +9,10 @@ public class RepairStatuses {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long status_id;
+    private Long statusId;
 
     @Column(unique = true, nullable = false)
-    private String status_name;
+    private String statusName;
 
     @OneToMany(
             mappedBy = "repairStatuses",
@@ -20,21 +20,19 @@ public class RepairStatuses {
     )
     private List<Repair> repairs;
 
-
-
-    public Long getStatus_id() {
-        return status_id;
+    public Long getStatusId() {
+        return statusId;
     }
 
-    public void setStatus_id(Long status_id) {
-        this.status_id = status_id;
+    public void setStatusId(Long statusId) {
+        this.statusId = statusId;
     }
 
-    public String getStatus_name() {
-        return status_name;
+    public String getStatusName() {
+        return statusName;
     }
 
-    public void setStatus_name(String status_name) {
-        this.status_name = status_name;
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
     }
 }

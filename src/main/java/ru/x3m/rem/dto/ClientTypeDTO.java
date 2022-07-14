@@ -6,43 +6,37 @@ import javax.validation.constraints.NotEmpty;
 
 public class ClientTypeDTO {
 
-    private Long client_type_id;
+    private Long clientTypeId;
 
     @NotEmpty
-    private String client_type_name;
+    private String clientTypeName;
 
-//    public ClientTypeDTO(){
-//    }
-//
-//    public ClientTypeDTO(Long client_type_id, @NotEmpty String client_type_name) {
-//        this.client_type_id = client_type_id;
-//        this.client_type_name = client_type_name;
-//    }
+    public ClientTypeDTO() {
+    }
+
+    public ClientTypeDTO(Long clientTypeId, String clientTypeName) {
+        this.clientTypeId = clientTypeId;
+        this.clientTypeName = clientTypeName;
+    }
 
     public ClientTypeDTO(ClientType clientType){
-        this.client_type_id = clientType.getClient_type_id();
-        this.client_type_name = clientType.getClient_type_name();
+        this.clientTypeId = clientType.getClientTypeId();
+        this.clientTypeName = clientType.getClientTypeName();
     }
 
-    public Long getClient_type_id() {
-        return client_type_id;
+    public Long getClientTypeId() {
+        return clientTypeId;
     }
 
-    public void setClient_type_id(Long client_type_id) {
-        this.client_type_id = client_type_id;
+    public void setClientTypeId(Long clientTypeId) {
+        this.clientTypeId = clientTypeId;
     }
 
-    public String getClient_type_name() {
-        return client_type_name;
+    public String getClientTypeName() {
+        return clientTypeName;
     }
 
-    public void setClient_type_name(String client_type_name) {
-        this.client_type_name = client_type_name;
+    public void setClientTypeName(String clientTypeName) {
+        this.clientTypeName = clientTypeName;
     }
-
-    public String getClientTypeNameById(Long client_type_id){
-        return client_type_name;
-    }
-
-
 }

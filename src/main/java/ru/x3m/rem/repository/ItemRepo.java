@@ -2,8 +2,8 @@ package ru.x3m.rem.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import ru.x3m.rem.entity.LlcOutlay;
+import ru.x3m.rem.entity.Item;
 
 @Repository
-public interface LlcOutlayRepo extends CrudRepository<LlcOutlay, Long> {
+public interface ItemRepo extends CrudRepository<Item, Long> {
 }

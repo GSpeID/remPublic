@@ -27,8 +27,8 @@
                           onchange="update1()">
                     <option value="0">Выбрать клиента</option>
                     <option th:each="client : ${clients}"
-                            th:value="${client.client_id}"
-                            th:text="${client.client_name}"></option>
+                            th:value="${client.clientId}"
+                            th:text="${client.clientName}"></option>
                   </select>
                 </div>
                 <br>
@@ -37,20 +37,20 @@
                           onchange="update3()">
                     <option value="0">Выбрать тип ремонта</option>
                     <option th:each="repairType : ${repairTypes}"
-                            th:value="${repairType.repair_type_id}"
-                            th:text="${repairType.repair_type_name}"></option>
+                            th:value="${repairType.repairTypeId}"
+                            th:text="${repairType.repairTypeName}"></option>
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="repair_address">Адресс обьекта</label>
+                  <label for="repairAddress">Адресс обьекта</label>
                   <input type="text" class="form-control" required="required"
-                         id="repair_address" name="repair_address" value=""/>
+                         id="repairAddress" name="repairAddress" value=""/>
                 </div>
                 <br>
                 <div class="form-group">
-                  <label for="repair_description">Описание</label>
+                  <label for="repairDescription">Описание</label>
                   <input type="text" class="form-control" required="required"
-                         id="repair_description" name="repair_description" value=""/>
+                         id="repairDescription" name="repairDescription" value=""/>
                 </div>
                 <br>
                 <div class="form-group mb-3">
@@ -58,14 +58,14 @@
                           onchange="update4()">
                     <option value="0">Выбрать технику</option>
                     <option th:each="device : ${devices}"
-                            th:value="${device.device_id}"
-                            th:text="${device.device_name}"></option>
+                            th:value="${device.deviceId}"
+                            th:text="${device.deviceName}"></option>
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="full_cost">Обьявленная стоимость</label>
+                  <label for="fullCost">Обьявленная стоимость</label>
                   <input type="text" class="form-control" required="required"
-                         id="full_cost" name="full_cost" value=""/>
+                         id="fullCost" name="fullCost" value=""/>
                 </div>
                 <br>
                 <div class="form-group">
@@ -81,9 +81,9 @@
                 </div>
                 <br>
                 <div class="form-group">
-                  <label for="repair_date">Дата проведения работ</label>
+                  <label for="repairDate">Дата проведения работ</label>
                   <input type="date" class="form-control" required="required"
-                         id="repair_date" name="repair_date" value=""/>
+                         id="repairDate" name="repairDate" value=""/>
                 </div>
                 <br>
                 <div class="form-group mb-3">
@@ -91,29 +91,29 @@
                           onchange="update5()">
                     <option value="0">Статус</option>
                     <option th:each="repairStatus : ${repairStatuses}"
-                            th:value="${repairStatus.status_id}"
-                            th:text="${repairStatus.status_name}"></option>
+                            th:value="${repairStatus.statusId}"
+                            th:text="${repairStatus.statusName}"></option>
                   </select>
                 </div>
                 <div class="form-group">
                   <input type="hidden" class="form-control"
-                         id="repair_id" name="repair_id" value=""/>
+                         id="repairId" name="repairId" value=""/>
                 </div>
                 <div class="form-group">
-                  <input type="hidden" class="form-control"
-                         id="client" name="client_id" value=""/>
+                  <input type="text" class="form-control"
+                         id="clientId" name="clientId" value=""/>
                 </div>
                 <div class="form-group">
-                  <input type="hidden" class="form-control"
-                         id="repairType" name="repair_type_id" value=""/>
+                  <input type="text" class="form-control"
+                         id="repairTypeId" name="repairTypeId" value=""/>
                 </div>
                 <div class="form-group">
-                  <input type="hidden" class="form-control"
-                         id="device" name="device_id" value=""/>
+                  <input type="text" class="form-control"
+                         id="deviceId" name="deviceId" value=""/>
                 </div>
                 <div class="form-group">
-                  <input type="hidden" class="form-control"
-                         id="status" name="status_id" value=""/>
+                  <input type="text" class="form-control"
+                         id="statusId" name="statusId" value=""/>
                 </div>
                 <br>
                 <button type="submit" class="btn btn-outline-primary"

@@ -9,10 +9,10 @@ public class ClientType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long client_type_id;
+    private Long clientTypeId;
 
     @Column(nullable = false)
-    private String client_type_name;
+    private String clientTypeName;
 
 
     @OneToMany(
@@ -25,22 +25,19 @@ public class ClientType {
     public ClientType(){
     }
 
-    public Long getClient_type_id() {
-        return client_type_id;
+    public Long getClientTypeId() {
+        return clientTypeId;
     }
 
-    public void setClient_type_id(Long client_type_id) {
-        this.client_type_id = client_type_id;
+    public void setClientTypeId(Long clientTypeId) {
+        this.clientTypeId = clientTypeId;
     }
 
-    public String getClient_type_name() {
-        return client_type_name;
+    public String getClientTypeName() {
+        return clientTypeName;
     }
 
-    public void setClient_type_name(String client_type_name) {
-        this.client_type_name = client_type_name;
+    public void setClientTypeName(String clientTypeName) {
+        this.clientTypeName = clientTypeName;
     }
-
-
-
 }

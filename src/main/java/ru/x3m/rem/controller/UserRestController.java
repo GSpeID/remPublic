@@ -22,10 +22,10 @@ public class UserRestController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/findUser/{user_id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/findUser/{userId}", method = RequestMethod.GET)
     public Optional<User> getUserByIdRest(HttpServletRequest request,
-                                          @PathVariable("user_id") Long user_id) {
-        return userService.findUserById(user_id);
+                                          @PathVariable("userId") Long userId) {
+        return userService.findUserById(userId);
     }
 
 }

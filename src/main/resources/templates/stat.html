@@ -1,6 +1,9 @@
-<!doctype html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<html lang="en">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -10,7 +13,7 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css"/>
-    <link type="text/css" media="all" href="../../css/stat.css" th:href="@{/css/stat.css}" rel="stylesheet">
+    <link type="text/css" media="all" href="../static/css/stat.css" th:href="@{/css/stat.css}" rel="stylesheet">
 
 
     <!-- Optional JavaScript -->
@@ -27,9 +30,9 @@
             integrity="sha512-OvBgP9A2JBgiRad/mM36mkzXSXaJE9BEIENnVEmeZdITvwT09xnxLtT4twkCa8m/loMbPHsvPl0T8lRGVBwjlQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
-<!--    <script th:src="@{/js/stat.js}" src="/static/js/stat.js"></script>-->
-<!--    <script th:src="@{/js/clientForm.js}" src="/static/js/clientForm.js"></script>-->
-<!--    <script th:src="@{/js/dataTable.js}" src="/static/js/dataTable.js"></script>-->
+    <script th:src="@{/js/clientForm.js}" src="/static/js/clientForm.js"></script>
+    <script th:src="@{/js/dataTable.js}" src="/static/js/dataTable.js"></script>
+    <script th:src="@{/js/stat.js}" src="../static/js/stat.js"></script>
 
     <title>Statistic</title>
 
@@ -37,6 +40,7 @@
 </head>
 
 <body>
+
 
 <div th:insert="/custom/navBar"></div>
 <br>
@@ -47,11 +51,8 @@
         Добавить\Редактировать статьи расходов
     </button>
 </div>
- Modal Add New llcOutlay
-<form th:action="@{/statistic/saveCostItem}" method="post">
-    <div th:insert="modals/llcOutlayFragment"></div>
-</form>
 <br>
+
 <br>
 <div class="accordion" id="accordionExample">
     <div class="accordion-item">
@@ -63,8 +64,8 @@
                     aria-expanded="true"
                     aria-controls="collapseOne">
                     <strong>Траты</strong> &nbsp;
-                    Всего произведено трат : &nbsp;
-                <div th:text="${llcOutlaysList.size()}"></div>
+                    Всего записей : &nbsp;
+<!--                <div th:text="${outlays.size()}"></div>-->
             </button>
         </h2>
         <div id="collapseOne"
@@ -85,24 +86,24 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:if="${#lists.isEmpty(llcOutlaysList)}">
+                        <tr th:if="${#lists.isEmpty(outlays)}">
                             <td class="text-center" colspan="5">Нет информации</td>
                         </tr>
-                        <tr th:each="llcOutlaysL : ${llcOutlaysList}">
+                        <tr th:each="outlayList : ${outlays}">
                             <th scope="row"
-                                th:text="${llcOutlaysL.costItem.getSubCostItem().subCostItemName}"></th>
-                            <td th:text="${llcOutlaysL.costItem.costItemName}"></td>
-                            <td th:text="${llcOutlaysL.getDescription()}"></td>
-                            <td th:text="${llcOutlaysL.getCost()}"></td>
-                            <td th:text="${llcOutlaysL.getDate()}"></td>
+                                th:text="${outlayList.getSubItem().getItem().getItemName()}"></th>
+                            <td th:text="${outlayList.getSubItem().getSubitemName()}"></td>
+                            <td th:text="${outlayList.description}"></td>
+                            <td th:text="${outlayList.price}"></td>
+                            <td th:text="${outlayList.date}"></td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a th:href="@{findLlcOutlay/(*{llcOutlay.getLlcOutlayId()})}"
-                                       class="btn btn-outline-warning editLlcOutlayBtn"
+                                    <a th:href="@{findOutlay/(*{outlayList.outlayId})}"
+                                       class="btn btn-outline-warning editOutlayBtn"
                                        data-bs-toggle="modal"
-                                       data-bs-target="#llcOutlayAddModal">Редактировать</a>
+                                       data-bs-target="#editOutlayModal">Редактировать</a>
                                     <a class="btn btn-outline-danger"
-                                       th:href="@{/statistic/deleteLlcOutlay/{id}(id=${llcOutlay.llcOutlayId})}">
+                                       th:href="@{/stat/deleteOutlay/{id}(id=${outlayList.outlayId})}">
                                         Удалить</a>
                                 </div>
                             </td>
@@ -110,18 +111,8 @@
                         </tbody>
                     </table>
                     <br>
-                    <br>
-                     Button trigger modal  Add New llcOutlay
-                    <div class="text-center">
-                        <button type="button" class="btn btn-outline-primary llcOutlayAddModalBtn"
-                                data-bs-toggle="modal"
-                                data-bs-target="#llcOutlayAddModal">
-                            Новые затраты
-                        </button>
-                    </div>
-                     Modal Add New llcOutlay
-                    <form th:action="@{/statistic/saveLlcOutlay}" method="post">
-                        <div th:insert="modals/llcOutlayAddFragment"></div>
+                    <form th:action="@{/stat}" method="post">
+                        <div th:insert="modals/outlayEditFragment"></div>
                     </form>
                 </div>
             </div>
@@ -129,6 +120,96 @@
     </div>
 </div>
 
+
+<!--                     Button trigger modal  Add New Outlay-->
+<div class="text-center">
+    <button type="button" class="btn btn-outline-primary llcOutlayAddModalBtn"
+            data-bs-toggle="modal"
+            data-bs-target="#llcOutlayAddModal"
+            data-backdrop="static" data-keyboard="false">
+        Новые затраты TEST
+    </button>
+</div>
+
+<div class="modal fade" id="llcOutlayAddModal" tabindex="-1" role="dialog" aria-labelledby="llcOutlayAddModal" aria-hidden="true">
+    <form class="row gy-2 gx-3 "   th:object="${outlay}" >
+        <script th:inline="javascript" th:if="${#fields.hasErrors('*')}">$("#llcOutlayAddModal").modal("show");</script>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="llcOutlayAddModalLabel">Добавить Расходы</h5>
+                    <button type="button" class="btn btn-outline-secondary"
+                            aria-label="Close" data-bs-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <br>
+                <div class="container">
+                    <div class="col-12">
+                        <form class="row gy-2 gx-3" id="outlaySubmit">
+                            <div class="col-auto">
+                                <select class="form-select"
+                                        id="dropItemsId"
+                                        name="dropItemsName"
+                                        onchange="update7()"
+                                        required
+                                >
+                                    <option value="">Выбрать статью</option>
+                                </select>
+                            </div>
+                            <br>
+                            <div class="col-auto">
+                                <select class="form-select"
+                                        id="dropSubItemsId"
+                                        name="dropSubItemsName"
+                                        onchange="update8()"
+                                        required
+                                >
+                                    <option value="">Выбрать подстатью</option>
+                                </select>
+                            </div>
+                            <br>
+                            <div class="col-auto">
+                                <input type="text" class="form-control"
+                                       th:field="*{description}"
+                                       id="descriptionId"
+                                       placeholder="Enter description"/>
+                                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error"></p>
+                            </div>
+                            <br>
+                            <div class="col-auto">
+                                <input type="text" class="form-control"
+                                       th:field="*{price}"
+                                       id="priceId" placeholder="Enter price"/>
+                                <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="error"></p>
+                            </div>
+                            <br>
+                            <div class="col-auto">
+                                <input type="date" class="form-control" required="required"
+                                       id="dateId"  value=""/>
+                            </div>
+                            <br>
+                            <div class="col-auto">
+                                <input type="hidden" class="form-control"
+                                       id="itemsItemId0" name="itemsItemId"  value=""/>
+                            </div>
+                            <div class="col-auto">
+                                <input type="hidden" class="form-control"
+                                       id="subitemsSubitemId" name="subitemsSubitemId" value=""/>
+                            </div>
+                            <br>
+                            <div class="modal-footer outlaySubmit">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+<!--                                <input type="button" class="btn btn-primary" id="outlaySubmitBtn" value="Save">-->
+                                <button class="btn btn-primary" type="submit" id="outlaySubmitBtn">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 
 </body>
 </html>

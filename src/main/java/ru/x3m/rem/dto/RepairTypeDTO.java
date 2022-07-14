@@ -1,48 +1,42 @@
 package ru.x3m.rem.dto;
 
-
 import ru.x3m.rem.entity.RepairType;
 
 import javax.validation.constraints.NotEmpty;
 
 public class RepairTypeDTO {
 
-    private Long repair_type_id;
+    private Long repairTypeId;
 
     @NotEmpty
-    private String repair_type_name;
+    private String repairTypeName;
 
     public RepairTypeDTO(){
     }
 
-    public RepairTypeDTO(Long repair_type_id, @NotEmpty String repair_type_name) {
-        this.repair_type_id = repair_type_id;
-        this.repair_type_name = repair_type_name;
+    public RepairTypeDTO(Long repairTypeId, String repairTypeName) {
+        this.repairTypeId = repairTypeId;
+        this.repairTypeName = repairTypeName;
     }
 
     public RepairTypeDTO(RepairType repairType) {
-        this.repair_type_id = repairType.getRepair_type_id();
-        this.repair_type_name = repairType.getRepair_type_name();
+        this.repairTypeId = repairType.getRepairTypeId();
+        this.repairTypeName = repairType.getRepairTypeName();
     }
 
-    public Long getRepair_type_id() {
-        return repair_type_id;
+    public Long getRepairTypeId() {
+        return repairTypeId;
     }
 
-    public void setRepair_type_id(Long repair_type_id) {
-        this.repair_type_id = repair_type_id;
+    public void setRepairTypeId(Long repairTypeId) {
+        this.repairTypeId = repairTypeId;
     }
 
-    public String getRepair_type_name() {
-        return repair_type_name;
+    public String getRepairTypeName() {
+        return repairTypeName;
     }
 
-    public void setRepair_type_name(String repair_type_name) {
-        this.repair_type_name = repair_type_name;
+    public void setRepairTypeName(String repairTypeName) {
+        this.repairTypeName = repairTypeName;
     }
-
-    public String getRepairTypNameById(Long repair_type_id){
-        return repair_type_name;
-    }
-
 }

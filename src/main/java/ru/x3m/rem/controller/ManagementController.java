@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.x3m.rem.dto.*;
 import ru.x3m.rem.entity.*;
 import ru.x3m.rem.service.*;
-
 import javax.validation.Valid;
 import java.util.List;
 
@@ -49,9 +48,9 @@ public class ManagementController {
         return "redirect:/repair-service/management";
     }
 
-    @GetMapping("/repair-service/management/delete-client/{client_id}")
-    public String deleteClient(@PathVariable Long client_id) {
-        managementService.deleteClient(client_id);
+    @GetMapping("/repair-service/management/delete-client/{clientId}")
+    public String deleteClient(@PathVariable Long clientId) {
+        managementService.deleteClient(clientId);
         return "redirect:/repair-service/management";
     }
 
@@ -69,9 +68,9 @@ public class ManagementController {
         return "redirect:/repair-service/management";
     }
 
-    @GetMapping("/repair-service/management/delete-client-type/{client_type_id}")
-    public String deleteClientType(@PathVariable Long client_type_id) {
-        managementService.deleteClientType(client_type_id);
+    @GetMapping("/repair-service/management/delete-client-type/{clientTypeId}")
+    public String deleteClientType(@PathVariable Long clientTypeId) {
+        managementService.deleteClientType(clientTypeId);
         return "redirect:/repair-service/management";
     }
 
@@ -88,9 +87,9 @@ public class ManagementController {
         return "redirect:/repair-service/management";
     }
 
-    @GetMapping("/repair-service/management/delete-device/{device_id}")
-    public String deleteDevice(@PathVariable Long device_id) {
-        managementService.deleteDevice(device_id);
+    @GetMapping("/repair-service/management/delete-device/{deviceId}")
+    public String deleteDevice(@PathVariable Long deviceId) {
+        managementService.deleteDevice(deviceId);
         return "redirect:/repair-service/management";
     }
 
@@ -107,9 +106,9 @@ public class ManagementController {
         return "redirect:/repair-service/management";
     }
 
-    @GetMapping("/repair-service/management/delete-repair-type/{repair_type_id}")
-    public String deleteRepairType(@PathVariable Long repair_type_id) {
-        managementService.deleteRepairType(repair_type_id);
+    @GetMapping("/repair-service/management/delete-repair-type/{repairTypeId}")
+    public String deleteRepairType(@PathVariable Long repairTypeId) {
+        managementService.deleteRepairType(repairTypeId);
         return "redirect:/repair-service/management";
     }
 
@@ -126,9 +125,9 @@ public class ManagementController {
         return "redirect:/repair-service/management";
     }
 
-    @GetMapping("/repair-service/management/delete-status/{status_id}")
-    public String deleteStatus(@PathVariable Long status_id){
-        managementService.deleteStatus(status_id);
+    @GetMapping("/repair-service/management/delete-status/{statusId}")
+    public String deleteStatus(@PathVariable Long statusId){
+        managementService.deleteStatus(statusId);
         return "redirect:/repair-service/management";
     }
 

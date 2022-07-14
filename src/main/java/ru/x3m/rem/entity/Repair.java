@@ -9,19 +9,19 @@ public class Repair {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long repair_id;
+    private Long repairId;
 
     @Column(nullable = false)
-    private String repair_address;
+    private String repairAddress;
 
     @Column
-    private String repair_description;
+    private String repairDescription;
 
     @Column
-    private LocalDate repair_date;
+    private LocalDate repairDate;
 
     @Column
-    private Float full_cost;
+    private Float fullCost;
 
     @Column
     private Float paid;
@@ -51,116 +51,59 @@ public class Repair {
     @JoinColumn(name = "status_id", insertable = false, updatable = false)
     private RepairStatuses repairStatuses;
 
-    private Long device_id;
-    private Long client_id;
-    private Long status_id;
-    private Long repair_type_id;
+    @Column(name = "device_id")
+    private Long deviceId;
+
+    @Column(name = "client_id")
+    private Long clientId;
+
+    @Column(name = "status_id")
+    private Long statusId;
+
+    @Column(name = "repair_type_id")
+    private Long repairTypeId;
 
     public Repair() {
     }
 
-    public Long getRepair_id() {
-        return repair_id;
+    public Long getRepairId() {
+        return repairId;
     }
 
-    public void setRepair_id(Long repair_id) {
-        this.repair_id = repair_id;
+    public void setRepairId(Long repairId) {
+        this.repairId = repairId;
     }
 
-    public String getRepair_address() {
-        return repair_address;
+    public String getRepairAddress() {
+        return repairAddress;
     }
 
-    public void setRepair_address(String repair_address) {
-        this.repair_address = repair_address;
+    public void setRepairAddress(String repairAddress) {
+        this.repairAddress = repairAddress;
     }
 
-    public String getRepair_description() {
-        return repair_description;
+    public String getRepairDescription() {
+        return repairDescription;
     }
 
-    public void setRepair_description(String repair_description) {
-        this.repair_description = repair_description;
+    public void setRepairDescription(String repairDescription) {
+        this.repairDescription = repairDescription;
     }
 
-    public LocalDate getRepair_date() {
-        return repair_date;
+    public LocalDate getRepairDate() {
+        return repairDate;
     }
 
-    public void setRepair_date(LocalDate repair_date) {
-        this.repair_date = repair_date;
+    public void setRepairDate(LocalDate repairDate) {
+        this.repairDate = repairDate;
     }
 
-    public Client getClient() {
-        return client;
+    public Float getFullCost() {
+        return fullCost;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public Device getDevice() {
-        return device;
-    }
-
-    public void setDevice(Device device) {
-        this.device = device;
-    }
-
-    public void setDevice_id(Long device_id) {
-        this.device_id = device_id;
-    }
-
-    public RepairType getRepairType() {
-        return repairType;
-    }
-
-    public void setRepairType(RepairType repairType) {
-        this.repairType = repairType;
-    }
-
-    public RepairStatuses getRepairStatuses() {
-        return repairStatuses;
-    }
-
-    public void setRepairStatuses(RepairStatuses repairStatuses) {
-        this.repairStatuses = repairStatuses;
-    }
-
-    public Long getDevice_id() {
-        return device_id;
-    }
-
-    public Long getClient_id() {
-        return client_id;
-    }
-
-    public void setClient_id(Long client_id) {
-        this.client_id = client_id;
-    }
-
-    public Long getStatus_id() {
-        return status_id;
-    }
-
-    public void setStatus_id(Long status_id) {
-        this.status_id = status_id;
-    }
-
-    public Long getRepair_type_id() {
-        return repair_type_id;
-    }
-
-    public void setRepair_type_id(Long repair_type_id) {
-        this.repair_type_id = repair_type_id;
-    }
-
-    public Float getFull_cost() {
-        return full_cost;
-    }
-
-    public void setFull_cost(Float full_cost) {
-        this.full_cost = full_cost;
+    public void setFullCost(Float fullCost) {
+        this.fullCost = fullCost;
     }
 
     public Float getPaid() {
@@ -193,5 +136,69 @@ public class Repair {
 
     public void setProfit(Float profit) {
         this.profit = profit;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Device getDevice() {
+        return device;
+    }
+
+    public void setDevice(Device device) {
+        this.device = device;
+    }
+
+    public RepairType getRepairType() {
+        return repairType;
+    }
+
+    public void setRepairType(RepairType repairType) {
+        this.repairType = repairType;
+    }
+
+    public RepairStatuses getRepairStatuses() {
+        return repairStatuses;
+    }
+
+    public void setRepairStatuses(RepairStatuses repairStatuses) {
+        this.repairStatuses = repairStatuses;
+    }
+
+    public Long getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(Long deviceId) {
+        this.deviceId = deviceId;
+    }
+
+    public Long getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(Long clientId) {
+        this.clientId = clientId;
+    }
+
+    public Long getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(Long statusId) {
+        this.statusId = statusId;
+    }
+
+    public Long getRepairTypeId() {
+        return repairTypeId;
+    }
+
+    public void setRepairTypeId(Long repairTypeId) {
+        this.repairTypeId = repairTypeId;
     }
 }

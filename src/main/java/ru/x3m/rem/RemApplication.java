@@ -12,8 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
         // +            add sort
         // +            add info button with full information
         // -            add schedule and notification
-        // +            add statuses: planned, completed, done-waiting for payment(maybe some another statuses)
-        // -/+          add address
         // - management:
         // +             client type selection on creation new client
         // -             add payment type (cash, bank transaction)

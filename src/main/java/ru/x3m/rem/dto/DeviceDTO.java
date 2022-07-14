@@ -6,42 +6,37 @@ import javax.validation.constraints.NotEmpty;
 
 public class DeviceDTO {
 
-    private Long device_id;
+    private Long deviceId;
 
     @NotEmpty
-    private String device_name;
+    private String deviceName;
 
-    public DeviceDTO(){
+    public DeviceDTO() {
     }
 
-    public DeviceDTO(Long device_id, @NotEmpty String device_name) {
-        this.device_id = device_id;
-        this.device_name = device_name;
+    public DeviceDTO(Long deviceId, String deviceName) {
+        this.deviceId = deviceId;
+        this.deviceName = deviceName;
     }
 
     public DeviceDTO(Device device){
-        this.device_id = device.getDevice_id();
-        this.device_name = device.getDevice_name();
+        this.deviceId = device.getDeviceId();
+        this.deviceName = device.getDeviceName();
     }
 
-    public Long getDevice_id() {
-        return device_id;
+    public Long getDeviceId() {
+        return deviceId;
     }
 
-    public void setDevice_id(Long device_id) {
-        this.device_id = device_id;
+    public void setDeviceId(Long deviceId) {
+        this.deviceId = deviceId;
     }
 
-    public String getDevice_name() {
-        return device_name;
+    public String getDeviceName() {
+        return deviceName;
     }
 
-    public void setDevice_name(String device_name) {
-        this.device_name = device_name;
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
     }
-
-    public String getDeviceNameById(Long device_id){
-        return device_name;
-    }
-
 }

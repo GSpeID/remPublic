@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -10,7 +10,7 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css"/>
-    <link rel="stylesheet" href="../static/css/management.css">
+    <link rel="stylesheet" href="../static/css/management.css" th:href="@{/css/stat.css}">
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -61,16 +61,16 @@
                             <td class="text-center" colspan="5">Нет информации</td>
                         </tr>
                         <tr th:each="client : ${clients}">
-                            <th scope="row" th:text="*{client.getClient_id()}"></th>
-                            <td th:text="${client.getClient_name()}"></td>
-                            <td th:text="${client.getClientType().getClient_type_name()}"></td>
+                            <th scope="row" th:text="*{client.getClientId()}"></th>
+                            <td th:text="${client.getClientName()}"></td>
+                            <td th:text="${client.getClientType().getClientTypeName()}"></td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a th:href="@{findClient/(*{client.client_id})}"
+                                    <a th:href="@{findClient/(*{client.clientId})}"
                                        class="btn btn-outline-warning editClientBtn"
                                        data-bs-toggle="modal" data-bs-target="#editClientModal">Редактировать</a>
                                     <a class="btn btn-outline-danger"
-                                       th:href="@{/repair-service/management/delete-client/{id}(id=${client.client_id})}">
+                                       th:href="@{/repair-service/management/delete-client/{id}(id=${client.clientId})}">
                                         Удалить</a>
                                 </div>
                             </td>
@@ -118,15 +118,15 @@
                             <td class="text-center" colspan="5">Нет информации</td>
                         </tr>
                         <tr th:each="device : ${devices}">
-                            <th scope="row" th:text="*{device.getDevice_id()}"></th>
-                            <td th:text="${device.getDevice_name()}"></td>
+                            <th scope="row" th:text="*{device.getDeviceId()}"></th>
+                            <td th:text="${device.getDeviceName()}"></td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a th:href="@{findDevice/(*{device.getDevice_id()})}"
+                                    <a th:href="@{findDevice/(*{device.getDeviceId()})}"
                                        class="btn btn-outline-warning editDeviceBtn"
                                        data-bs-toggle="modal" data-bs-target="#editDeviceModal">Редкатировать</a>
                                     <a class="btn btn-outline-danger"
-                                       th:href="@{/repair-service/management/delete-device/{id}(id=${device.device_id})}"
+                                       th:href="@{/repair-service/management/delete-device/{id}(id=${device.deviceId})}"
                                     >Удалить</a>
                                 </div>
                             </td>
@@ -174,16 +174,16 @@
                             <td class="text-center" colspan="5">Нет информации</td>
                         </tr>
                         <tr th:each="clientType : ${clientTypes}">
-                            <th scope="row" th:text="*{clientType.getClient_type_id()}"></th>
-                            <td th:text="${clientType.getClient_type_name()}"></td>
+                            <th scope="row" th:text="*{clientType.getClientTypeId()}"></th>
+                            <td th:text="${clientType.getClientTypeName()}"></td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a th:href="@{findClientType/(*{clientType.client_type_id})}"
+                                    <a th:href="@{findClientType/(*{clientType.clientTypeId})}"
                                        class="btn btn-outline-warning editClientTypeBtn"
                                        data-bs-toggle="modal"
                                        data-bs-target="#editClientTypeModal">Редактировать</a>
                                     <a class="btn btn-outline-danger"
-                                       th:href="@{/repair-service/management/delete-client-type/{id}(id=${clientType.client_type_id})}">Удалить</a>
+                                       th:href="@{/repair-service/management/delete-client-type/{id}(id=${clientType.clientTypeId})}">Удалить</a>
                                 </div>
                             </td>
                         </tr>
@@ -230,16 +230,16 @@
                             <td class="text-center" colspan="5">нет информации</td>
                         </tr>
                         <tr th:each="repairType : ${repairTypes}">
-                            <th scope="row" th:text="*{repairType.getRepair_type_id()}"></th>
-                            <td th:text="${repairType.getRepair_type_name()}"></td>
+                            <th scope="row" th:text="*{repairType.getRepairTypeId()}"></th>
+                            <td th:text="${repairType.getRepairTypeName()}"></td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a th:href="@{findRepairType/(*{repairType.getRepair_type_id()})}"
+                                    <a th:href="@{findRepairType/(*{repairType.getRepairTypeId()})}"
                                        class="btn btn-outline-warning editRepairTypeBtn"
                                        data-bs-toggle="modal"
                                        data-bs-target="#editRepairTypeModal">Редактировать</a>
                                     <a class="btn btn-outline-danger"
-                                       th:href="@{/repair-service/management/delete-repair-type/{id}(id=${repairType.repair_type_id})}">Удалить</a>
+                                       th:href="@{/repair-service/management/delete-repair-type/{id}(id=${repairType.repairTypeId})}">Удалить</a>
                                 </div>
                             </td>
                         </tr>
@@ -287,15 +287,15 @@
                             <td class="text-center" colspan="5">Нет информации</td>
                         </tr>
                         <tr th:each="status : ${repairStatuses}">
-                            <th scope="row" th:text="*{status.getStatus_id()}"></th>
-                            <td th:text="${status.getStatus_name()}"></td>
+                            <th scope="row" th:text="*{status.getStatusId()}"></th>
+                            <td th:text="${status.getStatusName()}"></td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a th:href="@{findStatus/(*{status.getStatus_id()})}"
+                                    <a th:href="@{findStatus/(*{status.getStatusId()})}"
                                        class="btn btn-outline-warning editStatusBtn"
                                        data-bs-toggle="modal" data-bs-target="#editStatusModal">Редактировать</a>
                                     <a class="btn btn-outline-danger"
-                                       th:href="@{/repair-service/management/delete-status/{id}(id=${status.getStatus_id()})}">Удалить</a>
+                                       th:href="@{/repair-service/management/delete-status/{id}(id=${status.getStatusId()})}">Удалить</a>
                                 </div>
                             </td>
                         </tr>
