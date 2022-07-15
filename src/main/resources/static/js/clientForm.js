@@ -234,30 +234,32 @@ $(document).ready(function () {
             method: "GET", url: urlString0,
             dataType: 'json',
         })
-
             .done(function (responseJson) {
-                const itemsDD = $("#dropItemsId").change(function () {
-                    $("#dropSubItemsId").empty();
-                    console.log("<---->");
-                    const itemId = $("#dropItemsId").val();
-                    const urlString1 = "/rem/statistic/api/subItemsByItemsId?itemsItemId=" + itemId;
-                    $.ajax({
-                        method: "GET",
-                        url: urlString1,
-                        dataType: 'json',
-                    })
-                        .done(function (responseJson) {
-                            const subitemsDD = $("#dropSubItemsId")
-                            $.each(responseJson, function (index, subitems) {
-                                $("<option>").val(subitems.subitemId).text(subitems.subitemName).appendTo(subitemsDD);
-                            });
-                        });
-                });
+                const itemsDD = $("#dropItemsId").change(function (){
+                    getSubItems();
+                })
                 $.each(responseJson, function (index, items) {
                     $("<option>").val(items.itemId).text(items.itemName).appendTo(itemsDD);
                 });
             });
+    }
 
+    function getSubItems() {
+        console.log("<---->");
+        const itemId = $("#dropItemsId").val();
+        const urlString1 = "/rem/statistic/api/subItemsByItemsId?itemsItemId=" + itemId;
+        $.ajax({
+            method: "GET",
+            url: urlString1,
+            dataType: 'json',
+        })
+            .done(function (responseJson) {
+                const subitemsDD = $("#dropSubItemsId");
+                subitemsDD.empty();
+                $.each(responseJson, function (index, subitems) {
+                    $("<option>").val(subitems.subitemId).text(subitems.subitemName).appendTo(subitemsDD);
+                });
+            });
     }
 
     //POST сохраниние затрат

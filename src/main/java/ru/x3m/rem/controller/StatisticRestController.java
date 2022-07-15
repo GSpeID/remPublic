@@ -91,7 +91,6 @@ public class StatisticRestController {
 
     @PostMapping(path = "/saveOutlayRest")
     public String saveOutlayDTO(@RequestBody @Valid OutlayDTO outlayDTO, BindingResult result,
-                                Errors errors,
                                 RedirectAttributes atts){
         if(result.hasErrors()) {
             atts.addAttribute("hasErrors", true);

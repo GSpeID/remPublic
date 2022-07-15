@@ -44,7 +44,7 @@
 
 <div th:insert="/custom/navBar"></div>
 <br>
-<!-- Button trigger modal  Edit Client -->
+<!-- Button trigger modal  Edit Outlay -->
 <div class="text-center" id="llcOutlayBtn">
     <button type="button" class="btn btn-outline-primary llcOutlayModalBtn"
             data-bs-toggle="modal" data-bs-target="#llcOutlayModal">
@@ -52,7 +52,7 @@
     </button>
 </div>
 <br>
-
+<div th:insert="/modals/llcOutlayFragment"></div>
 <br>
 <div class="accordion" id="accordionExample">
     <div class="accordion-item">
@@ -200,7 +200,6 @@
                             <br>
                             <div class="modal-footer outlaySubmit">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-<!--                                <input type="button" class="btn btn-primary" id="outlaySubmitBtn" value="Save">-->
                                 <button class="btn btn-primary" type="submit" id="outlaySubmitBtn">Save</button>
                             </div>
                         </form>

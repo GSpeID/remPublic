@@ -43,7 +43,7 @@ public class RepairController {
     }
 
     @PostMapping("/repair-service/create")
-    public String createRepairPost(@ModelAttribute("repair") @Valid RepairDTO repairDTO,
+    public String createRepairPost(@ModelAttribute("repair")  RepairDTO repairDTO,
                                    BindingResult result) {
         if (result.hasErrors()) {
             return "/repair-service";
