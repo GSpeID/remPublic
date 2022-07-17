@@ -43,15 +43,45 @@
                 <div th:text="${clients.size()}"></div>
             </button>
         </h2>
-        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+        <div id="collapseOne" class="accordion-collapse collapse show"
+             aria-labelledby="headingOne"
              data-bs-parent="#accordionExample">
             <div class="accordion-body">
                 <div class="col-12">
+                    <div>
+                        <form class="row" th:action="@{/repair-service/management/create-client}" th:object="${clientDTO}" method="post">
+                            <div class="col">
+                                <select class="form-select" th:object="${clientTypes}" id="dropClientType"
+                                        onchange="update2()">
+                                    <option value="0">Выберите тип клиента</option>
+                                    <option th:each="clientType : ${clientTypes}"
+                                            th:value="${clientType.clientTypeId}"
+                                            th:text="${clientType.clientTypeName}"
+                                            th:required="required"></option>
+                                </select>
+                                <div th:if="${#fields.hasErrors('clientTypeId')}" th:errors="*{clientTypeId}" class="error"/>
+                            </div>
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Введите имя клиента"
+                                           id="clientName" name="clientName" value=""
+                                           aria-label="client name" aria-describedby="button-addon1"
+                                           th:field="*{clientName}"
+                                    />
+                                    <button class="btn btn-outline-secondary" type="submit"
+                                            id="button-addon1">Добавить клиента</button>
+                                </div>
+                                <div th:if="${#fields.hasErrors('clientName')}" th:errors="*{clientName}" class="error"/>
+                            </div>
+                            <input type="hidden" class="form-control"
+                                   id="clientType" name="clientTypeId" value=""/>
+                        </form>
+                    </div>
                     <table id="clients" class="table table-hover">
                         <thead>
                         <tr>
                             <th scope="col">Клиент ID</th>
-                            <th scope="col">Название клиента</th>
+                            <th scope="col">Имя\Название клиента</th>
                             <th scope="col">Тип клиента</th>
                             <th scope="col">Действия</th>
                         </tr>
@@ -78,17 +108,6 @@
                         </tbody>
                     </table>
                     <br>
-                    <!-- Button trigger modal  Edit Client -->
-                    <div class="text-center">
-                        <button type="button" class="btn btn-outline-primary clientModalBtn"
-                                data-bs-toggle="modal" data-bs-target="#editClientModal">
-                            Добавить нового клиента
-                        </button>
-                    </div>
-                    <!-- Modal Edit Client -->
-                    <form th:action="@{/repair-service/management/create-client}" method="post">
-                        <div th:insert="modals/clientEditFragment"></div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -101,9 +120,25 @@
                 <div th:text="${devices.size()}"></div>
             </button>
         </h2>
-        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+        <div id="collapseTwo" class="accordion-collapse show"
+             aria-labelledby="headingTwo"
              data-bs-parent="#accordionExample">
             <div class="accordion-body">
+                <div>
+                    <form class="row" th:action="@{/repair-service/management/create-device/}" th:object="${deviceDTO}" method="post">
+                        <div class="input-group mb-3"  >
+                            <input type="text" class="form-control" placeholder="Введите название или модель техники"
+                                   id="deviceName" name="deviceName" value="" required="required"
+                                   aria-label="device name" aria-describedby="button-addon2"
+                                   th:field="*{deviceName}"
+                            />
+                            <button class="btn btn-outline-secondary"
+                                    type="submit" id="button-addon2">Добавить модель техники</button>
+                        </div>
+                        <div th:if="${#fields.hasErrors('deviceName')}" th:errors="*{deviceName}" class="error"/>
+                    </form>
+                </div>
+                <br>
                 <div class="col-12">
                     <table id="devices" class="table table-hover">
                         <thead>
@@ -134,17 +169,6 @@
                         </tbody>
                     </table>
                     <br>
-                    <!-- Button trigger modal  Edit Device -->
-                    <div class="text-center">
-                        <button type="button" class="btn btn-outline-primary deviceModalBtn"
-                                data-bs-toggle="modal" data-bs-target="#editDeviceModal">
-                            Добавить новую технику
-                        </button>
-                    </div>
-                    <!-- Modal Edit Device -->
-                    <form th:action="@{/repair-service/management/create-device/}" method="post">
-                        <div th:insert="modals/deviceEditFragment"></div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -157,10 +181,27 @@
                 <div th:text="${clientTypes.size()}"></div>
             </button>
         </h2>
-        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+        <div id="collapseThree" class="accordion-collapse show"
+             aria-labelledby="headingThree"
              data-bs-parent="#accordionExample">
             <div class="accordion-body">
                 <div class="col-12">
+                    <div>
+                        <form class="row" th:action="@{/repair-service/management/create-client-type/}"
+                              th:object="${clientTypeDTO}" method="post">
+                            <div class="input-group mb-3"  >
+                                <input type="text" class="form-control" placeholder="Введите тип клиента"
+                                       id="clientTypeName" name="clientTypeName" value="" required="required"
+                                       aria-label="client type name" aria-describedby="button-addon3"
+                                       th:field="*{clientTypeName}"
+                                />
+                                <button class="btn btn-outline-secondary"
+                                        type="submit" id="button-addon3">Добавить тип клиента</button>
+                            </div>
+                            <div th:if="${#fields.hasErrors('clientTypeName')}" th:errors="*{clientTypeName}" class="error"/>
+                        </form>
+                    </div>
+                    <br>
                     <table id="clientsTypes" class="table table-hover">
                         <thead>
                         <tr>
@@ -190,17 +231,6 @@
                         </tbody>
                     </table>
                     <br>
-                    <!-- Button trigger modal  Edit Client Type -->
-                    <div class="text-center">
-                        <button type="button" class="btn btn-outline-primary clientTypeModalBtn"
-                                data-bs-toggle="modal" data-bs-target="#editClientTypeModal">
-                            Добавить новый тип клиента
-                        </button>
-                    </div>
-                    <!-- Modal  Edit Client Type -->
-                    <form th:action="@{/repair-service/management/create-client-type/}" method="post">
-                        <div th:insert="modals/clientTypeEditFragment"></div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -213,9 +243,26 @@
                 <div th:text="${repairTypes.size()}"></div>
             </button>
         </h2>
-        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+        <div id="collapseFour" class="accordion-collapse show"
+             aria-labelledby="headingFour"
              data-bs-parent="#accordionExample">
             <div class="accordion-body">
+                <div>
+                    <form class="row" th:action="@{/repair-service/management/create-repair-type/}"
+                          th:object="${repairTypeDTO}" method="post">
+                        <div class="input-group mb-3"  >
+                            <input type="text" class="form-control" placeholder="Введите тип ремонта"
+                                   id="repairTypeName" name="repairTypeName" value="" required="required"
+                                   aria-label="repair type name" aria-describedby="button-addon4"
+                                   th:field="*{repairTypeName}"
+                            />
+                            <button class="btn btn-outline-secondary"
+                                    type="submit" id="button-addon4">Добавить тип ремонта</button>
+                        </div>
+                        <div th:if="${#fields.hasErrors('repairTypeName')}" th:errors="*{repairTypeName}" class="error"/>
+                    </form>
+                </div>
+                <br>
                 <div class="col-12">
                     <table id="repairsTypes" class="table table-hover">
                         <thead>
@@ -246,17 +293,6 @@
                         </tbody>
                     </table>
                     <br>
-                    <!-- Button trigger modal  Edit Repair Type -->
-                    <div class="text-center">
-                        <button type="button" class="btn btn-outline-primary repairTypeModalBtn"
-                                data-bs-toggle="modal" data-bs-target="#editRepairTypeModal">
-                            Добавить новый вид ремонта
-                        </button>
-                    </div>
-                    <!-- Modal Edit Edit Repair Type -->
-                    <form th:action="@{/repair-service/management/create-repair-type/}" method="post">
-                        <div th:insert="modals/repairTypeEditFragment"></div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -270,10 +306,27 @@
                 <div th:text="${repairStatuses.size()}"></div>
             </button>
         </h2>
-        <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
+        <div id="collapseFive" class="accordion-collapse show"
+             aria-labelledby="headingFive"
              data-bs-parent="#accordionExample">
             <div class="accordion-body">
                 <div class="col-12">
+                    <div>
+                        <form class="row" th:action="@{/repair-service/management/create-status/}"
+                              th:object="${repairStatusDTO}" method="post">
+                            <div class="input-group mb-3"  >
+                                <input type="text" class="form-control" placeholder="Введите статус заказа"
+                                       id="statusName" name="statusName" value="" required="required"
+                                       aria-label="status name" aria-describedby="button-addon5"
+                                       th:field="*{statusName}"
+                                />
+                                <button class="btn btn-outline-secondary"
+                                        type="submit" id="button-addon5">Добавить статус заказа</button>
+                            </div>
+                            <div th:if="${#fields.hasErrors('statusName')}" th:errors="*{statusName}" class="error"/>
+                        </form>
+                    </div>
+                    <br>
                     <table id="statuses" class="table table-hover">
                         <thead>
                         <tr>
@@ -302,17 +355,6 @@
                         </tbody>
                     </table>
                     <br>
-                    <!-- Button trigger modal  Edit Status -->
-                    <div class="text-center">
-                        <button type="button" class="btn btn-outline-primary statusModalBtn"
-                                data-bs-toggle="modal" data-bs-target="#editStatusModal">
-                            Добавить новый статус
-                        </button>
-                    </div>
-                    <!-- Modal Edit Edit Status -->
-                    <form th:action="@{/repair-service/management/create-status/}" method="post">
-                        <div th:insert="/modals/repairStatusFragment"></div>
-                    </form>
                 </div>
             </div>
         </div>

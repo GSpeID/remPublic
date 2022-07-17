@@ -20,20 +20,20 @@ public class OutlayDTO {
     private  String  description;
 
     @Valid
-    @NotNull(message = "DTO укажите потраченную суммму")
-    @DecimalMin(value = "0.01", message = "DTO минимум 1 копейка: 0.01")
-    @Digits(integer = 10, fraction = 2, message = "DTO формат 0.00 , целых {integer} и дробных {fraction} цифр")
+    @NotNull(message = "Укажите потраченную суммму")
+    @DecimalMin(value = "0.01", message = "Минимум 1 копейка: 0.01")
+    @Digits(integer = 10, fraction = 2, message = "Формат 0.00 , целых {integer} и дробных {fraction} цифр")
     private Double price;
 
     @Valid
-    @NotNull(message = "DTO укажите дату")
+    @NotNull(message = "Укажите дату")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 
-    @NotNull(message = "DTO выберите подстатю")
+    @NotNull(message = "Выберите подстатю")
     private Long subitemsSubitemId;
 
-    @NotNull(message = "DTO выберите статью")
+    @NotNull(message = "Выберите статью")
     private Long itemsItemId;
 
     private String subitemName;

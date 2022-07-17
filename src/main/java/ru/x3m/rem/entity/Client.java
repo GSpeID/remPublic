@@ -2,6 +2,8 @@ package ru.x3m.rem.entity;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -12,6 +14,8 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long clientId;
 
+    @NotNull(message = "Не должно быть пустым")
+    @Size(min = 2, max = 45, message = "Миинимум {min}, максимум {max} символов")
     @Column(unique = true, nullable = false)
     private String clientName;
 
@@ -25,6 +29,7 @@ public class Client {
     )
     private List<Repair> repairs;
 
+    @NotNull(message = "Выберите тип клиента")
     @Column(name = "client_type_id")
     private Long clientTypeId;
 

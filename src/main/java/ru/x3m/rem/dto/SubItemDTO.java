@@ -3,15 +3,17 @@ package ru.x3m.rem.dto;
 import ru.x3m.rem.entity.SubItem;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class SubItemDTO {
 
     private Long subitemId;
 
-    @NotNull
+    @NotNull(message = "Не должно быть пустым")
+    @Size(min = 3, message = "Минимум {min} символа")
     private String subitemName;
 
-    @NotNull
+    @NotNull(message = "Выберите подстатью")
     private Long itemsItemId;
 
     public SubItemDTO() {

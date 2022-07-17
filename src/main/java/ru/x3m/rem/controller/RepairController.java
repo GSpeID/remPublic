@@ -9,15 +9,14 @@ import ru.x3m.rem.dto.*;
 import ru.x3m.rem.entity.*;
 import ru.x3m.rem.service.*;
 
-import javax.validation.*;
 import java.util.List;
 
 
 @Controller
 public class RepairController {
 
-    private RepairService repairService;
-    private ManagementService managementService;
+    private final RepairService repairService;
+    private final ManagementService managementService;
 
     @Autowired
     public RepairController(RepairService repairService, ManagementService managementService) {
@@ -29,23 +28,17 @@ public class RepairController {
     public String allRepairsPage(Model model) {
         List<Repair> repairs = repairService.findAllRepairs();
         model.addAttribute("repairs", repairs);
-        List<Client> clients = managementService.findAllClients();
-        model.addAttribute("clients", clients);
-        List<Device> devices = managementService.findAllDevices();
-        model.addAttribute("devices", devices);
-        List<ClientType> clientTypes = managementService.findAllClientTypes();
-        model.addAttribute("clientTypes", clientTypes);
-        List<RepairType> repairTypes = managementService.findAllRepairTypes();
-        model.addAttribute("repairTypes", repairTypes);
-        List<RepairStatuses> repairStatuses = managementService.findAllRepairStatuses();
-        model.addAttribute("repairStatuses", repairStatuses);
+        ManagementController.globalModelsList(model, managementService);
         return "repair-service";
     }
 
     @PostMapping("/repair-service/create")
     public String createRepairPost(@ModelAttribute("repair")  RepairDTO repairDTO,
-                                   BindingResult result) {
+                                   BindingResult result, Model model) {
         if (result.hasErrors()) {
+            List<Repair> repairs = repairService.findAllRepairs();
+            model.addAttribute("repairs", repairs);
+            ManagementController.globalModelsList(model, managementService);
             return "/repair-service";
         }
         repairService.saveRepair(repairDTO);

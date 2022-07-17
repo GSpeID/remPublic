@@ -22,7 +22,7 @@
                 <button class="btn btn-outline-success me-2" type="button">Исходные данные для заказов</button>
             </a>
             <a href="" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/stat}">
-                <button class="btn btn-outline-warning me-2" type="button">Финансовая статистика</button>
+                <button class="btn btn-outline-warning me-2" type="button">Расходы</button>
             </a>
             <a>
                 <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/register}" method="POST">

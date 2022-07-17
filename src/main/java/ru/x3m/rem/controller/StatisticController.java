@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.x3m.rem.dto.ItemDTO;
 import ru.x3m.rem.dto.OutlayDTO;
 import ru.x3m.rem.dto.SubItemDTO;
@@ -31,52 +29,45 @@ public class StatisticController {
         this.outlayRepo = outlayRepo;
     }
 
-//    @GetMapping("/error")
-//    public String errorPage(){
-//        return "/error";
-//    }
-
-    @GetMapping("/stat")
-    public String statPage(Model model){
-        model.addAttribute("outlay", new Outlay());
-        List<Outlay> outlays = (List<Outlay>) outlayRepo.findAll();
+    private void models(Model model) {
+        List<Outlay> outlays = statisticService.findAllOutlay();
         model.addAttribute("outlays" , outlays);
         List<SubItem> subItems = statisticService.findAllSubItem();
         model.addAttribute("subItems", subItems);
         List<Item> items = statisticService.findAllItems();
         model.addAttribute("items", items);
+    }
+
+    private boolean resendModels(BindingResult result, Model model) {
+        if (result.hasErrors()){
+            models(model);
+            return true;
+        }
+        return false;
+    }
+
+    @GetMapping("/stat")
+    public String statPage(Model model){
+        model.addAttribute("outlayDTO", new OutlayDTO());
+        model.addAttribute("itemDTO", new ItemDTO());
+        model.addAttribute("subItemDTO", new SubItemDTO());
+        models(model);
         return "stat";
     }
 
+
     //----- Save\Delete Outlay
 
-    @GetMapping("/stat/new")
-    public String newOutlay(Model model){
-        model.addAttribute("outlay", new Outlay());
-        List<SubItem> subItems = statisticService.findAllSubItem();
-        model.addAttribute("subItems", subItems);
-        List<Item> items = statisticService.findAllItems();
-        model.addAttribute("items", items);
-
-        return "newoutlay";
-    }
-
-    @PostMapping("/stat/new")
-    public String saveOutlay(@Valid @ModelAttribute Outlay outlay,
-                             BindingResult bindingResult, Model model, RedirectAttributes atts){
-        if (bindingResult.hasErrors()){
-            atts.addAttribute("hasErrors", true);
-            List<SubItem> subItems = statisticService.findAllSubItem();
-            model.addAttribute("subItems", subItems);
-            List<Item> items = statisticService.findAllItems();
-            model.addAttribute("items", items);
-            return "newoutlay";
-        }
-//        outlayRepo.save(outlay);
-//        statisticService.saveOutlayDTO(outlayDTO);
+    @PostMapping(value = "/stat/saveOutlay")
+    public String saveOutlay(@ModelAttribute("outlayDTO") @Valid OutlayDTO outlayDTO, BindingResult result,
+                             Model model,
+                             @ModelAttribute("subItemDTO") SubItemDTO subItemDTO,
+                             @ModelAttribute("itemDTO") ItemDTO itemDTO){
+        if (resendModels(result, model))
+            return "stat";
+        statisticService.saveOutlay(outlayDTO);
         return "redirect:/stat";
     }
-
 
     @GetMapping("/stat/deleteOutlay/{id}")
     public String deleteOutlay(@PathVariable Long id){
@@ -85,12 +76,13 @@ public class StatisticController {
     }
 
     //----- Save\Delete Item
+
     @PostMapping(value = "/stat/saveItem")
-    public String saveItem(@ModelAttribute("itemSaving") @Valid ItemDTO itemDTO,
-                             BindingResult result){
-        if (result.hasErrors()){
-            return "redirect:/error";
-        }
+    public String saveItem(@ModelAttribute("itemDTO") @Valid ItemDTO itemDTO, BindingResult result,
+                           Model model,
+                           @ModelAttribute("subItemDTO") SubItemDTO subItemDTO,
+                           @ModelAttribute("outlayDTO") OutlayDTO outlayDTO){
+        if (resendModels(result, model)) return "stat";
         statisticService.saveItems(itemDTO);
         return "redirect:/stat";
     }
@@ -102,12 +94,13 @@ public class StatisticController {
     }
 
     //----- Save\Delete SubItem
+
     @PostMapping("/stat/saveSubItem")
-    public String saveOutlay(@ModelAttribute("subItem") @Valid SubItemDTO subItemDTO,
-                             BindingResult result){
-        if (result.hasErrors()){
-            return "redirect:/error";
-        }
+    public String saveSubItem(@ModelAttribute("subItemDTO") @Valid SubItemDTO subItemDTO, BindingResult result,
+                              Model model,
+                              @ModelAttribute("itemDTO") ItemDTO itemDTO,
+                              @ModelAttribute("outlayDTO") OutlayDTO outlayDTO){
+        if (resendModels(result, model)) return "stat";
         statisticService.saveSubItem(subItemDTO);
         return "redirect:/stat";
     }

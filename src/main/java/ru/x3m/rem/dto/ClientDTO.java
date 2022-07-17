@@ -6,13 +6,13 @@ import javax.validation.constraints.*;
 
 public class ClientDTO {
 
-    @NotNull
     private Long clientId;
 
-    @NotEmpty
+    @NotNull(message = "Не должно быть пустым")
+    @Size(min = 2, max = 45, message = "Миинимум {min}, максимум {max} символов")
     private String clientName;
 
-    @NotNull
+    @NotNull(message = "Выберите тип клиента")
     private  Long clientTypeId;
 
 

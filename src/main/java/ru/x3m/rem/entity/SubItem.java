@@ -1,6 +1,8 @@
 package ru.x3m.rem.entity;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -11,6 +13,8 @@ public class SubItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long subitemId;
 
+    @Valid
+    @NotNull
     @Column(name = "subitem_name")
     private String subitemName;
 

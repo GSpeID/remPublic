@@ -19,8 +19,8 @@ public class Device {
     private Long deviceId;
 
     @Column(unique = true, nullable = false)
-    @NotNull(message = "не должно быть пустым")
-    @Size(min = 3, max = 20, message = "минимум 3 символа")
+    @NotNull(message = "Не должно быть пустым")
+    @Size(min = 2, max = 45, message = "Миинимум {min}, максимум {max} символов")
     private String deviceName;
 
     @OneToMany(

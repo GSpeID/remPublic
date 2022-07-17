@@ -1,6 +1,8 @@
 package ru.x3m.rem.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -11,6 +13,8 @@ public class ClientType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long clientTypeId;
 
+    @NotNull(message = "Не должно быть пустым")
+    @Size(min = 2, max = 45, message = "Миинимум {min}, максимум {max} символов")
     @Column(nullable = false)
     private String clientTypeName;
 

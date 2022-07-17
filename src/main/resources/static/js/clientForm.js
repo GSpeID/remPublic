@@ -235,19 +235,19 @@ $(document).ready(function () {
             dataType: 'json',
         })
             .done(function (responseJson) {
-                const itemsDD = $("#dropItemsId").change(function (){
-                    getSubItems();
-                })
+                const itemsDD = $("#dropItemsId");
                 $.each(responseJson, function (index, items) {
                     $("<option>").val(items.itemId).text(items.itemName).appendTo(itemsDD);
                 });
             });
     }
 
-    function getSubItems() {
-        console.log("<---->");
-        const itemId = $("#dropItemsId").val();
-        const urlString1 = "/rem/statistic/api/subItemsByItemsId?itemsItemId=" + itemId;
+
+    $('#dropItemsId').on('change', function (){
+
+        let idd = $(this).val();
+        console.log(idd);
+        const urlString1 = "/rem/statistic/api/subItemsByItemsId?itemsItemId=" + idd;
         $.ajax({
             method: "GET",
             url: urlString1,
@@ -260,40 +260,7 @@ $(document).ready(function () {
                     $("<option>").val(subitems.subitemId).text(subitems.subitemName).appendTo(subitemsDD);
                 });
             });
-    }
-
-    //POST сохраниние затрат
-        $('#outlaySubmitBtn').on('click', function (event) {
-            event.preventDefault();
-            let description = $("#descriptionId").val();
-            let price = $("#priceId").val();
-            let date = $("#dateId").val();
-            let itemsItemId = $("#itemsItemId0").val();
-            let subitemsSubitemId = $("#subitemsSubitemId").val();
-            let data;
-            data = {
-                description,
-                price,
-                date,
-                subitemsSubitemId,
-                itemsItemId
-            }
-            console.log(data);
-            const json = JSON.stringify(data);
-            $.ajax({
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                url: "http://localhost:8191/rem/statistic/api/saveOutlayRest",
-                type: 'POST',
-                data: json,
-                dataType: 'json',
-                success: function (data) {
-                    console.log(data);
-                },
-            });
-        });
+    })
 
 });
 

@@ -14,15 +14,15 @@ import java.util.List;
 @Controller
 public class ManagementController {
 
-    private ManagementService managementService;
+    private final ManagementService managementService;
 
     @Autowired
     public ManagementController(ManagementService managementService) {
         this.managementService = managementService;
     }
 
-    @GetMapping("/repair-service/management")
-    public String allManagementPage(Model model) {
+    //--- для повторного использования в качестве метода, вместо дублирования кода
+    static void globalModelsList(Model model, ManagementService managementService) {
         List<Client> clients = managementService.findAllClients();
         model.addAttribute("clients", clients);
         List<Device> devices = managementService.findAllDevices();
@@ -33,16 +33,35 @@ public class ManagementController {
         model.addAttribute("repairTypes", repairTypes);
         List<RepairStatuses> repairStatuses = managementService.findAllRepairStatuses();
         model.addAttribute("repairStatuses", repairStatuses);
+    }
+
+    //---возыращения моделей для страницы с валидацией
+    private String modelsList(Model model) {
+        globalModelsList(model, managementService);
         return "/management";
+    }
+
+    @GetMapping("/repair-service/management")
+    public String allManagementPage(Model model) {
+        model.addAttribute("clientDTO", new ClientDTO());
+        model.addAttribute("deviceDTO", new DeviceDTO());
+        model.addAttribute("clientTypeDTO", new ClientTypeDTO());
+        model.addAttribute("repairTypeDTO", new RepairTypeDTO());
+        model.addAttribute("repairStatusDTO", new RepairStatusDTO());
+        return modelsList(model);
     }
 
     //----- Save\Delete Client
 
     @PostMapping("/repair-service/management/create-client")
-    public String createClientPost(@ModelAttribute("client") @Valid ClientDTO clientDTO,
-                                   Model model, BindingResult result) {
+    public String createClient(@ModelAttribute("clientDTO") @Valid ClientDTO clientDTO,
+                               BindingResult result, Model model,
+                               @ModelAttribute("deviceDTO")  DeviceDTO deviceDTO,
+                               @ModelAttribute("clientTypeDTO")  ClientTypeDTO clientTypeDTO,
+                               @ModelAttribute("repairTypeDTO")  RepairTypeDTO repairTypeDTO,
+                               @ModelAttribute("repairStatusDTO")  RepairStatusDTO repairStatusDTO) {
         if (result.hasErrors()) {
-            return "/management";
+            return modelsList(model);
         }
         managementService.saveClient(clientDTO);
         return "redirect:/repair-service/management";
@@ -58,11 +77,14 @@ public class ManagementController {
 
 
     @PostMapping("/repair-service/management/create-client-type")
-    public String createClientTypePost(@ModelAttribute("clientType")
-                                       @Valid ClientTypeDTO clientTypeDTO,
-                                       BindingResult result) {
+    public String createClientType(@ModelAttribute("clientTypeDTO") @Valid  ClientTypeDTO clientTypeDTO,
+                                   BindingResult result,Model model,
+                                   @ModelAttribute("clientDTO") ClientDTO clientDTO,
+                                   @ModelAttribute("deviceDTO")  DeviceDTO deviceDTO,
+                                   @ModelAttribute("repairTypeDTO")  RepairTypeDTO repairTypeDTO,
+                                   @ModelAttribute("repairStatusDTO")  RepairStatusDTO repairStatusDTO) {
         if (result.hasErrors()) {
-            return "/management";
+            return modelsList(model);
         }
         managementService.saveClientType(clientTypeDTO);
         return "redirect:/repair-service/management";
@@ -77,11 +99,14 @@ public class ManagementController {
     //----- Save\Delete Device
 
     @PostMapping("/repair-service/management/create-device")
-    public String createDevicePost(@ModelAttribute("device")
-                                   @Valid DeviceDTO deviceDTO,
-                                   BindingResult result) {
+    public String createDevice(@ModelAttribute("deviceDTO") @Valid  DeviceDTO deviceDTO,
+                               BindingResult result, Model model,
+                               @ModelAttribute("clientDTO") ClientDTO clientDTO,
+                               @ModelAttribute("clientTypeDTO")  ClientTypeDTO clientTypeDTO,
+                               @ModelAttribute("repairTypeDTO")  RepairTypeDTO repairTypeDTO,
+                               @ModelAttribute("repairStatusDTO")  RepairStatusDTO repairStatusDTO) {
         if (result.hasErrors()) {
-            return "/management";
+            return modelsList(model);
         }
         managementService.saveDevice(deviceDTO);
         return "redirect:/repair-service/management";
@@ -96,11 +121,14 @@ public class ManagementController {
     //----- Save\Delete Repair Type
 
     @PostMapping("/repair-service/management/create-repair-type")
-    public String createRepairTypePost(@ModelAttribute("repairType")
-                                       @Valid RepairTypeDTO repairTypeDTO,
-                                       BindingResult result) {
+    public String createRepairType(@ModelAttribute("repairTypeDTO") @Valid  RepairTypeDTO repairTypeDTO,
+                                   BindingResult result, Model model,
+                                   @ModelAttribute("clientDTO") ClientDTO clientDTO,
+                                   @ModelAttribute("deviceDTO")  DeviceDTO deviceDTO,
+                                   @ModelAttribute("clientTypeDTO")  ClientTypeDTO clientTypeDTO,
+                                   @ModelAttribute("repairStatusDTO")  RepairStatusDTO repairStatusDTO) {
         if (result.hasErrors()) {
-            return "/management";
+            return modelsList(model);
         }
         managementService.saveRepairType(repairTypeDTO);
         return "redirect:/repair-service/management";
@@ -115,11 +143,15 @@ public class ManagementController {
     //----- Save\Delete Statuses
 
     @PostMapping("/repair-service/management/create-status")
-    public String createStatus(@ModelAttribute("status")
-                               @Valid RepairStatusDTO repairStatusDTO,
-                               BindingResult result) {
+    public String createStatus(@ModelAttribute("repairStatusDTO") @Valid RepairStatusDTO repairStatusDTO,
+                               BindingResult result, Model model,
+                               @ModelAttribute("clientDTO") ClientDTO clientDTO,
+                               @ModelAttribute("deviceDTO")  DeviceDTO deviceDTO,
+                               @ModelAttribute("clientTypeDTO") ClientTypeDTO clientTypeDTO,
+                               @ModelAttribute("repairTypeDTO") RepairTypeDTO repairTypeDTO
+                               ) {
         if (result.hasErrors()) {
-            return "/management";
+            return modelsList(model);
         }
         managementService.saveStatus(repairStatusDTO);
         return "redirect:/repair-service/management";

@@ -52,11 +52,14 @@ public class StatisticRestController {
         return statisticService.findSubItemById(id);
     }
 
-
-
     @RequestMapping(value = "/outlays", method = RequestMethod.GET)
     public List<Outlay> getOutlays(){
         return statisticService.findAllOutlay();
+    }
+
+    @RequestMapping(value = "/items", method = RequestMethod.GET)
+    public List<Item> getItems(){
+        return statisticService.findAllItems();
     }
 
     @RequestMapping(value = "/subItems", method = RequestMethod.GET)
@@ -67,38 +70,6 @@ public class StatisticRestController {
     @RequestMapping(value = "/subItemsByItemsId", method = RequestMethod.GET)
     public List<SubItem> getSubByItemsItemsId(@RequestParam("itemsItemId") Long itemsItemId){
         return statisticService.findAllSubByItemsItemId(itemsItemId);
-    }
-
-    @RequestMapping(value = "/items", method = RequestMethod.GET)
-    public List<Item> getItems(){
-        return statisticService.findAllItems();
-    }
-
-
-    @PostMapping(value = "/saveItemRest")
-    public String saveItemDTO(@Valid @RequestBody ItemDTO itemDTO, Errors errors,
-                                BindingResult result, RedirectAttributes atts){
-        if(result.hasErrors()) {
-            atts.addAttribute("hasErrors", true);
-            return "saveItemRest";
-        }else{
-            statisticService.saveItems(itemDTO);
-
-        }
-
-        return HttpStatus.OK.getReasonPhrase();
-    }
-
-    @PostMapping(path = "/saveOutlayRest")
-    public String saveOutlayDTO(@RequestBody @Valid OutlayDTO outlayDTO, BindingResult result,
-                                RedirectAttributes atts){
-        if(result.hasErrors()) {
-            atts.addAttribute("hasErrors", true);
-            return "stat";
-        }else{
-            statisticService.saveOutlayDTO(outlayDTO);
-        }
-        return HttpStatus.OK.getReasonPhrase();
     }
 
 }

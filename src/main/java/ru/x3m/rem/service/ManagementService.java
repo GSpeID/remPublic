@@ -15,11 +15,11 @@ import java.util.Optional;
 @Transactional
 public class ManagementService {
 
-    private ClientRepo clientRepo;
-    private ClientTypeRepo clientTypeRepo;
-    private DeviceRepo deviceRepo;
-    private RepairTypeRepo repairTypeRepo;
-    private RepairStatusesRepo repairStatusesRepo;
+    private final ClientRepo clientRepo;
+    private final ClientTypeRepo clientTypeRepo;
+    private final DeviceRepo deviceRepo;
+    private final RepairTypeRepo repairTypeRepo;
+    private final RepairStatusesRepo repairStatusesRepo;
 
     @Autowired
     public ManagementService(ClientRepo clientRepo, ClientTypeRepo clientTypeRepo,
@@ -32,19 +32,31 @@ public class ManagementService {
         this.repairStatusesRepo = repairStatusesRepo;
     }
 
+
+    //--- Clients
     public Optional<ClientDTO> findClientById(Long clientId){
         return clientRepo.findById(clientId)
                 .map(ClientDTO::new);
-    }
-
-    public String findClientByName(String clientName){
-        return clientName;
     }
 
     public List<Client> findAllClients(){
         return (List<Client>) clientRepo.findAll();
     }
 
+    public void saveClient(ClientDTO clientDTO){
+        Client client = new Client();
+        client.setClientId(clientDTO.getClientId());
+        client.setClientName(clientDTO.getClientName());
+        client.setClientTypeId(clientDTO.getClientTypeId());
+        clientRepo.save(client);
+    }
+
+    public void deleteClient(Long clientId){
+        clientRepo.findById(clientId)
+                .ifPresent(clientRepo::delete);
+    }
+
+    //--- Client type
     public Optional<ClientTypeDTO> findClientTypeById(Long clientId){
         return clientTypeRepo.findById(clientId)
                 .map(ClientTypeDTO::new);
@@ -54,6 +66,19 @@ public class ManagementService {
         return (List<ClientType>) clientTypeRepo.findAll();
     }
 
+    public void saveClientType(ClientTypeDTO clientTypeDTO){
+        ClientType clientType = new ClientType();
+        clientType.setClientTypeId(clientTypeDTO.getClientTypeId());
+        clientType.setClientTypeName(clientTypeDTO.getClientTypeName());
+        clientTypeRepo.save(clientType);
+    }
+
+    public void deleteClientType(Long clientTypeId){
+        clientTypeRepo.findById(clientTypeId)
+                .ifPresent(clientTypeRepo::delete);
+    }
+
+    //--- Device
     public Optional<DeviceDTO> findDeviceById(Long deviceId){
         return deviceRepo.findById(deviceId)
                 .map(DeviceDTO::new);
@@ -63,6 +88,20 @@ public class ManagementService {
         return (List<Device>) deviceRepo.findAll();
     }
 
+    public void saveDevice(DeviceDTO deviceDTO){
+        Device device = new Device();
+        device.setDeviceId(deviceDTO.getDeviceId());
+        device.setDeviceName(deviceDTO.getDeviceName());
+        deviceRepo.save(device);
+
+    }
+
+    public void deleteDevice(Long deviceId){
+        deviceRepo.findById(deviceId)
+                .ifPresent(deviceRepo::delete);
+    }
+
+    //--- Repair type
     public Optional<RepairTypeDTO> findRepairTypeById(Long repairTypeId){
         return repairTypeRepo.findById(repairTypeId)
                 .map(RepairTypeDTO::new);
@@ -72,6 +111,19 @@ public class ManagementService {
         return (List<RepairType>) repairTypeRepo.findAll();
     }
 
+    public void saveRepairType(RepairTypeDTO repairTypeDTO){
+        RepairType repairType = new RepairType();
+        repairType.setRepairTypeId(repairTypeDTO.getRepairTypeId());
+        repairType.setRepairTypeName(repairTypeDTO.getRepairTypeName());
+        repairTypeRepo.save(repairType);
+    }
+
+    public void deleteRepairType(Long repairTypeId){
+        repairTypeRepo.findById(repairTypeId)
+                .ifPresent(repairTypeRepo::delete);
+    }
+
+    //--- Repair status
     public Optional<RepairStatusDTO> findRepairStatusById(Long statusId){
         return repairStatusesRepo.findById(statusId)
                 .map(RepairStatusDTO::new);
@@ -81,72 +133,16 @@ public class ManagementService {
         return (List<RepairStatuses>) repairStatusesRepo.findAll();
     }
 
-    public void saveClient(ClientDTO clientDTO){
-        Client client = new Client();
-        client.setClientId(clientDTO.getClientId());
-        client.setClientName(clientDTO.getClientName());
-        client.setClientTypeId(clientDTO.getClientTypeId());
-
-        clientRepo.save(client);
-    }
-
-    public void deleteClient(Long clientId){
-        clientRepo.findById(clientId)
-                .ifPresent(client -> clientRepo.delete(client));
-    }
-
-    public void saveClientType(ClientTypeDTO clientTypeDTO){
-        ClientType clientType = new ClientType();
-        clientType.setClientTypeId(clientTypeDTO.getClientTypeId());
-        clientType.setClientTypeName(clientTypeDTO.getClientTypeName());
-
-        clientTypeRepo.save(clientType);
-    }
-
-    public void deleteClientType(Long clientTypeId){
-        clientTypeRepo.findById(clientTypeId)
-                .ifPresent(clientType -> clientTypeRepo.delete(clientType));
-    }
-
-    public void saveDevice(DeviceDTO deviceDTO){
-        Device device = new Device();
-        device.setDeviceId(deviceDTO.getDeviceId());
-        device.setDeviceName(deviceDTO.getDeviceName());
-
-        deviceRepo.save(device);
-
-    }
-
-    public void deleteDevice(Long deviceId){
-        deviceRepo.findById(deviceId)
-                .ifPresent(device -> deviceRepo.delete(device));
-    }
-
-    public void saveRepairType(RepairTypeDTO repairTypeDTO){
-        RepairType repairType = new RepairType();
-        repairType.setRepairTypeId(repairTypeDTO.getRepairTypeId());
-        repairType.setRepairTypeName(repairTypeDTO.getRepairTypeName());
-
-        repairTypeRepo.save(repairType);
-    }
-
-    public void deleteRepairType(Long repairTypeId){
-        repairTypeRepo.findById(repairTypeId)
-                .ifPresent(repairType -> repairTypeRepo.delete(repairType));
-    }
-
-
     public  void saveStatus(RepairStatusDTO repairStatusDTO){
         RepairStatuses repairStatus = new RepairStatuses();
         repairStatus.setStatusId(repairStatusDTO.getStatusId());
         repairStatus.setStatusName(repairStatusDTO.getStatusName());
-
         repairStatusesRepo.save(repairStatus);
     }
 
     public void deleteStatus(Long status_id){
         repairStatusesRepo.findById(status_id)
-                .ifPresent(repairStatuses -> repairStatusesRepo.delete(repairStatuses));
+                .ifPresent(repairStatusesRepo::delete);
     }
 
 }

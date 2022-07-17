@@ -34,4 +34,14 @@ $(document).ready(function() {
             url: './localisation/ru.json'
         }
     } );
+    $('#itms').DataTable( {
+        language: {
+            url: './localisation/ru.json'
+        }
+    } );
+        $('#subitms').DataTable( {
+        language: {
+            url: './localisation/ru.json'
+        }
+    } );
 } );
