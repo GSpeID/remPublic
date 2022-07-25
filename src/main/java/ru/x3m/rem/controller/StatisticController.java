@@ -20,8 +20,8 @@ import java.util.List;
 @Controller
 public class StatisticController {
 
-    private StatisticService statisticService;
-    private OutlayRepo outlayRepo;
+    private final StatisticService statisticService;
+    private final OutlayRepo outlayRepo;
 
     @Autowired
     public StatisticController(StatisticService statisticService, OutlayRepo outlayRepo) {
