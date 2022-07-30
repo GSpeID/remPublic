@@ -27,7 +27,6 @@ $(document).ready(function () {
                 $('#editRepairModal #deviceName').val(repair.deviceName);
                 $('#editRepairModal #repairTypeName').val(repair.repairTypeName);
                 $('#editRepairModal #statusName').val(repair.statusName);
-                console.log(repair)
             }
         });
 

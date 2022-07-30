@@ -36,6 +36,12 @@ public class EventRestController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/findEventById/{id}")
+    @ResponseBody
+    public EventDTO findEvent(@PathVariable("id") Long id){
+        return convertToDto(eventService.findEventById(id));
+    }
+
     @PostMapping("/saveEvent")
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
@@ -43,6 +49,14 @@ public class EventRestController {
         Event event = convertToEntity(eventDTO);
         Event eventCreated = eventService.saveEventRest(event);
         return convertToDto(eventCreated);
+    }
+
+    @DeleteMapping("/deleteEvent/{id}")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public EventDTO deleteEvent(@PathVariable("id") Long id) {
+        eventService.deleteEvent(id);
+        return null;
     }
 
     //--- entity to DTO

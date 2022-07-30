@@ -2,7 +2,6 @@ package ru.x3m.rem.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.x3m.rem.dto.EventDTO;
 import ru.x3m.rem.dto.EventGroupDTO;
 import ru.x3m.rem.entity.Event;
 import ru.x3m.rem.entity.EventGroup;
@@ -31,21 +30,20 @@ public class EventService {
         return (List<Event>) eventRepo.findAll();
     }
 
-    public Optional<EventDTO> findEventById(Long id){
-        return eventRepo.findById(id)
-                .map(EventDTO::new);
+    public Event findEventById(Long id){
+        return eventRepo.findEventById(id);
     }
 
-    public void saveEvent(EventDTO eventDTO){
-        Event event = new Event();
-        event.setId(eventDTO.getId());
-        event.setTitle(eventDTO.getTitle());
-        event.setStart(eventDTO.getStart());
-        event.setEnd(eventDTO.getEnd());
-        event.setAllDay(eventDTO.getAllDay());
-        event.setGroupId(eventDTO.getGroupId());
-        eventRepo.save(event);
-    }
+//    public void saveEvent(EventDTO eventDTO){
+//        Event event = new Event();
+//        event.setId(eventDTO.getId());
+//        event.setTitle(eventDTO.getTitle());
+//        event.setStart(eventDTO.getStart());
+//        event.setEnd(eventDTO.getEnd());
+//        event.setAllDay(eventDTO.getAllDay());
+//        event.setGroupId(eventDTO.getGroupId());
+//        eventRepo.save(event);
+//    }
 
     public Event saveEventRest(Event event){
         event.setId(event.getId());

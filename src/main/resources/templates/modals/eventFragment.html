@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+
+</head>
+<body>
+<div th:fragment="eventAddFragment">
+    <div class="modal" tabindex="-1" id="addEvent">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Мероприятие</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="col-12">
+                            <form th:action="@{/calendar/saveEvent}" th:object="${eventDTO}" method="post">
+                                <input type="checkbox"
+                                       name="allDay" id="allDay" value="true" checked="checked"
+                                />
+                                    <label class="form-check-label" th:for="${allDay}">На протяжении всего дня</label>
+                                    <br>
+                                    <br>
+                                    <select class="form-select"
+                                            id="dropGroups"
+                                            required="required"
+                                            onchange="update9()"
+                                            th:object="${groupList}"
+                                    >
+                                        <option value="">Тип мероприятия</option>
+                                        <option th:each="group : ${groupList}"
+                                                th:value="${group.groupId}"
+                                                th:text="${group.groupName}"
+                                        ></option>
+                                    </select>
+                                    <div th:if="${#fields.hasErrors('groupId')}" th:errors="*{groupId}" class="error"/>
+                                    <br>
+                                    <input type="text" class="form-control" placeholder="Описание мероприятия"
+                                           minlength="5" maxlength="255"
+                                           th:field="*{title}"
+                                           id="title" name="title"
+                                           value="" required="required"
+                                    />
+                                <br>
+                                <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error"/>
+                                    <label>Начало мероприятия</label>
+                                    <input type="datetime-local" class="form-control"
+                                           th:field="*{start}"
+                                           id="start" name="start"
+                                           value="" required="required"
+                                    />
+                                <div th:if="${#fields.hasErrors('start')}" th:errors="*{start}" class="error"/>
+                                <br>
+                                    <label>Завершение мероприятия</label>
+                                    <input type="datetime-local" class="form-control"
+                                           th:field="*{end}"
+                                           id="end" name="end"
+                                           value="" required="required"
+                                    />
+                                <div th:if="${#fields.hasErrors('end')}" th:errors="*{end}" class="error"/>
+                                <input type="hidden" class="form-control"
+                                       id="groupId" name="groupId" value=""/>
+                                <input type="hidden" class="form-control"
+                                       id="id" name="id" value=""/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="button" id="deleteEventBtn" class="btn btn-primary">Удалить</button>
+                    <button type="button" id="saveEventBtn" class="btn btn-primary">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
