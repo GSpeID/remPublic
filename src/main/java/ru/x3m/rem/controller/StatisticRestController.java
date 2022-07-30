@@ -27,7 +27,7 @@ import java.util.Optional;
 @RequestMapping("/statistic/api/")
 public class StatisticRestController {
 
-    private StatisticService statisticService;
+    private final StatisticService statisticService;
 
     @Autowired
     public StatisticRestController(StatisticService statisticService) {

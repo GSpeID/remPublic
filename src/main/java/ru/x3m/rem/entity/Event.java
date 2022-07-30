@@ -7,13 +7,13 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "event")
+@Table(name = "events")
 @Getter
 @Setter
 @NoArgsConstructor
 public class Event {
 
-    @Column(name = "id")
+    @Column(name = "event_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

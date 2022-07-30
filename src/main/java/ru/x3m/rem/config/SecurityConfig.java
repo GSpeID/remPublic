@@ -5,6 +5,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 
 @Configuration
@@ -19,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/authUser", "/login", "/static/**", "/css/*", "/js/*","/images/*","/favicon.ico",
-                        "/statistic/api/*", "/statistic/api/**").permitAll()
+                        "/statistic/api/*", "/statistic/api/**", "/events/api/*", "/events/api/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

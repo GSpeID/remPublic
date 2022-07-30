@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "event_group")
+@Table(name = "event_groups")
 public class EventGroup {
 
     @Id

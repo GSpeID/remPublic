@@ -226,6 +226,12 @@ $(document).ready(function () {
         document.getElementById('subitemsSubitemId').value = option.value;
     }
 
+    window.update9 = function () {
+        const select = document.getElementById('dropGroups');
+        const option = select.options[select.selectedIndex];
+        document.getElementById('groupId').value = option.value;
+    }
+
     //зависимый выпадающий список при создании затрат
     getItems();
     function getItems() {

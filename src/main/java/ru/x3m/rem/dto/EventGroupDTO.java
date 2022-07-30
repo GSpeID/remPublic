@@ -1,6 +1,7 @@
 package ru.x3m.rem.dto;
 
 import lombok.*;
+import ru.x3m.rem.entity.EventGroup;
 
 import java.io.Serializable;
 
@@ -11,4 +12,9 @@ import java.io.Serializable;
 public class EventGroupDTO {
     private  Long groupId;
     private  String groupName;
+
+    public EventGroupDTO(EventGroup eventGroup) {
+        this.groupId = eventGroup.getGroupId();
+        this.groupName = eventGroup.getGroupName();
+    }
 }
