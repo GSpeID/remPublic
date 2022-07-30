@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function() {
     $('#addEvent').modal('hide').on('hidden.bs.modal', function () {
         $(this).find('form').trigger('reset');
@@ -7,6 +8,20 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     const calendarEl = document.getElementById('calendar');
     const calendar = new FullCalendar.Calendar(calendarEl, {
+        eventDidMount: function(info) {
+            let eventEnd = 'До конца дня';
+            if (!info.event.allDay) {
+                eventEnd = moment(info.event.endStr).format('YYYY-MM-DD HH:mm:ss');
+            }
+            $(info.el).popover({
+                title: info.event.title,
+                placement: 'top',
+                trigger: 'hover',
+                content: 'Начало: '+ moment(info.event.startStr).format('YYYY-MM-DD HH:mm')+'\n'+
+                         'Окончание: '+ eventEnd,
+                container: 'body'
+            });
+        },
         locale: 'ru',
         initialView: 'dayGridMonth',
         editable: true,
@@ -14,12 +29,11 @@ document.addEventListener('DOMContentLoaded', function() {
         nowIndicator: true,
         selectable: true,
         // selectHelper: true,
-        weekNumbers: true,
         views: {
-            listDay: { buttonText: 'В течении дня' },
-            listWeek: { buttonText: 'В течении недели' },
-            listMonth: { buttonText: 'В течении месяца' },
-            listYear:{buttonText: 'В течении года'}
+            listDay: { buttonText: 'За день' },
+            listWeek: { buttonText: 'За неделю' },
+            listMonth: { buttonText: 'За месяц' },
+            listYear:{buttonText: 'За год'}
         },
         headerToolbar: {
             left: 'dayGridDay,timeGridWeek,dayGridMonth listDay,listWeek,listMonth,listYear',
@@ -35,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const end = $('#end').val();
                 const allDay = $('#allDay').val();
                 const groupId = $('#groupId').val();
+                const backgroundColor = $('#backgroundColor').val();
                 $.ajax({
                     headers: {
                         'Accept': 'application/json',
@@ -42,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     },
                     url:'/rem/events/api/saveEvent',
                     type:'POST',
-                    data: JSON.stringify({ title, start, end, allDay, groupId}),
+                    data: JSON.stringify({ title, start, end, allDay, groupId, backgroundColor}),
                     dataType:'json',
                     success:function(data)
                     {
@@ -62,13 +77,11 @@ document.addEventListener('DOMContentLoaded', function() {
         eventDrop: function(info) {
             const msg = confirm("Are you sure about this change?")
             if (msg) {
-                // if (!confirm("Are you sure about this change?")) {
-                //     info.revert();
-                // }
                 const id = info.event.id;
                 const title = info.event.title;
                 const groupId = info.event.groupId;
                 const allDay = info.event.allDay;
+                const backgroundColor = info.event.backgroundColor;
                 const start = moment(info.event.startStr).format('YYYY-MM-DD HH:mm:ss');
                 let end = null;
                 if (!allDay) {
@@ -81,15 +94,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     },
                     type: 'POST',
                     url: '/rem/events/api/saveEvent',
-                    data: JSON.stringify({id, title, start, end, allDay, groupId}),
+                    data: JSON.stringify({id, title, start, end, allDay, groupId, backgroundColor}),
                     dataType: 'json',
                     traditional: true,
                     success: function (msg) {
-                        console.log(msg);
                         calendar.refetchEvents();
                     },
                     error: function (msg) {
-                        console.log(msg);
                         alert('We are unable to process your request');
                     }
                 });
@@ -105,7 +116,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 type: 'GET',
                 url: '/rem/events/api/findEventById/' + eventId,
                 success: function (editEvent) {
-                    console.log(info.id)
                     $('#addEvent #id').val(editEvent.id)
                     $('#addEvent #dropGroups').val(editEvent.groupId)
                     $('#addEvent #title').val(editEvent.title);
@@ -113,7 +123,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     $('#addEvent #end').val(editEvent.end);
                     $('#addEvent #allDay').val(editEvent.allDay);
                     $('#addEvent #groupId').val(editEvent.groupId);
-                }
+                    $('#addEvent #backgroundColor').val(editEvent.backgroundColor);
+                },
+
             });
             //сохранить ивент
             $('#saveEventBtn').off("click").on("click", function () {
@@ -123,6 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const end = $('#end').val();
                 const allDay = $('#allDay').val();
                 const groupId = $('#groupId').val();
+                const backgroundColor = $('#backgroundColor').val();
                 $.ajax({
                     headers: {
                         'Accept': 'application/json',
@@ -130,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     },
                     url:'/rem/events/api/saveEvent',
                     type:'POST',
-                    data: JSON.stringify({id, title, start, end, allDay, groupId}),
+                    data: JSON.stringify({id, title, start, end, allDay, groupId, backgroundColor}),
                     dataType:'json',
                     success:function(data)
                     {
@@ -162,19 +175,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         },
-
-
-        // eventDidMount: function(info) {
-        //     const tooltip = new Tooltip(info.el, {
-        //         title: info.event.extendedProps.description,
-        //         placement: 'top',
-        //         trigger: 'hover',
-        //         container: 'body'
-        //     });
-        // },
-
         events:{
             url: '/rem/events/api/findAllEvents',
+            textColor: 'black'
         }
 
 

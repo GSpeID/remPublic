@@ -12,9 +12,11 @@ import java.io.Serializable;
 public class EventGroupDTO {
     private  Long groupId;
     private  String groupName;
+    private String backgroundColor;
 
     public EventGroupDTO(EventGroup eventGroup) {
         this.groupId = eventGroup.getGroupId();
         this.groupName = eventGroup.getGroupName();
+        this.backgroundColor = eventGroup.getBackgroundColor();
     }
 }

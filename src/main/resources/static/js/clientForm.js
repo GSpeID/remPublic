@@ -230,6 +230,10 @@ $(document).ready(function () {
         const option = select.options[select.selectedIndex];
         document.getElementById('groupId').value = option.value;
     }
+    $("#dropGroups").on('change', function () {
+        const color = $(this).find('option:selected').attr('id');
+        $('#backgroundColor').val(color);
+    });
 
     //зависимый выпадающий список при создании затрат
     getItems();

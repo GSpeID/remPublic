@@ -21,8 +21,11 @@ public class EventDTO {
     private  String end;
     @NotNull(message = "Необходимо выбрать")
     private  Boolean allDay;
+
     @NotNull(message = "Необходимо выбрать")
     private  Long groupId;
+
+    private String backgroundColor;
 
     public EventDTO(Event event) {
         this.id = event.getId();
@@ -30,6 +33,7 @@ public class EventDTO {
         this.start = event.getStart();
         this.end = event.getEnd();
         this.allDay = event.getAllDay();
-//        this.groupId = event.getGroupId();
+        this.groupId = event.getGroupId();
+        this.backgroundColor = event.getBackgroundColor();
     }
 }

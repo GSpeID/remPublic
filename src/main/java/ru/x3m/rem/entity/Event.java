@@ -33,6 +33,9 @@ public class Event {
     @Column(name = "group_id")
     private Long groupId;
 
+    @Column(name = "background_color")
+    private String backgroundColor;
+
     @ManyToOne
     @JoinColumn(name = "group_id", insertable = false, updatable = false)
     private EventGroup eventGroup;

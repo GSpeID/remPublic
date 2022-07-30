@@ -34,6 +34,7 @@
                                         <option th:each="group : ${groupList}"
                                                 th:value="${group.groupId}"
                                                 th:text="${group.groupName}"
+                                                th:id="${group.backgroundColor}"
                                         ></option>
                                     </select>
                                     <div th:if="${#fields.hasErrors('groupId')}" th:errors="*{groupId}" class="error"/>
@@ -65,6 +66,8 @@
                                        id="groupId" name="groupId" value=""/>
                                 <input type="hidden" class="form-control"
                                        id="id" name="id" value=""/>
+                                <input type="hidden" class="form-control"
+                                       id="backgroundColor" name="backgroundColor" value=""/>
                             </form>
                         </div>
                     </div>

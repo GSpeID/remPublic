@@ -22,6 +22,9 @@ public class EventGroup {
     @Column(name = "group_name")
     private String groupName;
 
+    @Column(name = "group_color")
+    private String backgroundColor;
+
     @OneToMany(
             mappedBy = "eventGroup",
             cascade = CascadeType.ALL
