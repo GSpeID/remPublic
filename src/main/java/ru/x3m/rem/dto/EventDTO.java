@@ -15,17 +15,14 @@ import java.io.Serializable;
 public class EventDTO {
 
     private  Long id;
-    @NotNull(message = "Необходимо заполнить")
     private  String title;
     private  String start;
     private  String end;
-    @NotNull(message = "Необходимо выбрать")
     private  Boolean allDay;
-
-    @NotNull(message = "Необходимо выбрать")
     private  Long groupId;
-
     private String backgroundColor;
+
+    private String url;
 
     public EventDTO(Event event) {
         this.id = event.getId();
@@ -35,5 +32,6 @@ public class EventDTO {
         this.allDay = event.getAllDay();
         this.groupId = event.getGroupId();
         this.backgroundColor = event.getBackgroundColor();
+        this.url = event.getUrl();
     }
 }

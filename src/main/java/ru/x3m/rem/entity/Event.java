@@ -36,6 +36,9 @@ public class Event {
     @Column(name = "background_color")
     private String backgroundColor;
 
+    @Column(name = "url")
+    private String url;
+
     @ManyToOne
     @JoinColumn(name = "group_id", insertable = false, updatable = false)
     private EventGroup eventGroup;

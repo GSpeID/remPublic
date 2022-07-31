@@ -53,6 +53,7 @@ public class EventService {
         event.setAllDay(event.getAllDay());
         event.setGroupId(event.getGroupId());
         event.setBackgroundColor(event.getBackgroundColor());
+        event.setUrl(event.getUrl());
         eventRepo.save(event);
         return event;
     }

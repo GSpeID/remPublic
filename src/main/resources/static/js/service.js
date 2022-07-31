@@ -1,5 +1,22 @@
 $(document).ready(function () {
 
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+
+    const table = $('#r-services').DataTable({
+            language: {
+                url: './localisation/ru.json'
+            },
+            columnDefs: [
+                {
+                    target: 7,
+                    visible: false,
+                    searchable: false,
+                }
+            ]
+        }
+    );
 
     //редактирование заказа
     $('table .editRepairBtn').on('click', function (event) {
@@ -64,32 +81,37 @@ $(document).ready(function () {
 
     });
 
-    //сохраниние в календарь
-    $('#saveEventBtn').off("click").on("click", function () {
-        const title = $('#title').val();
-        const start = $('#start').val();
-        const end = $('#end').val();
-        const allDay = $('#allDay').val();
-        const groupId = $('#groupId').val();
-        const backgroundColor = $('#backgroundColor').val();
-        $.ajax({
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            url:'/rem/events/api/saveEvent',
-            type:'POST',
-            data: JSON.stringify({ title, start, end, allDay, groupId, backgroundColor}),
-            dataType:'json',
-            success:function(data)
-            {
 
-                $('#addEvent').modal('hide');
-                calendar.refetchEvents();
-            },
-            error:function (error){
-                alert('error:'+eval(error));
-            }
+
+    // сохраниние в календарь
+    $('table .saveRepairEventBtn').off("click").on("click", function () {
+        $('#r-services tbody').off("click").on('click', 'tr', function (event) {
+        const repairId = table.row($(this).closest('tr')).data()[7];
+        const title = table.row($(this).closest('tr')).data()[0];
+        const start = table.row($(this).closest('tr')).data()[6];
+        const end = start;
+        const allDay = true;
+        const groupId = '1';
+        const backgroundColor = '#4da843';
+        const url = 'http://localhost:8191/rem/findRepair/' + repairId;
+        console.log(repairId);
+        console.log(url);
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: '/rem/events/api/saveEvent',
+                type: 'POST',
+                data: JSON.stringify({title, start, end, allDay, groupId, backgroundColor, url}),
+                dataType: 'json',
+                success: function (data) {
+                    $('#addEvent').modal('hide');
+                },
+                error: function (error) {
+                    alert('error:' + eval(error));
+                }
+            });
         });
     });
 
