@@ -1,3 +1,17 @@
+$(document).ready(function () {
+
+    window.update9 = function () {
+        const select = document.getElementById('dropGroups');
+        const option = select.options[select.selectedIndex];
+        document.getElementById('groupId').value = option.value;
+    }
+    $("#dropGroups").on('change', function () {
+        const color = $(this).find('option:selected').attr('id');
+        $('#backgroundColor').val(color);
+    });
+
+});
+
 
 document.addEventListener('DOMContentLoaded', function() {
     $('#addEvent').modal('hide').on('hidden.bs.modal', function () {
@@ -9,7 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const calendarEl = document.getElementById('calendar');
     const calendar = new FullCalendar.Calendar(calendarEl, {
         eventDidMount: function(info) {
-            let eventEnd = 'До конца дня';
+            // const eventGroup = info.event
+            let eventEnd = 'На протяжении всего дня';
             if (!info.event.allDay) {
                 eventEnd = moment(info.event.endStr).format('YYYY-MM-DD HH:mm:ss');
             }
@@ -17,8 +32,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 title: info.event.title,
                 placement: 'top',
                 trigger: 'hover',
-                content: 'Начало: '+ moment(info.event.startStr).format('YYYY-MM-DD HH:mm')+'\n'+
-                         'Окончание: '+ eventEnd,
+                content: 'Начало: '+ moment(info.event.startStr).format('YYYY-MM-DD HH:mm') +'\n'+
+                         'Окончание: ' + eventEnd,
                 container: 'body'
             });
         },
