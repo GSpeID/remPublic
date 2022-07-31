@@ -93,7 +93,7 @@ $(document).ready(function () {
         const allDay = true;
         const groupId = '1';
         const backgroundColor = '#4da843';
-        const url = 'http://localhost:8191/rem/findRepair/' + repairId;
+        const url = '/rem/repair-service/api/findRepair/' + repairId;
         console.log(repairId);
         console.log(url);
             $.ajax({
