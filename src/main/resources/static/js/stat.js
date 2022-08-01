@@ -66,7 +66,6 @@ $(document).ready(function () {
         const select = document.getElementById('dropItems');
         const option = select.options[select.selectedIndex];
         document.getElementById('itemsItemId').value = option.value;
-        console.log(option.value)
     }
 
     window.update7 = function () {

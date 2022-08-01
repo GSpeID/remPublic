@@ -1,9 +1,5 @@
 $(document).ready(function() {
-    $('#clients').DataTable( {
-        language: {
-            url: '../localisation/ru.json'
-        }
-    } );
+
     $('#devices').DataTable( {
         language: {
             url: '../localisation/ru.json'
@@ -24,11 +20,7 @@ $(document).ready(function() {
             url: '../localisation/ru.json'
         }
     } );
-    // $('#r-services').DataTable( {
-    //     language: {
-    //         url: './localisation/ru.json'
-    //     }
-    // } );
+
     $('#stats').DataTable( {
         language: {
             url: './localisation/ru.json'

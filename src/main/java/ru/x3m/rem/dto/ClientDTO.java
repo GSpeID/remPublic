@@ -1,9 +1,16 @@
 package ru.x3m.rem.dto;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.x3m.rem.entity.Client;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+@NoArgsConstructor
+@Getter
+@Setter
 public class ClientDTO {
 
     private Long clientId;
@@ -15,10 +22,11 @@ public class ClientDTO {
     @NotNull(message = "Выберите тип клиента")
     private  Long clientTypeId;
 
+    private String clientContact;
 
+    private String clientPhone;
 
-    public ClientDTO(){
-    }
+    private String clientMail;
 
     public ClientDTO(Long clientId, String clientName, Long clientTypeId) {
         this.clientId = clientId;
@@ -32,27 +40,4 @@ public class ClientDTO {
         this.clientTypeId = client.getClientType().getClientTypeId();
     }
 
-    public Long getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(Long clientId) {
-        this.clientId = clientId;
-    }
-
-    public String getClientName() {
-        return clientName;
-    }
-
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
-    }
-
-    public Long getClientTypeId() {
-        return clientTypeId;
-    }
-
-    public void setClientTypeId(Long clientTypeId) {
-        this.clientTypeId = clientTypeId;
-    }
 }

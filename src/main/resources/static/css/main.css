@@ -1,4 +1,8 @@
-.navbar{
+.error {
+    color: darkred;
+}
+
+.navbar {
     position: relative;
     display: flex;
     align-items: center;
@@ -8,12 +12,12 @@
     flex-wrap: nowrap;
 }
 
-body {
-    color: rgba(4,57,94,1);
-    background: rgba(4,57,94,.1);
-    padding: 0 1em 1em;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 1em;
+.indexFont {
+    font-family: "Lucida Console", monospace;
+
 }
 
-
+.center {
+    display: block;
+    margin: 0 auto;
+}

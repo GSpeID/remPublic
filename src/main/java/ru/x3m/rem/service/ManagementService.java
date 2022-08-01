@@ -34,20 +34,22 @@ public class ManagementService {
 
 
     //--- Clients
-    public Optional<ClientDTO> findClientById(Long clientId){
-        return clientRepo.findById(clientId)
-                .map(ClientDTO::new);
+    public Client findClientById(Long id) {
+        return clientRepo.findClientByClientId(id);
     }
 
     public List<Client> findAllClients(){
         return (List<Client>) clientRepo.findAll();
     }
 
-    public void saveClient(ClientDTO clientDTO){
+    public void saveClient(ClientDTO clientDTO) {
         Client client = new Client();
         client.setClientId(clientDTO.getClientId());
         client.setClientName(clientDTO.getClientName());
         client.setClientTypeId(clientDTO.getClientTypeId());
+        client.setClientContact(clientDTO.getClientContact());
+        client.setClientPhone(clientDTO.getClientPhone());
+        client.setClientMail(clientDTO.getClientMail());
         clientRepo.save(client);
     }
 

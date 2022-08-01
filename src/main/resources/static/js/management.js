@@ -1,5 +1,31 @@
 $(document).ready(function () {
 
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+
+    $('#clients').DataTable({
+        language: {
+            url: '../localisation/ru.json'
+        }
+    });
+
+    //полная информация о клиенте
+    $('table .fullInfoClientBtn').on('click', function (event) {
+        event.preventDefault();
+        const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
+        $.ajax({
+            type: 'GET',
+            url: '/rem/repair-service/management/api/findClient/' + id,
+            success: function (client) {
+                $('#clientCardModal #clientName').val(client.clientName);
+                $('#clientCardModal #clientContact').val(client.clientContact);
+                $('#clientCardModal #clientPhone').val(client.clientPhone);
+                $('#clientCardModal #clientMail').val(client.clientMail);
+            }
+        });
+    });
+
     //редактирование клиента
     $('table .editClientBtn').on('click', function (event) {
         event.preventDefault();
@@ -72,6 +98,11 @@ $(document).ready(function () {
                 $('#editStatusModal #statusName').val(status.statusName);
             }
         });
+    });
+
+    $("#dropClientType").on('change', function () {
+        const clientTypeId = $(this).find('option:selected').attr('value');
+        $('#clientType').val(clientTypeId);
     });
 
 });

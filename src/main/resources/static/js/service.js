@@ -5,16 +5,12 @@ $(document).ready(function () {
     })
 
     const table = $('#r-services').DataTable({
+            columnDefs: [
+                {"visible": false, "targets": 7}
+            ],
             language: {
                 url: './localisation/ru.json'
             },
-            columnDefs: [
-                {
-                    target: 7,
-                    visible: false,
-                    searchable: false,
-                }
-            ]
         }
     );
 

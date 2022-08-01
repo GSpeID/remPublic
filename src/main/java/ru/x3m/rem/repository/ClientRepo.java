@@ -8,5 +8,6 @@ import ru.x3m.rem.entity.Client;
 
 @Repository
 public interface ClientRepo extends CrudRepository<Client, Long> {
+    Client findClientByClientId(Long id);
 
 }
