@@ -4,9 +4,8 @@
 <head>
     <div th:replace="/custom/pagesTemplate :: css-head"></div>
     <div th:replace="/custom/pagesTemplate :: js-head"></div>
-    <script th:src="@{../js/management.js}" src="../static/js/management.js"></script>
-    <script th:src="@{../js/dataTable.js}" src="../static/js/dataTable.js"></script>
-
+    <script src="../static/js/management.js" th:src="@{../js/management.js}"></script>
+    <script src="../static/js/dataTable.js" th:src="@{../js/dataTable.js}"></script>
     <title>Управление</title>
 </head>
 <body>
@@ -14,76 +13,77 @@
 <div class="accordion" id="accordionExample">
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingOne">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <button aria-controls="collapseOne" aria-expanded="true" class="accordion-button"
+                    data-bs-target="#collapseOne" data-bs-toggle="collapse" type="button">
                 <strong>Клиенты</strong> &nbsp; Всего клиентов : &nbsp;
                 <div th:text="${clients.size()}"></div>
             </button>
         </h2>
-        <div id="collapseOne" class="accordion-collapse collapse show"
-             aria-labelledby="headingOne"
-             data-bs-parent="#accordionExample">
+        <div aria-labelledby="headingOne" class="accordion-collapse collapse show"
+             data-bs-parent="#accordionExample"
+             id="collapseOne">
             <div class="accordion-body">
                 <div class="col-12">
                     <div>
-                        <form th:action="@{/repair-service/management/create-client}" th:object="${clientDTO}"
-                              method="post">
+                        <form method="post" th:action="@{/repair-service/management/create-client}"
+                              th:object="${clientDTO}">
                             <div class="row">
                                 <div class="col">
-                                    <select class="form-select" th:object="${clientTypes}" id="dropClientType"
+                                    <select class="form-select" id="dropClientType" th:object="${clientTypes}"
                                     >
                                         <option value="0">Выберите тип клиента</option>
                                         <option th:each="clientType : ${clientTypes}"
-                                                th:value="${clientType.clientTypeId}"
+                                                th:required="required"
                                                 th:text="${clientType.clientTypeName}"
-                                                th:required="required"></option>
+                                                th:value="${clientType.clientTypeId}"></option>
                                     </select>
-                                    <div th:if="${#fields.hasErrors('clientTypeId')}" th:errors="*{clientTypeId}"
-                                         class="error"/>
-                                    <input type="hidden" class="form-control"
-                                           id="clientType" name="clientTypeId" value=""/>
+                                    <div class="error" th:errors="*{clientTypeId}"
+                                         th:if="${#fields.hasErrors('clientTypeId')}"/>
+                                    <input class="form-control" id="clientType"
+                                           name="clientTypeId" type="hidden" value=""/>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <input type="text" class="form-control"
-                                               placeholder="Контактное лицо"
-                                               id="clientContact" name="clientContact" value=""/>
+                                        <input class="form-control" id="clientContact"
+                                               name="clientContact"
+                                               placeholder="Контактное лицо" type="text" value=""/>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <input type="text" class="form-control"
+                                        <input class="form-control" id="clientPhone"
+                                               name="clientPhone"
                                                pattern="+7[0-9]{10}"
-                                               placeholder="Телефон +71234567890"
-                                               id="clientPhone" name="clientPhone" value=""/>
+                                               placeholder="Телефон +71234567890" type="text" value=""/>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <input type="email" class="form-control"
-                                               placeholder="E-mail"
-                                               id="clientMail" name="clientMail" value=""/>
+                                        <input class="form-control" id="clientMail"
+                                               name="clientMail"
+                                               placeholder="E-mail" type="email" value=""/>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="Клиент"
-                                               id="clientName" name="clientName" value=""
-                                               aria-label="client name" aria-describedby="button-addon1"
-                                               th:field="*{clientName}"
+                                        <input aria-describedby="button-addon1" aria-label="client name"
+                                               class="form-control"
+                                               id="clientName" name="clientName" placeholder="Клиент"
+                                               th:field="*{clientName}" type="text"
+                                               value=""
                                         />
-                                        <button class="btn btn-outline-secondary" type="submit"
-                                                id="button-addon1">Добавить клиента
+                                        <button class="btn btn-outline-secondary" id="button-addon1"
+                                                type="submit">Добавить клиента
                                         </button>
                                     </div>
-                                    <div th:if="${#fields.hasErrors('clientName')}" th:errors="*{clientName}"
-                                         class="error"/>
+                                    <div class="error" th:errors="*{clientName}"
+                                         th:if="${#fields.hasErrors('clientName')}"/>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <br>
-                    <table id="clients" class="table table-hover">
+                    <table class="table table-hover" id="clients">
                         <thead>
                         <tr>
                             <th scope="col">Клиент ID</th>
@@ -102,19 +102,23 @@
                             <td th:text="${client.getClientType().getClientTypeName()}"></td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a th:href="@{findClient/(*{client.clientId})}"
-                                       class="btn btn-outline-info fullInfoClientBtn"
-                                       data-toggle="tooltip" data-placement="top" title="Полная информация"
-                                       data-bs-toggle="modal" data-bs-target="#clientCardModal"><i
+                                    <a class="btn btn-outline-info fullInfoClientBtn"
+                                       data-bs-target="#clientCardModal"
+                                       data-bs-toggle="modal" data-placement="top" data-toggle="tooltip"
+                                       th:href="@{findClient/(*{client.clientId})}" title="Полная информация"><i
                                             class="fa-regular fa-folder-open"></i></a>
-                                    <a th:href="@{findClient/(*{client.clientId})}" data-toggle="tooltip"
-                                       data-placement="top" title="Редактировать"
-                                       class="btn btn-outline-secondary editClientBtn"
-                                       data-bs-toggle="modal" data-bs-target="#editClientModal"><i
+                                    <a class="btn btn-outline-secondary editClientBtn" data-bs-target="#editClientModal"
+                                       data-bs-toggle="modal" data-placement="top"
+                                       data-toggle="tooltip"
+                                       th:href="@{findClient/(*{client.clientId})}" title="Редактировать"><i
                                             class="fa-regular fa-pen-to-square"></i></a>
-                                    <a class="btn btn-outline-danger" data-toggle="tooltip" data-placement="top"
-                                       title="Удалить"
-                                       th:href="@{/repair-service/management/delete-client/{id}(id=${client.clientId})}">
+                                    <a class="btn btn-outline-secondary clientDocsBtn" data-bs-target="#clientDocsModal"
+                                       data-bs-toggle="modal" data-placement="top" data-toggle="tooltip"
+                                       th:href="@{findClient/(*{client.clientName})}" title="Открыть документы">
+                                        <i class="fa-solid fa-book"></i></a>
+                                    <a class="btn btn-outline-danger" data-placement="top" data-toggle="tooltip"
+                                       th:href="@{/repair-service/management/delete-client/{id}(id=${client.clientId})}"
+                                       title="Удалить">
                                         <i class="fa-solid fa-folder-minus"></i>
                                     </a>
                                 </div>
@@ -129,33 +133,36 @@
     </div>
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingTwo">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            <button aria-controls="collapseTwo" aria-expanded="false" class="accordion-button collapsed"
+                    data-bs-target="#collapseTwo" data-bs-toggle="collapse" type="button">
                 <strong>Техника</strong> &nbsp; Всего моделей техники : &nbsp;
                 <div th:text="${devices.size()}"></div>
             </button>
         </h2>
-        <div id="collapseTwo" class="accordion-collapse show"
-             aria-labelledby="headingTwo"
-             data-bs-parent="#accordionExample">
+        <div aria-labelledby="headingTwo" class="accordion-collapse show"
+             data-bs-parent="#accordionExample"
+             id="collapseTwo">
             <div class="accordion-body">
                 <div>
-                    <form class="row" th:action="@{/repair-service/management/create-device/}" th:object="${deviceDTO}" method="post">
-                        <div class="input-group mb-3"  >
-                            <input type="text" class="form-control" placeholder="Введите название или модель техники"
-                                   id="deviceName" name="deviceName" value="" required="required"
-                                   aria-label="device name" aria-describedby="button-addon2"
-                                   th:field="*{deviceName}"
+                    <form class="row" method="post" th:action="@{/repair-service/management/create-device/}"
+                          th:object="${deviceDTO}">
+                        <div class="input-group mb-3">
+                            <input aria-describedby="button-addon2" aria-label="device name" class="form-control"
+                                   id="deviceName" name="deviceName" placeholder="Введите название или модель техники"
+                                   required="required"
+                                   th:field="*{deviceName}" type="text"
+                                   value=""
                             />
                             <button class="btn btn-outline-secondary"
-                                    type="submit" id="button-addon2">Добавить модель техники</button>
+                                    id="button-addon2" type="submit">Добавить модель техники
+                            </button>
                         </div>
-                        <div th:if="${#fields.hasErrors('deviceName')}" th:errors="*{deviceName}" class="error"/>
+                        <div class="error" th:errors="*{deviceName}" th:if="${#fields.hasErrors('deviceName')}"/>
                     </form>
                 </div>
                 <br>
                 <div class="col-12">
-                    <table id="devices" class="table table-hover">
+                    <table class="table table-hover" id="devices">
                         <thead>
                         <tr>
                             <th scope="col">Техника ID</th>
@@ -172,9 +179,9 @@
                             <td th:text="${device.getDeviceName()}"></td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a th:href="@{findDevice/(*{device.getDeviceId()})}"
-                                       class="btn btn-outline-warning editDeviceBtn"
-                                       data-bs-toggle="modal" data-bs-target="#editDeviceModal">Редкатировать</a>
+                                    <a class="btn btn-outline-warning editDeviceBtn"
+                                       data-bs-target="#editDeviceModal"
+                                       data-bs-toggle="modal" th:href="@{findDevice/(*{device.getDeviceId()})}">Редкатировать</a>
                                     <a class="btn btn-outline-danger"
                                        th:href="@{/repair-service/management/delete-device/{id}(id=${device.deviceId})}"
                                     >Удалить</a>
@@ -190,34 +197,39 @@
     </div>
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingThree">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            <button aria-controls="collapseThree" aria-expanded="false" class="accordion-button collapsed"
+                    data-bs-target="#collapseThree" data-bs-toggle="collapse" type="button">
                 <strong>Типы клиентов</strong> &nbsp; Всего типов клиентов : &nbsp;
                 <div th:text="${clientTypes.size()}"></div>
             </button>
         </h2>
-        <div id="collapseThree" class="accordion-collapse show"
-             aria-labelledby="headingThree"
-             data-bs-parent="#accordionExample">
+        <div aria-labelledby="headingThree" class="accordion-collapse show"
+             data-bs-parent="#accordionExample"
+             id="collapseThree">
             <div class="accordion-body">
                 <div class="col-12">
                     <div>
-                        <form class="row" th:action="@{/repair-service/management/create-client-type/}"
-                              th:object="${clientTypeDTO}" method="post">
-                            <div class="input-group mb-3"  >
-                                <input type="text" class="form-control" placeholder="Введите тип клиента"
-                                       id="clientTypeName" name="clientTypeName" value="" required="required"
-                                       aria-label="client type name" aria-describedby="button-addon3"
-                                       th:field="*{clientTypeName}"
+                        <form class="row" method="post"
+                              th:action="@{/repair-service/management/create-client-type/}"
+                              th:object="${clientTypeDTO}">
+                            <div class="input-group mb-3">
+                                <input aria-describedby="button-addon3" aria-label="client type name"
+                                       class="form-control"
+                                       id="clientTypeName" name="clientTypeName" placeholder="Введите тип клиента"
+                                       required="required"
+                                       th:field="*{clientTypeName}" type="text"
+                                       value=""
                                 />
                                 <button class="btn btn-outline-secondary"
-                                        type="submit" id="button-addon3">Добавить тип клиента</button>
+                                        id="button-addon3" type="submit">Добавить тип клиента
+                                </button>
                             </div>
-                            <div th:if="${#fields.hasErrors('clientTypeName')}" th:errors="*{clientTypeName}" class="error"/>
+                            <div class="error" th:errors="*{clientTypeName}"
+                                 th:if="${#fields.hasErrors('clientTypeName')}"/>
                         </form>
                     </div>
                     <br>
-                    <table id="clientsTypes" class="table table-hover">
+                    <table class="table table-hover" id="clientsTypes">
                         <thead>
                         <tr>
                             <th scope="col">Тип клиента ID</th>
@@ -234,10 +246,10 @@
                             <td th:text="${clientType.getClientTypeName()}"></td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a th:href="@{findClientType/(*{clientType.clientTypeId})}"
-                                       class="btn btn-outline-warning editClientTypeBtn"
+                                    <a class="btn btn-outline-warning editClientTypeBtn"
+                                       data-bs-target="#editClientTypeModal"
                                        data-bs-toggle="modal"
-                                       data-bs-target="#editClientTypeModal">Редактировать</a>
+                                       th:href="@{findClientType/(*{clientType.clientTypeId})}">Редактировать</a>
                                     <a class="btn btn-outline-danger"
                                        th:href="@{/repair-service/management/delete-client-type/{id}(id=${clientType.clientTypeId})}">Удалить</a>
                                 </div>
@@ -252,34 +264,37 @@
     </div>
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingFour">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+            <button aria-controls="collapseFour" aria-expanded="false" class="accordion-button collapsed"
+                    data-bs-target="#collapseFour" data-bs-toggle="collapse" type="button">
                 <strong>Виды ремонтов</strong> &nbsp; Всего типов ремонтов :&nbsp;
                 <div th:text="${repairTypes.size()}"></div>
             </button>
         </h2>
-        <div id="collapseFour" class="accordion-collapse show"
-             aria-labelledby="headingFour"
-             data-bs-parent="#accordionExample">
+        <div aria-labelledby="headingFour" class="accordion-collapse show"
+             data-bs-parent="#accordionExample"
+             id="collapseFour">
             <div class="accordion-body">
                 <div>
-                    <form class="row" th:action="@{/repair-service/management/create-repair-type/}"
-                          th:object="${repairTypeDTO}" method="post">
-                        <div class="input-group mb-3"  >
-                            <input type="text" class="form-control" placeholder="Введите тип ремонта"
-                                   id="repairTypeName" name="repairTypeName" value="" required="required"
-                                   aria-label="repair type name" aria-describedby="button-addon4"
-                                   th:field="*{repairTypeName}"
+                    <form class="row" method="post"
+                          th:action="@{/repair-service/management/create-repair-type/}" th:object="${repairTypeDTO}">
+                        <div class="input-group mb-3">
+                            <input aria-describedby="button-addon4" aria-label="repair type name" class="form-control"
+                                   id="repairTypeName" name="repairTypeName" placeholder="Введите тип ремонта"
+                                   required="required"
+                                   th:field="*{repairTypeName}" type="text"
+                                   value=""
                             />
                             <button class="btn btn-outline-secondary"
-                                    type="submit" id="button-addon4">Добавить тип ремонта</button>
+                                    id="button-addon4" type="submit">Добавить тип ремонта
+                            </button>
                         </div>
-                        <div th:if="${#fields.hasErrors('repairTypeName')}" th:errors="*{repairTypeName}" class="error"/>
+                        <div class="error" th:errors="*{repairTypeName}"
+                             th:if="${#fields.hasErrors('repairTypeName')}"/>
                     </form>
                 </div>
                 <br>
                 <div class="col-12">
-                    <table id="repairsTypes" class="table table-hover">
+                    <table class="table table-hover" id="repairsTypes">
                         <thead>
                         <tr>
                             <th scope="col">Вид ремонта ID</th>
@@ -296,10 +311,10 @@
                             <td th:text="${repairType.getRepairTypeName()}"></td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a th:href="@{findRepairType/(*{repairType.getRepairTypeId()})}"
-                                       class="btn btn-outline-warning editRepairTypeBtn"
+                                    <a class="btn btn-outline-warning editRepairTypeBtn"
+                                       data-bs-target="#editRepairTypeModal"
                                        data-bs-toggle="modal"
-                                       data-bs-target="#editRepairTypeModal">Редактировать</a>
+                                       th:href="@{findRepairType/(*{repairType.getRepairTypeId()})}">Редактировать</a>
                                     <a class="btn btn-outline-danger"
                                        th:href="@{/repair-service/management/delete-repair-type/{id}(id=${repairType.repairTypeId})}">Удалить</a>
                                 </div>
@@ -315,34 +330,36 @@
 
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingFive">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+            <button aria-controls="collapseFive" aria-expanded="false" class="accordion-button collapsed"
+                    data-bs-target="#collapseFive" data-bs-toggle="collapse" type="button">
                 <strong>Статусы заказа</strong> &nbsp; Всего статусов :&nbsp;
                 <div th:text="${repairStatuses.size()}"></div>
             </button>
         </h2>
-        <div id="collapseFive" class="accordion-collapse show"
-             aria-labelledby="headingFive"
-             data-bs-parent="#accordionExample">
+        <div aria-labelledby="headingFive" class="accordion-collapse show"
+             data-bs-parent="#accordionExample"
+             id="collapseFive">
             <div class="accordion-body">
                 <div class="col-12">
                     <div>
-                        <form class="row" th:action="@{/repair-service/management/create-status/}"
-                              th:object="${repairStatusDTO}" method="post">
-                            <div class="input-group mb-3"  >
-                                <input type="text" class="form-control" placeholder="Введите статус заказа"
-                                       id="statusName" name="statusName" value="" required="required"
-                                       aria-label="status name" aria-describedby="button-addon5"
-                                       th:field="*{statusName}"
+                        <form class="row" method="post"
+                              th:action="@{/repair-service/management/create-status/}" th:object="${repairStatusDTO}">
+                            <div class="input-group mb-3">
+                                <input aria-describedby="button-addon5" aria-label="status name" class="form-control"
+                                       id="statusName" name="statusName" placeholder="Введите статус заказа"
+                                       required="required"
+                                       th:field="*{statusName}" type="text"
+                                       value=""
                                 />
                                 <button class="btn btn-outline-secondary"
-                                        type="submit" id="button-addon5">Добавить статус заказа</button>
+                                        id="button-addon5" type="submit">Добавить статус заказа
+                                </button>
                             </div>
-                            <div th:if="${#fields.hasErrors('statusName')}" th:errors="*{statusName}" class="error"/>
+                            <div class="error" th:errors="*{statusName}" th:if="${#fields.hasErrors('statusName')}"/>
                         </form>
                     </div>
                     <br>
-                    <table id="statuses" class="table table-hover">
+                    <table class="table table-hover" id="statuses">
                         <thead>
                         <tr>
                             <th scope="col">Статус ID</th>
@@ -359,9 +376,9 @@
                             <td th:text="${status.getStatusName()}"></td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a th:href="@{findStatus/(*{status.getStatusId()})}"
-                                       class="btn btn-outline-warning editStatusBtn"
-                                       data-bs-toggle="modal" data-bs-target="#editStatusModal">Редактировать</a>
+                                    <a class="btn btn-outline-warning editStatusBtn"
+                                       data-bs-target="#editStatusModal"
+                                       data-bs-toggle="modal" th:href="@{findStatus/(*{status.getStatusId()})}">Редактировать</a>
                                     <a class="btn btn-outline-danger"
                                        th:href="@{/repair-service/management/delete-status/{id}(id=${status.getStatusId()})}">Удалить</a>
                                 </div>

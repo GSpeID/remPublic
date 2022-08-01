@@ -1,59 +1,57 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 
 <html lang="en">
 <head>
     <div th:replace="~{/custom/pagesTemplate :: css-head}"></div>
     <div th:replace="~{/custom/pagesTemplate :: js-head}"></div>
-    <script th:src="@{/js/dataTable.js}" src="/static/js/dataTable.js"></script>
-    <script th:src="@{/js/stat.js}" src="../static/js/stat.js"></script>
-
+    <script src="/static/js/dataTable.js" th:src="@{/js/dataTable.js}"></script>
+    <script src="../static/js/stat.js" th:src="@{/js/stat.js}"></script>
     <title>Расходы</title>
-
-
 </head>
-
 <body>
 <div th:replace="~{/custom/pagesTemplate :: nav-bar(Расходы)}"></div>
 <br>
 <div class="accordion" id="accordionExample1">
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingOne1">
-            <button class="accordion-button"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#collapseOne1"
+            <button aria-controls="collapseOne1"
                     aria-expanded="true"
-                    aria-controls="collapseOne1">
+                    class="accordion-button"
+                    data-bs-target="#collapseOne1"
+                    data-bs-toggle="collapse"
+                    type="button">
                 <strong>Статьи расходов</strong> &nbsp;
                 Всего записей : &nbsp;
                 <div th:text="${items.size()}"></div>
             </button>
         </h2>
-        <div id="collapseOne1"
+        <div aria-labelledby="headingOne1"
              class="accordion-collapse collapse show"
-             aria-labelledby="headingOne1"
-             data-bs-parent="#accordionExample1">
+             data-bs-parent="#accordionExample1"
+             id="collapseOne1">
             <div class="accordion-body">
                 <div>
-                    <form class="row" th:action="@{/stat/saveItem}" th:object="${itemDTO}" method="post">
-                        <div class="input-group mb-3"  >
-                            <input type="text" class="form-control" placeholder="Введите название статьи расходов"
-                                   id="itemName" name="itemName" value="" required="required"
-                                   aria-label="item name" aria-describedby="button-addon2"
-                                   th:field="*{itemName}"
+                    <form class="row" method="post" th:action="@{/stat/saveItem}" th:object="${itemDTO}">
+                        <div class="input-group mb-3">
+                            <input aria-describedby="button-addon2" aria-label="item name" class="form-control"
+                                   id="itemName" minlength="2" maxlength="255" name="itemName"
+                                   placeholder="Введите название статьи расходов" required="required"
+                                   th:field="*{itemName}" type="text"
+                                   value=""
                             />
                             <button class="btn btn-outline-secondary"
-                                    type="submit" id="button-addon1">Добавить статью</button>
+                                    id="button-addon1" type="submit">Добавить статью
+                            </button>
                         </div>
-                        <div th:if="${#fields.hasErrors('itemName')}" th:errors="*{itemName}" class="error"/>
+                        <div class="error" th:errors="*{itemName}" th:if="${#fields.hasErrors('itemName')}"/>
                     </form>
                 </div>
                 <br>
                 <div class="col-12">
-                    <table id="itms" class="table table-hover">
+                    <table class="table table-hover" id="itms">
                         <thead>
                         <tr class="bg-light">
                             <th scope="col">ID</th>
@@ -71,10 +69,10 @@
                             <td th:text="${itemList.getItemName()}"></td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a th:href="@{findItem/(*{itemList.itemId})}"
-                                       class="btn btn-outline-warning editOutlayBtn"
+                                    <a class="btn btn-outline-warning editOutlayBtn"
+                                       data-bs-target="#editOutlayModal"
                                        data-bs-toggle="modal"
-                                       data-bs-target="#editOutlayModal">Редактировать</a>
+                                       th:href="@{findItem/(*{itemList.itemId})}">Редактировать</a>
                                     <a class="btn btn-outline-danger"
                                        th:href="@{/stat/deleteItem/{id}(id=${itemList.itemId})}">
                                         Удалить</a>
@@ -92,57 +90,64 @@
 <div class="accordion" id="accordionExample2">
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingOne2">
-            <button class="accordion-button"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#collapseOne2"
+            <button aria-controls="collapseOne2"
                     aria-expanded="true"
-                    aria-controls="collapseOne2">
+                    class="accordion-button"
+                    data-bs-target="#collapseOne2"
+                    data-bs-toggle="collapse"
+                    type="button">
                 <strong>Подстатьи расходов</strong> &nbsp;
                 Всего записей : &nbsp;
                 <div th:text="${subItems.size()}"></div>
             </button>
         </h2>
-        <div id="collapseOne2"
+        <div aria-labelledby="headingOne2"
              class="accordion-collapse collapse show"
-             aria-labelledby="headingOne2"
-             data-bs-parent="#accordionExample1">
+             data-bs-parent="#accordionExample1"
+             id="collapseOne2">
             <div class="accordion-body">
                 <div class="col-12">
                     <div>
-                        <form class="row" th:action="@{/stat/saveSubItem}" th:object="${subItemDTO}" method="post">
+                        <form class="row" method="post" th:action="@{/stat/saveSubItem}" th:object="${subItemDTO}">
                             <div class="col">
                                 <select class="form-select"
                                         id="dropItems"
+                                        onchange="update6()"
+                                        required
                                         th:object="${items}"
-                                        onchange="update6()">
+                                >
                                     <option value="0">Выбрать статью</option>
                                     <option th:each="item : ${items}"
-                                            th:value="${item.itemId}"
-                                            th:text="${item.itemName}"></option>
+                                            th:text="${item.itemName}"
+                                            th:value="${item.itemId}"></option>
                                 </select>
-                                <div th:if="${#fields.hasErrors('itemsItemId')}" th:errors="*{itemsItemId}" class="error"/>
+                                <div class="error" th:errors="*{itemsItemId}"
+                                     th:if="${#fields.hasErrors('itemsItemId')}"/>
 
                             </div>
                             <div class="col">
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Введите название подстатьи"
-                                           id="subitemName" name="subitemName" value=""
-                                           aria-label="sub item name" aria-describedby="button-addon2"
-                                           th:field="*{subitemName}"
+                                    <input aria-describedby="button-addon2" aria-label="sub item name"
+                                           class="form-control"
+                                           id="subitemName" maxlength="255" minlength="2" name="subitemName"
+                                           placeholder="Введите название подстатьи" required="required"
+                                           th:field="*{subitemName}" type="text"
+                                           value=""
                                     />
-                                    <button class="btn btn-outline-secondary" type="submit"
-                                            id="button-addon2">Добавить подстатью</button>
+                                    <button class="btn btn-outline-secondary" id="button-addon2"
+                                            type="submit">Добавить подстатью
+                                    </button>
                                 </div>
-                                <div th:if="${#fields.hasErrors('subitemName')}" th:errors="*{subitemName}" class="error"/>
+                                <div class="error" th:errors="*{subitemName}"
+                                     th:if="${#fields.hasErrors('subitemName')}"/>
                             </div>
-                            <input type="hidden" class="form-control"
-                                   id="itemsItemId" name="itemsItemId" value=""/>
-                            <input type="hidden" class="form-control"
-                                   id="subitemId" name="subitemId" value=""/>
+                            <input class="form-control" id="itemsItemId"
+                                   name="itemsItemId" type="hidden" value=""/>
+                            <input class="form-control" id="subitemId"
+                                   name="subitemId" type="hidden" value=""/>
                         </form>
                     </div>
-                    <table id="subitms" class="table table-hover">
+                    <table class="table table-hover" id="subitms">
                         <thead>
                         <tr class="bg-light">
                             <th scope="col">ID</th>
@@ -162,10 +167,10 @@
                             <td th:text="${subitemList.getItem().getItemName()}"></td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a th:href="@{findSubitem/(*{subitemList.subitemId})}"
-                                       class="btn btn-outline-warning editOutlayBtn"
+                                    <a class="btn btn-outline-warning editOutlayBtn"
+                                       data-bs-target="#editOutlayModal"
                                        data-bs-toggle="modal"
-                                       data-bs-target="#editOutlayModal">Редактировать</a>
+                                       th:href="@{findSubitem/(*{subitemList.subitemId})}">Редактировать</a>
                                     <a class="btn btn-outline-danger"
                                        th:href="@{/stat/deleteSubItem/{id}(id=${subitemList.subitemId})}">
                                         Удалить</a>
@@ -183,23 +188,23 @@
 <div class="accordion" id="accordionExample">
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingOne">
-            <button class="accordion-button"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#collapseOne"
+            <button aria-controls="collapseOne"
                     aria-expanded="true"
-                    aria-controls="collapseOne">
-                    <strong>Траты</strong> &nbsp;
-                    Всего записей : &nbsp;
+                    class="accordion-button"
+                    data-bs-target="#collapseOne"
+                    data-bs-toggle="collapse"
+                    type="button">
+                <strong>Траты</strong> &nbsp;
+                Всего записей : &nbsp;
                 <div th:text="${outlays.size()}"></div>
             </button>
         </h2>
-        <div id="collapseOne"
+        <div aria-labelledby="headingOne"
              class="accordion-collapse collapse show"
-             aria-labelledby="headingOne"
-             data-bs-parent="#accordionExample">
+             data-bs-parent="#accordionExample"
+             id="collapseOne">
             <div class="accordion-body">
-                <form id="outlaySubmit" th:object="${outlayDTO}" th:action="@{/stat/saveOutlay}" method="post">
+                <form id="outlaySubmit" method="post" th:action="@{/stat/saveOutlay}" th:object="${outlayDTO}">
                     <div class="row">
                         <div class="col">
                             <select class="form-select"
@@ -210,7 +215,7 @@
                             >
                                 <option value="">Выбрать статью</option>
                             </select>
-                            <div th:if="${#fields.hasErrors('itemsItemId')}" th:errors="*{itemsItemId}" class="error"/>
+                            <div class="error" th:errors="*{itemsItemId}" th:if="${#fields.hasErrors('itemsItemId')}"/>
                         </div>
                         <div class="col">
                             <select class="form-select"
@@ -221,45 +226,47 @@
                             >
                                 <option selected value="">Выбрать подстатью</option>
                             </select>
-                            <div th:if="${#fields.hasErrors('subitemsSubitemId')}" th:errors="*{subitemsSubitemId}"
-                                 class="error"/>
+                            <div class="error" th:errors="*{subitemsSubitemId}"
+                                 th:if="${#fields.hasErrors('subitemsSubitemId')}"/>
                         </div>
                         <div class="col">
-                            <input type="date" class="form-control" required="required"
-                                   id="date" name="date" value="" placeholder="Укажите дату"/>
+                            <input class="form-control" id="date" name="date"
+                                   placeholder="Укажите дату" required="required" type="date" value=""/>
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control"
-                                   id="price" placeholder="Введите сумму"
-                                   th:field="*{price}"
+                            <input class="form-control" id="price"
+                                   max="10" min="0" placeholder="Введите сумму"
+                                   step="0.1" th:field="*{price}"
+                                   type="number"
                             />
-                            <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="error"/>
+                            <div class="error" th:errors="*{price}" th:if="${#fields.hasErrors('price')}"/>
                         </div>
                     </div>
                     <br>
                     <div class="row">
                         <div class="col">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Описание затрат"
-                                       id="description"
-                                       aria-label="outlay description" aria-describedby="button-addon3"
-                                       th:field="*{description}"
+                                <input aria-describedby="button-addon3" aria-label="outlay description"
+                                       class="form-control"
+                                       id="description" maxlength="255" minlength="3"
+                                       placeholder="Описание затрат" th:field="*{description}"
+                                       type="text"
                                 />
-                                <button class="btn btn-outline-secondary" type="submit" id="button-addon3">Добавить
+                                <button class="btn btn-outline-secondary" id="button-addon3" type="submit">Добавить
                                     расходы
                                 </button>
                             </div>
-                            <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error"/>
+                            <div class="error" th:errors="*{description}" th:if="${#fields.hasErrors('description')}"/>
                         </div>
                     </div>
-                    <input type="hidden" class="form-control"
-                           id="itemsItemId0" name="itemsItemId" value=""/>
-                    <input type="hidden" class="form-control"
-                           id="subitemsSubitemId" name="subitemsSubitemId" value=""/>
+                    <input class="form-control" id="itemsItemId0"
+                           name="itemsItemId" type="hidden" value=""/>
+                    <input class="form-control" id="subitemsSubitemId"
+                           name="subitemsSubitemId" type="hidden" value=""/>
                 </form>
                 <br>
                 <div class="col-12">
-                    <table id="stats" class="table table-hover">
+                    <table class="table table-hover" id="stats">
                         <thead>
                         <tr class="bg-light">
                             <th scope="col">Статья расходов</th>
@@ -283,10 +290,10 @@
                             <td th:text="${outlayList.date}"></td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a th:href="@{findOutlay/(*{outlayList.outlayId})}"
-                                       class="btn btn-outline-warning editOutlayBtn"
+                                    <a class="btn btn-outline-warning editOutlayBtn"
+                                       data-bs-target="#editOutlayModal"
                                        data-bs-toggle="modal"
-                                       data-bs-target="#editOutlayModal">Редактировать</a>
+                                       th:href="@{findOutlay/(*{outlayList.outlayId})}">Редактировать</a>
                                     <a class="btn btn-outline-danger"
                                        th:href="@{/stat/deleteOutlay/{id}(id=${outlayList.outlayId})}">
                                         Удалить</a>
