@@ -16,8 +16,154 @@
 <body>
 <div th:replace="~{/custom/pagesTemplate :: nav-bar(Заказы)}"></div>
 <br>
-<br>
-<div class="container-fluid">
+<div class="container-fluid" id="createRepairContainer">
+    <form>
+        <br>
+        <div class=row>
+            <div class="col">
+                <div class="form-group mb-3">
+                    <select class="form-select"
+                            th:object="${clients}"
+                            id="dropClient"
+                            onchange="update1()"
+                            required
+                    >
+                        <option value="">Выбрать клиента</option>
+                        <option th:each="client : ${clients}"
+                                th:value="${client.clientId}"
+                                th:text="${client.clientName}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group mb-3">
+                    <select class="form-select"
+                            th:object="${repairTypes}"
+                            id="dropRepairType"
+                            onchange="update3()"
+                            required
+                    >
+                        <option value="">Выбрать тип ремонта</option>
+                        <option th:each="repairType : ${repairTypes}"
+                                th:value="${repairType.repairTypeId}"
+                                th:text="${repairType.repairTypeName}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group mb-3">
+                    <select class="form-select"
+                            th:object="${devices}"
+                            id="dropDevice"
+                            onchange="update4()"
+                            required
+                    >
+                        <option value="">Выбрать технику</option>
+                        <option th:each="device : ${devices}"
+                                th:value="${device.deviceId}"
+                                th:text="${device.deviceName}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group mb-3">
+                    <select class="form-select"
+                            th:object="${repairStatuses}"
+                            id="dropStatus"
+                            onchange="update5()"
+                            required
+                    >
+                        <option value="">Статус</option>
+                        <option th:each="repairStatus : ${repairStatuses}"
+                                th:value="${repairStatus.statusId}"
+                                th:text="${repairStatus.statusName}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <input type="number" class="form-control" required="required"
+                           placeholder="Обьявленная стоимость" step="0.1" min="0" max="10"
+                           id="fullCost" name="fullCost" value=""/>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <input type="number" class="form-control" required="required"
+                           placeholder="Получено средств" step="0.1" min="0" max="10"
+                           id="paid" name="paid" value=""/>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <input type="number" class="form-control" required="required"
+                           placeholder="Затраты" step="0.1" min="0" max="10"
+                           id="outlay" name="outlay" value=""/>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <input type="date" class="form-control" required="required"
+                           placeholder="Дата проведения работ"
+                           id="repairDate" name="repairDate" value=""/>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-auto">
+                <input type="checkbox" class="btn-check" autocomplete="off"
+                       id="cashBtn" name="cashBtn" value="false">
+                <label class="btn btn-outline-secondary" for="cashBtn">Наличные</label>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <input type="text" class="form-control" required="required"
+                           placeholder="Адресс обьекта" minlength="3" maxlength="255"
+                           id="repairAddress" name="repairAddress" value=""
+                    />
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Описание"
+                           id="repairDescription" minlength="3" maxlength="255"
+                           aria-label="repair address" aria-describedby="button-addon10"
+                    />
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon10"
+                            data-toggle="tooltip" data-placement="top" title="Сохранить заказ">
+                        <i class="fa-solid fa-file-import"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="hidden" class="form-control"
+                   id="repairId" name="repairId" value=""/>
+        </div>
+        <div class="form-group">
+            <input type="hidden" class="form-control"
+                   id="clientId" name="clientId" value=""/>
+        </div>
+        <div class="form-group">
+            <input type="hidden" class="form-control"
+                   id="repairTypeId" name="repairTypeId" value=""/>
+        </div>
+        <div class="form-group">
+            <input type="hidden" class="form-control"
+                   id="deviceId" name="deviceId" value=""/>
+        </div>
+        <div class="form-group">
+            <input type="hidden" class="form-control"
+                   id="statusId" name="statusId" value=""/>
+        </div>
+        <br>
+    </form>
+</div>
+<div class="container-fluid" id="r-table">
+    <br>
     <table id="r-services" class="table table-hover">
         <thead>
         <tr class="bg-light">
@@ -67,17 +213,16 @@
         </tr>
         </tbody>
     </table>
+    <br>
 </div>
-    <br>
-    <br>
-    <!-- Button trigger modal  Add New Repair -->
-    <div class="text-center">
-        <button type="button" class="btn btn-outline-primary repairAddModalBtn"
-                data-bs-toggle="modal" data-bs-target="#addRepairModal">
-            Создать новый заказ
-        </button>
-    </div>
-    <!-- Modal Add New Client -->
+<!--    &lt;!&ndash; Button trigger modal  Add New Repair &ndash;&gt;-->
+<!--    <div class="text-center">-->
+<!--        <button type="button" class="btn btn-outline-primary repairAddModalBtn"-->
+<!--                data-bs-toggle="modal" data-bs-target="#addRepairModal">-->
+<!--            Создать новый заказ-->
+<!--        </button>-->
+<!--    </div>-->
+<!-- Modal Add New Client -->
 <div th:replace="~{/custom/modals :: repairAddFragment}"></div>
     <!-- Modal Edit Repair -->
 <div th:replace="~{/custom/modals :: repairEditFragment}"></div>

@@ -5,7 +5,6 @@
 
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
     <div th:replace="~{/custom/pagesTemplate :: css-head}"></div>
     <div th:replace="~{/custom/pagesTemplate :: js-head}"></div>
     <script th:src="@{/js/dataTable.js}" src="/static/js/dataTable.js"></script>
@@ -227,11 +226,11 @@
                         </div>
                         <div class="col">
                             <input type="date" class="form-control" required="required"
-                                   id="date" name="date" value="" placeholder="укажите дату"/>
+                                   id="date" name="date" value="" placeholder="Укажите дату"/>
                         </div>
                         <div class="col">
                             <input type="text" class="form-control"
-                                   id="price" placeholder="Enter price"
+                                   id="price" placeholder="Введите сумму"
                                    th:field="*{price}"
                             />
                             <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="error"/>

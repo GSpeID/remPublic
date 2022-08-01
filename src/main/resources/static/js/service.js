@@ -1,14 +1,18 @@
 $(document).ready(function () {
 
+    $('#cashBtn').change(function () {
+        $(this).val($(this).prop('checked'));
+    })
+
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
 
     const table = $('#r-services').DataTable({
-            columnDefs: [
-                {"visible": false, "targets": 7}
-            ],
-            language: {
+        columnDefs: [
+            {"visible": false, "targets": 7}
+        ],
+        language: {
                 url: './localisation/ru.json'
             },
         }

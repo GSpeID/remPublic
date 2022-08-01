@@ -21,3 +21,11 @@
     display: block;
     margin: 0 auto;
 }
+
+#r-table {
+    border: 1px solid black;
+}
+
+#createRepairContainer {
+    border: 1px solid black;
+}

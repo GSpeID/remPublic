@@ -173,6 +173,7 @@
     </div>
 </div>
 
+<!--event add\edit -->
 <div th:fragment="eventAddFragment">
     <div class="modal" tabindex="-1" id="addEvent">
         <div class="modal-dialog">
@@ -186,7 +187,7 @@
                         <div class="col-12">
                             <form th:action="@{/calendar/saveEvent}" th:object="${eventDTO}" method="post">
                                 <input type="checkbox"
-                                       name="allDay" id="allDay" value="true" checked="checked"
+                                       name="allDay" id="allDay" value="false"
                                 />
                                 <label class="form-check-label" th:for="${allDay}">На протяжении всего дня</label>
                                 <br>
