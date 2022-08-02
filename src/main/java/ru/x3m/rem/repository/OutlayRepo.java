@@ -8,4 +8,11 @@ import java.util.List;
 
 @Repository
 public interface OutlayRepo extends CrudRepository<Outlay, Long> {
+
+    Outlay findByOutlayId(Long id);
+
+    List<Outlay> findAllByItemsItemId(Long id);
+
+    List<Outlay> findAllBySubitemsSubitemId(Long id);
+
 }

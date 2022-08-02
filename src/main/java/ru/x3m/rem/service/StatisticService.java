@@ -3,10 +3,15 @@ package ru.x3m.rem.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import ru.x3m.rem.dto.*;
-import ru.x3m.rem.entity.*;
-import ru.x3m.rem.repository.*;
+import ru.x3m.rem.dto.ItemDTO;
+import ru.x3m.rem.dto.OutlayDTO;
+import ru.x3m.rem.dto.SubItemDTO;
+import ru.x3m.rem.entity.Item;
+import ru.x3m.rem.entity.Outlay;
+import ru.x3m.rem.entity.SubItem;
+import ru.x3m.rem.repository.ItemRepo;
+import ru.x3m.rem.repository.OutlayRepo;
+import ru.x3m.rem.repository.SubItemRepo;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,17 +33,16 @@ public class StatisticService {
 
     //-- Outlay
 
-    public Optional<OutlayDTO> findOutlayById(Long id){
+    public List<Outlay> findAllOutlay() {
+        return (List<Outlay>) outlayRepo.findAll();
+    }
+
+    public Optional<OutlayDTO> findOutlayById(Long id) {
         return outlayRepo.findById(id)
                 .map(OutlayDTO::new);
     }
 
-    public List<Outlay> findAllOutlay(){
-        return (List<Outlay>) outlayRepo.findAll();
-    }
-
-
-    public void saveOutlay(OutlayDTO outlayDTO){
+    public void saveOutlay(OutlayDTO outlayDTO) {
         Outlay outlay = new Outlay();
         outlay.setOutlayId(outlayDTO.getOutlayId());
         outlay.setDescription(outlayDTO.getDescription());
@@ -49,19 +53,36 @@ public class StatisticService {
         outlayRepo.save(outlay);
     }
 
-    public void deleteOutlay(Long id){
+    public void deleteOutlay(Long id) {
         outlayRepo.findById(id)
                 .ifPresent(outlayRepo::delete);
     }
 
+    //Outlay Rest
+    public List<Outlay> findAllOutlayRest() {
+        return (List<Outlay>) outlayRepo.findAll();
+    }
+
+    public List<Outlay> findOutlaysByItemIdRest(Long id) {
+        return outlayRepo.findAllByItemsItemId(id);
+    }
+
+    public List<Outlay> findOutlayBySubItemIdRest(Long id) {
+        return outlayRepo.findAllBySubitemsSubitemId(id);
+    }
+
+    public Outlay findOutlayByIdRest(Long id) {
+        return outlayRepo.findByOutlayId(id);
+    }
+
     //-- Item
 
-    public Optional<ItemDTO> findItemById(Long id){
+    public Optional<ItemDTO> findItemById(Long id) {
         return itemRepo.findById(id)
                 .map(ItemDTO::new);
     }
 
-    public List<Item> findAllItems(){
+    public List<Item> findAllItems() {
         return (List<Item>) itemRepo.findAll();
     }
 

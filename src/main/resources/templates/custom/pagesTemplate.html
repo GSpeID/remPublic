@@ -31,6 +31,12 @@
                         th:classappend="${activeTab == 'Календарь' ? 'active' : ''}"
                 ><i class="fa-regular fa-calendar"></i></button>
             </a>
+            <a href="" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/charts}">
+                <button class="btn btn-outline-warning me-2" type="button"
+                        data-toggle="tooltip" data-placement="top" title="Графики"
+                        th:classappend="${activeTab == 'Графики' ? 'active' : ''}"
+                ><i class="fa-solid fa-chart-line"></i></button>
+            </a>
             <a href="" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/register}">
                 <button class="btn btn-outline-danger me-2" type="button"
                         data-toggle="tooltip" data-placement="top" title="Добавить пользователя"

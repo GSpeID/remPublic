@@ -5,7 +5,6 @@ import lombok.Setter;
 import lombok.ToString;
 import ru.x3m.rem.entity.Item;
 
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -25,14 +24,10 @@ public class ItemDTO {
     public ItemDTO() {
     }
 
-    public ItemDTO(Long itemId, String itemName) {
-        this.itemId = itemId;
-        this.itemName = itemName;
-    }
-
     public ItemDTO(Item item) {
         this.itemId = item.getItemId();
         this.itemName = item.getItemName();
     }
+
 
 }

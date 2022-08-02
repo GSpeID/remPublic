@@ -38,8 +38,17 @@ public class EventRestController {
 
     @GetMapping("/findEventById/{id}")
     @ResponseBody
-    public EventDTO findEvent(@PathVariable("id") Long id){
+    public EventDTO findEvent(@PathVariable("id") Long id) {
         return convertToDto(eventService.findEventById(id));
+    }
+
+    @PostMapping("/findInDateRange")
+    @ResponseBody
+    public List<EventDTO> findInDateRange(@RequestParam("start") String start, @RequestParam("end") String end) {
+        List<Event> events = eventService.findEventsInDateRange(start, end);
+        return events.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
     @PostMapping("/saveEvent")

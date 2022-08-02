@@ -3,10 +3,13 @@ package ru.x3m.rem.dto;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
-import ru.x3m.rem.entity.*;
+import ru.x3m.rem.entity.Outlay;
 
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Getter
@@ -42,19 +45,6 @@ public class OutlayDTO {
 
 
     public OutlayDTO() {
-    }
-
-    public OutlayDTO(Long outlayId, String description, Double price,
-                     LocalDate date, Long subitemsSubitemId, Long itemsItemId,
-                     String subitemName, String itemName) {
-        this.outlayId = outlayId;
-        this.description = description;
-        this.price = price;
-        this.date = date;
-        this.subitemsSubitemId = subitemsSubitemId;
-        this.itemsItemId = itemsItemId;
-        this.subitemName = subitemName;
-        this.itemName = itemName;
     }
 
     public OutlayDTO(Outlay outlay) {

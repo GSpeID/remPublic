@@ -34,17 +34,6 @@ public class EventService {
         return eventRepo.findEventById(id);
     }
 
-//    public void saveEvent(EventDTO eventDTO){
-//        Event event = new Event();
-//        event.setId(eventDTO.getId());
-//        event.setTitle(eventDTO.getTitle());
-//        event.setStart(eventDTO.getStart());
-//        event.setEnd(eventDTO.getEnd());
-//        event.setAllDay(eventDTO.getAllDay());
-//        event.setGroupId(eventDTO.getGroupId());
-//        eventRepo.save(event);
-//    }
-
     public Event saveEventRest(Event event){
         event.setId(event.getId());
         event.setTitle(event.getTitle());
@@ -58,17 +47,21 @@ public class EventService {
         return event;
     }
 
-    public void deleteEvent(Long id){
+    public void deleteEvent(Long id) {
         eventRepo.findById(id)
                 .ifPresent(eventRepo::delete);
     }
 
     //--Groups
-    public List<EventGroup> findAllGroups(){
+    public List<EventGroup> findAllGroups() {
         return (List<EventGroup>) eventGroupRepo.findAll();
     }
 
-    public Optional<EventGroupDTO> findGroupById(Long id){
+    public List<Event> findEventsInDateRange(String start, String end) {
+        return eventRepo.findAllByStartAfterAndEndBefore(start, end);
+    }
+
+    public Optional<EventGroupDTO> findGroupById(Long id) {
         return eventGroupRepo.findById(id)
                 .map(EventGroupDTO::new);
     }

@@ -1,11 +1,11 @@
 package ru.x3m.rem.dto;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.validation.annotation.Validated;
-import ru.x3m.rem.entity.Event;
 
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 
 @NoArgsConstructor
 @Getter
@@ -21,17 +21,6 @@ public class EventDTO {
     private  Boolean allDay;
     private  Long groupId;
     private String backgroundColor;
-
     private String url;
 
-    public EventDTO(Event event) {
-        this.id = event.getId();
-        this.title = event.getTitle();
-        this.start = event.getStart();
-        this.end = event.getEnd();
-        this.allDay = event.getAllDay();
-        this.groupId = event.getGroupId();
-        this.backgroundColor = event.getBackgroundColor();
-        this.url = event.getUrl();
-    }
 }
