@@ -1,15 +1,17 @@
 package ru.x3m.rem.entity;
 
-
-
-
-
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "devices")
 public class Device {
@@ -29,19 +31,4 @@ public class Device {
     )
     private List<Repair> repairs;
 
-    public Long getDeviceId() {
-        return deviceId;
-    }
-
-    public void setDeviceId(Long deviceId) {
-        this.deviceId = deviceId;
-    }
-
-    public String getDeviceName() {
-        return deviceName;
-    }
-
-    public void setDeviceName(String deviceName) {
-        this.deviceName = deviceName;
-    }
 }

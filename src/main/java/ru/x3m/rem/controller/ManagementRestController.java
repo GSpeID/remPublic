@@ -4,14 +4,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.x3m.rem.dto.*;
-import ru.x3m.rem.entity.Client;
+import ru.x3m.rem.entity.*;
 import ru.x3m.rem.service.ManagementService;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/repair-service/management/api")
+@RequestMapping("/management/api")
 public class ManagementRestController {
 
     private final ManagementService managementService;
@@ -24,38 +24,62 @@ public class ManagementRestController {
         this.modelMapper = modelMapper;
     }
 
+    @GetMapping("/findAllClients")
+    public List<ClientDTO> findAllClients() {
+        List<Client> clients = managementService.findAllClients();
+        return clients.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
     @GetMapping(value = "/findClient/{id}")
     @ResponseBody
     public ClientDTO findClient(@PathVariable("id") Long id) {
         return convertToDto(managementService.findClientById(id));
     }
 
-    @RequestMapping(value = "/findDevice/{deviceId}", method = RequestMethod.GET)
-    public Optional<DeviceDTO> getDeviceByIdRest(HttpServletRequest request,
-                                                 @PathVariable("deviceId") Long deviceId) {
-        return managementService.findDeviceById(deviceId);
+    @GetMapping(value = "/findDevice/{id}")
+    @ResponseBody
+    public DeviceDTO findDevice(@PathVariable("id") Long id) {
+        return convertToDto(managementService.findDeviceById(id));
     }
 
-    @RequestMapping(value = "/findRepairType/{repairTypeId}", method = RequestMethod.GET)
-    public Optional<RepairTypeDTO> getRepairTypeByIdRest(HttpServletRequest request,
-                                                         @PathVariable("repairTypeId") Long repairTypeId){
-        return managementService.findRepairTypeById(repairTypeId);
+    @GetMapping(value = "/findRepairType/{id}")
+    @ResponseBody
+    public RepairTypeDTO findRepairType(@PathVariable("id") Long id) {
+        return convertToDto(managementService.findRepairTypeById(id));
     }
 
-    @RequestMapping(value = "/findClientType/{clientTypeId}", method = RequestMethod.GET)
-    public Optional<ClientTypeDTO> getClientTypeByIdRest(HttpServletRequest request,
-                                                         @PathVariable("clientTypeId") Long clientTypeId) {
-        return managementService.findClientTypeById(clientTypeId);
+    @GetMapping(value = "/findClientType/{id}")
+    @ResponseBody
+    public ClientTypeDTO findClientType(@PathVariable("id") Long id) {
+        return convertToDto(managementService.findClientTypeById(id));
     }
 
-    @RequestMapping(value = "/findStatus/{statusId}", method = RequestMethod.GET)
-    public Optional<RepairStatusDTO> getStatusByIdRest(HttpServletRequest request,
-                                                       @PathVariable("statusId") Long statusId) {
-        return managementService.findRepairStatusById(statusId);
+    @GetMapping("/findStatus/{id}")
+    public RepairStatusDTO findStatusById(@PathVariable("id") Long id) {
+        return convertToDto(managementService.findRepairStatusById(id));
     }
 
+    //--- entity to DTO
     private ClientDTO convertToDto(Client client) {
         return modelMapper.map(client, ClientDTO.class);
+    }
+
+    private RepairStatusDTO convertToDto(RepairStatus repairStatus) {
+        return modelMapper.map(repairStatus, RepairStatusDTO.class);
+    }
+
+    private DeviceDTO convertToDto(Device device) {
+        return modelMapper.map(device, DeviceDTO.class);
+    }
+
+    private RepairTypeDTO convertToDto(RepairType repairType) {
+        return modelMapper.map(repairType, RepairTypeDTO.class);
+    }
+
+    private ClientTypeDTO convertToDto(ClientType clientType) {
+        return modelMapper.map(clientType, ClientTypeDTO.class);
     }
 
     //--- DTO to entity

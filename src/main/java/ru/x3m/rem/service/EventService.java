@@ -52,13 +52,14 @@ public class EventService {
                 .ifPresent(eventRepo::delete);
     }
 
-    //--Groups
-    public List<EventGroup> findAllGroups() {
-        return (List<EventGroup>) eventGroupRepo.findAll();
-    }
 
     public List<Event> findEventsInDateRange(String start, String end) {
         return eventRepo.findAllByStartAfterAndEndBefore(start, end);
+    }
+
+    //--Groups
+    public List<EventGroup> findAllGroups() {
+        return (List<EventGroup>) eventGroupRepo.findAll();
     }
 
     public Optional<EventGroupDTO> findGroupById(Long id) {

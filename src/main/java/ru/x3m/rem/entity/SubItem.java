@@ -1,10 +1,17 @@
 package ru.x3m.rem.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "subitems", schema = "rem_db")
 public class SubItem {
@@ -30,40 +37,5 @@ public class SubItem {
             cascade = CascadeType.ALL
     )
     private List<Outlay> outlays;
-
-    public SubItem() {
-    }
-
-    public Long getSubitemId() {
-        return subitemId;
-    }
-
-    public void setSubitemId(Long subitemId) {
-        this.subitemId = subitemId;
-    }
-
-    public String getSubitemName() {
-        return subitemName;
-    }
-
-    public void setSubitemName(String subitemName) {
-        this.subitemName = subitemName;
-    }
-
-    public Item getItem() {
-        return item;
-    }
-
-    public void setItem(Item item) {
-        this.item = item;
-    }
-
-    public Long getItemsItemId() {
-        return itemsItemId;
-    }
-
-    public void setItemsItemId(Long itemsItemId) {
-        this.itemsItemId = itemsItemId;
-    }
 
 }

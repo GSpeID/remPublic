@@ -11,5 +11,4 @@ public class SpringConfig {
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
-
 }

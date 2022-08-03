@@ -17,7 +17,7 @@
 <div th:replace="~{/custom/pagesTemplate :: nav-bar(Заказы)}"></div>
 <br>
 <div class="container-fluid" id="createRepairContainer">
-    <form>
+    <form th:action="@{/repair-service/create}" method="post">
         <br>
         <div class=row>
             <div class="col">
@@ -85,21 +85,21 @@
             <div class="col">
                 <div class="form-group">
                     <input type="number" class="form-control" required="required"
-                           placeholder="Обьявленная стоимость" step="0.1" min="0" max="10"
+                           placeholder="Обьявленная стоимость" step="0.1" min="0"
                            id="fullCost" name="fullCost" value=""/>
                 </div>
             </div>
             <div class="col">
                 <div class="form-group">
                     <input type="number" class="form-control" required="required"
-                           placeholder="Получено средств" step="0.1" min="0" max="10"
+                           placeholder="Получено средств" step="0.1" min="0"
                            id="paid" name="paid" value=""/>
                 </div>
             </div>
             <div class="col">
                 <div class="form-group">
                     <input type="number" class="form-control" required="required"
-                           placeholder="Затраты" step="0.1" min="0" max="10"
+                           placeholder="Затраты" step="0.1" min="0"
                            id="outlay" name="outlay" value=""/>
                 </div>
             </div>
@@ -115,8 +115,8 @@
         <div class="row">
             <div class="col-md-auto">
                 <input type="checkbox" class="btn-check" autocomplete="off"
-                       id="cashBtn" name="cashBtn" value="false">
-                <label class="btn btn-outline-secondary" for="cashBtn">Наличные</label>
+                       id="cash" name="cash" value="false">
+                <label class="btn btn-outline-secondary" for="cash">Наличные</label>
             </div>
             <div class="col">
                 <div class="form-group">
@@ -129,7 +129,8 @@
             <div class="col">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Описание"
-                           id="repairDescription" minlength="3" maxlength="255"
+                           id="repairDescription" name="repairDescription"
+                           minlength="3" maxlength="255" required="required"
                            aria-label="repair address" aria-describedby="button-addon10"
                     />
                     <button class="btn btn-outline-danger" type="submit" id="button-addon10"
@@ -195,12 +196,13 @@
             <td>
 
                 <div class="btn-group" role="group">
-                    <a th:href="@{findRepair/(*{repair.repairId})}" class="btn btn-outline-info fullInfoBtn"
+                    <a th:href="@{findRepairById/(*{repair.repairId})}" class="btn btn-outline-info fullInfoBtn"
                        data-toggle="tooltip" data-placement="top" title="Полная информация"
                        data-bs-toggle="modal" data-bs-target="#fullInfoModal"><i class="fa-regular fa-folder-open"></i></a>
-                    <a th:href="@{findRepair/(*{repair.repairId})}" class="btn btn-outline-secondary editRepairBtn"
+                    <a th:href="@{findRepairById/(*{repair.repairId})}" class="btn btn-outline-secondary editRepairBtn"
                        data-toggle="tooltip" data-placement="top" title="Редактировать"
-                       data-bs-toggle="modal" data-bs-target="#editRepairModal"><i class="fa-regular fa-pen-to-square"></i></a>
+                       data-bs-toggle="modal" data-bs-target="#editRepairModal"><i
+                            class="fa-regular fa-pen-to-square"></i></a>
                     <a class="btn btn-outline-secondary saveRepairEventBtn" type="button" id="saveRepairEventBtn"
                        data-toggle="tooltip" data-placement="top" title="Сохранить в календарь">
                         <i class="fa-regular fa-calendar-plus"></i></a>

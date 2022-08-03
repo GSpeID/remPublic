@@ -1,11 +1,18 @@
 package ru.x3m.rem.entity;
 
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "repair_types")
 public class RepairType {
@@ -25,19 +32,4 @@ public class RepairType {
     )
     private List<Repair> repairs;
 
-    public Long getRepairTypeId() {
-        return repairTypeId;
-    }
-
-    public void setRepairTypeId(Long repairTypeId) {
-        this.repairTypeId = repairTypeId;
-    }
-
-    public String getRepairTypeName() {
-        return repairTypeName;
-    }
-
-    public void setRepairTypeName(String repairTypeName) {
-        this.repairTypeName = repairTypeName;
-    }
 }

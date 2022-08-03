@@ -3,7 +3,6 @@ package ru.x3m.rem.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.x3m.rem.entity.Client;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -28,16 +27,7 @@ public class ClientDTO {
 
     private String clientMail;
 
-    public ClientDTO(Long clientId, String clientName, Long clientTypeId) {
-        this.clientId = clientId;
-        this.clientName = clientName;
-        this.clientTypeId = clientTypeId;
-    }
+    private String clientTypeName;
 
-    public ClientDTO(Client client) {
-        this.clientId = client.getClientId();
-        this.clientName = client.getClientName();
-        this.clientTypeId = client.getClientType().getClientTypeId();
-    }
 
 }

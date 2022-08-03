@@ -87,14 +87,39 @@ public class StatisticRestController {
         return statisticService.findAllSubByItemsItemId(itemsItemId);
     }
 
+    @GetMapping(value = "/subItemsByItem")
+    @ResponseBody
+    public List<SubItemDTO> getSubByItemsByItem(@RequestParam("itemsItemId") Long itemsItemId) {
+        List<SubItem> subItems = statisticService.findAllSubByItemsItemId(itemsItemId);
+        return subItems.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
     //--- entity to DTO
     private OutlayDTO convertToDto(Outlay outlay) {
         return modelMapper.map(outlay, OutlayDTO.class);
     }
 
+    private SubItemDTO convertToDto(SubItem subItem) {
+        return modelMapper.map(subItem, SubItemDTO.class);
+    }
+
+    private ItemDTO convertToDto(Item item) {
+        return modelMapper.map(item, ItemDTO.class);
+    }
+
     //--- DTO to entity
     private Outlay convertToEntity(OutlayDTO outlayDTO) {
         return modelMapper.map(outlayDTO, Outlay.class);
+    }
+
+    private SubItem convertToEntity(SubItemDTO subItemDTO) {
+        return modelMapper.map(subItemDTO, SubItem.class);
+    }
+
+    private Item convertToEntity(ItemDTO itemDTO) {
+        return modelMapper.map(itemDTO, Item.class);
     }
 
 }

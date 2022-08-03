@@ -7,4 +7,6 @@ import ru.x3m.rem.entity.ClientType;
 @Repository
 public interface ClientTypeRepo extends CrudRepository<ClientType, Long> {
 
+    ClientType findByClientTypeId(Long id);
+
 }

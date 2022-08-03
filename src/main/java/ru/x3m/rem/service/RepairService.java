@@ -3,46 +3,33 @@ package ru.x3m.rem.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.x3m.rem.dto.*;
-import ru.x3m.rem.entity.*;
-import ru.x3m.rem.repository.*;
+import ru.x3m.rem.dto.RepairDTO;
+import ru.x3m.rem.entity.Repair;
+import ru.x3m.rem.repository.RepairRepo;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
 public class RepairService {
 
-    private RepairRepo repairRepo;
-    private ClientRepo clientRepo;
-    private ClientTypeRepo clientTypeRepo;
-    private DeviceRepo deviceRepo;
-    private RepairTypeRepo repairTypeRepo;
-    private RepairStatusesRepo repairStatusesRepo;
+    private final RepairRepo repairRepo;
+
 
     @Autowired
-    public RepairService(RepairRepo repairRepo, ClientRepo clientRepo, ClientTypeRepo clientTypeRepo,
-                         DeviceRepo deviceRepo, RepairTypeRepo repairTypeRepo,
-                         RepairStatusesRepo repairStatusesRepo) {
+    public RepairService(RepairRepo repairRepo) {
         this.repairRepo = repairRepo;
-        this.clientRepo = clientRepo;
-        this.clientTypeRepo = clientTypeRepo;
-        this.deviceRepo = deviceRepo;
-        this.repairTypeRepo = repairTypeRepo;
-        this.repairStatusesRepo = repairStatusesRepo;
     }
 
-    public Optional<RepairDTO> findRepairById(Long id){
-        return repairRepo.findById(id)
-                .map(RepairDTO::new);
+    public Repair findRepairById(Long id) {
+        return repairRepo.findByRepairId(id);
     }
 
     public List<Repair> findAllRepairs() {
         return (List<Repair>) repairRepo.findAll();
     }
 
-    public void saveRepair(RepairDTO repairDTO){
+    public void saveRepair(RepairDTO repairDTO) {
         Repair repair = new Repair();
         repair.setRepairId(repairDTO.getRepairId());
         repair.setRepairAddress(repairDTO.getRepairAddress());
@@ -57,14 +44,13 @@ public class RepairService {
         repair.setArrears(repairDTO.calcArrears());
         repair.setOutlay(repairDTO.getOutlay());
         repair.setProfit(repairDTO.calcProfit());
-
+        repair.setCash(repairDTO.getCash());
         repairRepo.save(repair);
-
     }
 
     public void deleteRepair(Long repair_id){
         repairRepo.findById(repair_id)
-                .ifPresent(repair -> repairRepo.delete(repair));
+                .ifPresent(repairRepo::delete);
     }
 
 }

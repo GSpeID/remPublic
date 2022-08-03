@@ -1,9 +1,16 @@
 package ru.x3m.rem.entity;
 
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
 public class User {
@@ -26,46 +33,4 @@ public class User {
     @Column(name = "role_id")
     private Long roleId;
 
-    public User() {
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public Long getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
-    }
 }

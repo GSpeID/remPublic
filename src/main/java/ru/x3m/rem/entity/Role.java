@@ -1,8 +1,15 @@
 package ru.x3m.rem.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
 
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "roles")
 public class Role {
@@ -21,22 +28,4 @@ public class Role {
     )
     private List<User> users;
 
-    public Role(){
-    }
-
-    public int getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
 }

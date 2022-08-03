@@ -1,13 +1,18 @@
 package ru.x3m.rem.controller;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import ru.x3m.rem.dto.*;
-import ru.x3m.rem.entity.*;
-import ru.x3m.rem.service.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import ru.x3m.rem.dto.RepairDTO;
+import ru.x3m.rem.entity.Repair;
+import ru.x3m.rem.service.ManagementService;
+import ru.x3m.rem.service.RepairService;
 
 import java.util.List;
 
@@ -17,11 +22,15 @@ public class RepairController {
 
     private final RepairService repairService;
     private final ManagementService managementService;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public RepairController(RepairService repairService, ManagementService managementService) {
+    public RepairController(RepairService repairService,
+                            ManagementService managementService,
+                            ModelMapper modelMapper) {
         this.repairService = repairService;
         this.managementService = managementService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/repair-service")
@@ -50,5 +59,6 @@ public class RepairController {
         repairService.deleteRepair(repairId);
         return "redirect:/repair-service";
     }
+
 
 }

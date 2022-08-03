@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    $('#cashBtn').change(function () {
+    $('#cash').change(function () {
         $(this).val($(this).prop('checked'));
     })
 
@@ -24,7 +24,7 @@ $(document).ready(function () {
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
         $.ajax({
             type: 'GET',
-            url: '/rem/repair-service/api/findRepair/' + id,
+            url: '/rem/repair-service/api/findRepairById/' + id,
             success: function (repair) {
                 $('#editRepairModal #repairId').val(repair.repairId);
                 $('#editRepairModal #repairAddress').val(repair.repairAddress);
@@ -44,6 +44,11 @@ $(document).ready(function () {
                 $('#editRepairModal #deviceName').val(repair.deviceName);
                 $('#editRepairModal #repairTypeName').val(repair.repairTypeName);
                 $('#editRepairModal #statusName').val(repair.statusName);
+                if (repair.cash) {
+                    $('#fullInfoModal').find(':checkbox[name=cash]').prop('checked', true);
+                } else {
+                    $('#fullInfoModal').find(':checkbox[name=cash]').prop('checked', false);
+                }
             }
         });
 
@@ -55,7 +60,7 @@ $(document).ready(function () {
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
         $.ajax({
             type: 'GET',
-            url: '/rem/repair-service/api/findRepair/' + id,
+            url: '/rem/repair-service/api/findRepairById/' + id,
             success: function (repair) {
                 $('#fullInfoModal #repairId').val(repair.repairId);
                 $('#fullInfoModal #repairAddress').val(repair.repairAddress);
@@ -75,6 +80,12 @@ $(document).ready(function () {
                 $('#fullInfoModal #deviceName').val(repair.deviceName);
                 $('#fullInfoModal #repairTypeName').val(repair.repairTypeName);
                 $('#fullInfoModal #statusName').val(repair.statusName);
+                if (repair.cash) {
+                    $('#fullInfoModal').find(':checkbox[name=cash]').prop('checked', true);
+                } else {
+                    $('#fullInfoModal').find(':checkbox[name=cash]').prop('checked', false);
+                }
+
                 console.log(repair)
             }
         });
@@ -92,8 +103,8 @@ $(document).ready(function () {
         const end = start;
         const allDay = true;
         const groupId = '1';
-        const backgroundColor = '#4da843';
-        const url = '/rem/repair-service/api/findRepair/' + repairId;
+            const backgroundColor = '#4da843';
+            const url = '/rem/repair-service/api/findRepairById/' + repairId;
         console.log(repairId);
         console.log(url);
             $.ajax({

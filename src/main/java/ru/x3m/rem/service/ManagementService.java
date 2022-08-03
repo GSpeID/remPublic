@@ -9,7 +9,6 @@ import ru.x3m.rem.entity.*;
 import ru.x3m.rem.repository.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -19,17 +18,17 @@ public class ManagementService {
     private final ClientTypeRepo clientTypeRepo;
     private final DeviceRepo deviceRepo;
     private final RepairTypeRepo repairTypeRepo;
-    private final RepairStatusesRepo repairStatusesRepo;
+    private final RepairStatusRepo repairStatusRepo;
 
     @Autowired
     public ManagementService(ClientRepo clientRepo, ClientTypeRepo clientTypeRepo,
                              DeviceRepo deviceRepo, RepairTypeRepo repairTypeRepo,
-                             RepairStatusesRepo repairStatusesRepo) {
+                             RepairStatusRepo repairStatusRepo) {
         this.clientRepo = clientRepo;
         this.clientTypeRepo = clientTypeRepo;
         this.deviceRepo = deviceRepo;
         this.repairTypeRepo = repairTypeRepo;
-        this.repairStatusesRepo = repairStatusesRepo;
+        this.repairStatusRepo = repairStatusRepo;
     }
 
 
@@ -59,9 +58,8 @@ public class ManagementService {
     }
 
     //--- Client type
-    public Optional<ClientTypeDTO> findClientTypeById(Long clientId){
-        return clientTypeRepo.findById(clientId)
-                .map(ClientTypeDTO::new);
+    public ClientType findClientTypeById(Long id) {
+        return clientTypeRepo.findByClientTypeId(id);
     }
 
     public List<ClientType> findAllClientTypes(){
@@ -81,9 +79,8 @@ public class ManagementService {
     }
 
     //--- Device
-    public Optional<DeviceDTO> findDeviceById(Long deviceId){
-        return deviceRepo.findById(deviceId)
-                .map(DeviceDTO::new);
+    public Device findDeviceById(Long id) {
+        return deviceRepo.findByDeviceId(id);
     }
 
     public List<Device> findAllDevices(){
@@ -104,9 +101,8 @@ public class ManagementService {
     }
 
     //--- Repair type
-    public Optional<RepairTypeDTO> findRepairTypeById(Long repairTypeId){
-        return repairTypeRepo.findById(repairTypeId)
-                .map(RepairTypeDTO::new);
+    public RepairType findRepairTypeById(Long id) {
+        return repairTypeRepo.findByRepairTypeId(id);
     }
 
     public List<RepairType> findAllRepairTypes(){
@@ -120,31 +116,30 @@ public class ManagementService {
         repairTypeRepo.save(repairType);
     }
 
-    public void deleteRepairType(Long repairTypeId){
+    public void deleteRepairType(Long repairTypeId) {
         repairTypeRepo.findById(repairTypeId)
                 .ifPresent(repairTypeRepo::delete);
     }
 
     //--- Repair status
-    public Optional<RepairStatusDTO> findRepairStatusById(Long statusId){
-        return repairStatusesRepo.findById(statusId)
-                .map(RepairStatusDTO::new);
+    public RepairStatus findRepairStatusById(Long id) {
+        return repairStatusRepo.findByStatusId(id);
     }
 
-    public List<RepairStatuses> findAllRepairStatuses(){
-        return (List<RepairStatuses>) repairStatusesRepo.findAll();
+    public List<RepairStatus> findAllRepairStatuses() {
+        return (List<RepairStatus>) repairStatusRepo.findAll();
     }
 
-    public  void saveStatus(RepairStatusDTO repairStatusDTO){
-        RepairStatuses repairStatus = new RepairStatuses();
+    public void saveStatus(RepairStatusDTO repairStatusDTO) {
+        RepairStatus repairStatus = new RepairStatus();
         repairStatus.setStatusId(repairStatusDTO.getStatusId());
         repairStatus.setStatusName(repairStatusDTO.getStatusName());
-        repairStatusesRepo.save(repairStatus);
+        repairStatusRepo.save(repairStatus);
     }
 
-    public void deleteStatus(Long status_id){
-        repairStatusesRepo.findById(status_id)
-                .ifPresent(repairStatusesRepo::delete);
+    public void deleteStatus(Long status_id) {
+        repairStatusRepo.findById(status_id)
+                .ifPresent(repairStatusRepo::delete);
     }
 
 }

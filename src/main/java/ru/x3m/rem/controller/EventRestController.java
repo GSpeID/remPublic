@@ -29,6 +29,7 @@ public class EventRestController {
 
     @GetMapping("/findAllEvents")
     @ResponseBody
+//    @JsonView(EventDTO.TestFull.class)
     public List<EventDTO> getEvents(){
         List<Event> events = eventService.findAllEvents();
         return events.stream()

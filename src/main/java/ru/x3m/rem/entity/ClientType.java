@@ -1,10 +1,17 @@
 package ru.x3m.rem.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "client_types")
 public class ClientType {
@@ -25,23 +32,4 @@ public class ClientType {
     )
     private List<Client> clients;
 
-
-    public ClientType(){
-    }
-
-    public Long getClientTypeId() {
-        return clientTypeId;
-    }
-
-    public void setClientTypeId(Long clientTypeId) {
-        this.clientTypeId = clientTypeId;
-    }
-
-    public String getClientTypeName() {
-        return clientTypeName;
-    }
-
-    public void setClientTypeName(String clientTypeName) {
-        this.clientTypeName = clientTypeName;
-    }
 }

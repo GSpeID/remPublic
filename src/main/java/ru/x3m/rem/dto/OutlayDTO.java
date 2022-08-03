@@ -1,6 +1,7 @@
 package ru.x3m.rem.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.x3m.rem.entity.Outlay;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
+@NoArgsConstructor
 @Getter
 @Setter
 public class OutlayDTO {
@@ -42,10 +44,6 @@ public class OutlayDTO {
     private String subitemName;
 
     private String itemName;
-
-
-    public OutlayDTO() {
-    }
 
     public OutlayDTO(Outlay outlay) {
         this.outlayId = outlay.getOutlayId();

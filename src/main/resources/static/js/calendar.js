@@ -155,7 +155,11 @@ document.addEventListener('DOMContentLoaded', function () {
                             $('#fullInfoModal #deviceName').val(repair.deviceName);
                             $('#fullInfoModal #repairTypeName').val(repair.repairTypeName);
                             $('#fullInfoModal #statusName').val(repair.statusName);
-                            console.log(repair)
+                            if (repair.cash) {
+                                $('#fullInfoModal').find(':checkbox[name=cash]').prop('checked', true);
+                            } else {
+                                $('#fullInfoModal').find(':checkbox[name=cash]').prop('checked', false);
+                            }
                         }
                     });
                 $('#fullInfoModal').modal('toggle');

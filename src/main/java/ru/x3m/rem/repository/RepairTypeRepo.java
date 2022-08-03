@@ -7,4 +7,6 @@ import ru.x3m.rem.entity.RepairType;
 @Repository
 public interface RepairTypeRepo extends CrudRepository<RepairType, Long> {
 
+    RepairType findByRepairTypeId(Long id);
+
 }

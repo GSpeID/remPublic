@@ -1,9 +1,14 @@
 package ru.x3m.rem.dto;
 
-import ru.x3m.rem.entity.Role;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 
+@NoArgsConstructor
+@Getter
+@Setter
 public class RoleDTO {
 
     private int roleId;
@@ -11,32 +16,4 @@ public class RoleDTO {
     @NotEmpty
     private String roleName;
 
-    public RoleDTO() {
-    }
-
-    public RoleDTO(int roleId, String roleName) {
-        this.roleId = roleId;
-        this.roleName = roleName;
-    }
-
-    public RoleDTO(Role role) {
-        this.roleId = role.getRoleId();
-        this.roleName = role.getRoleName();
-    }
-
-    public int getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
 }

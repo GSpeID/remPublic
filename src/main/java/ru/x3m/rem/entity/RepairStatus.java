@@ -1,13 +1,20 @@
 package ru.x3m.rem.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "repair_statuses")
-public class RepairStatuses {
+public class RepairStatus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,24 +26,9 @@ public class RepairStatuses {
     private String statusName;
 
     @OneToMany(
-            mappedBy = "repairStatuses",
+            mappedBy = "repairStatus",
             cascade = CascadeType.ALL
     )
     private List<Repair> repairs;
 
-    public Long getStatusId() {
-        return statusId;
-    }
-
-    public void setStatusId(Long statusId) {
-        this.statusId = statusId;
-    }
-
-    public String getStatusName() {
-        return statusName;
-    }
-
-    public void setStatusName(String statusName) {
-        this.statusName = statusName;
-    }
 }

@@ -1,7 +1,9 @@
 package ru.x3m.rem.entity;
 
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -9,9 +11,11 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "outlays", schema = "rem_db")
-@Data
 public class Outlay {
 
     @Id
