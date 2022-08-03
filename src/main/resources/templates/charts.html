@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <div th:replace="/custom/pagesTemplate :: css-head"></div>
+    <link rel="stylesheet" href="../static/css/charts.css" th:href="@{/css/charts.css}">
+    <div th:replace="/custom/pagesTemplate :: js-head"></div>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="../static/js/chart.js" th:src="@{./js/chart.js}"></script>
+    <title>Графики</title>
+</head>
+<body>
+<div th:replace="~{/custom/pagesTemplate :: nav-bar(Графики)}"></div>
+<br>
+<div class="container">
+    <figure class="highcharts-figure">
+        <div id="container"></div>
+        <p class="highcharts-description">
+            Статистика
+        </p>
+    </figure>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-2">
+            <div class="form-group">
+                <input type="date" class="form-control"
+                       id="min" name="min" value="2022-08-01"/>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="form-group">
+                <input type="date" class="form-control"
+                       id="max" name="max" value="2022-08-31"/>
+            </div>
+        </div>
+    </div>
+    <div id="testChart">
+
+    </div>
+</div>
+
+</body>
+</html>
