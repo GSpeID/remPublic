@@ -2,7 +2,6 @@ package ru.x3m.rem.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.x3m.rem.dto.EventGroupDTO;
 import ru.x3m.rem.entity.Event;
 import ru.x3m.rem.entity.EventGroup;
 import ru.x3m.rem.repository.EventGroupRepo;
@@ -10,7 +9,6 @@ import ru.x3m.rem.repository.EventRepo;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -62,9 +60,8 @@ public class EventService {
         return (List<EventGroup>) eventGroupRepo.findAll();
     }
 
-    public Optional<EventGroupDTO> findGroupById(Long id) {
-        return eventGroupRepo.findById(id)
-                .map(EventGroupDTO::new);
+    public EventGroup findGroupById(Long id) {
+        return eventGroupRepo.findByGroupId(id);
     }
 
 }

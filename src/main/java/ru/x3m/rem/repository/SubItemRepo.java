@@ -9,6 +9,8 @@ import java.util.List;
 @Repository
 public interface SubItemRepo extends CrudRepository<SubItem, Long> {
 
+    SubItem findBySubitemId(Long id);
+
     List<SubItem> findAllByItemsItemId(Long itemsItemId);
 
 }

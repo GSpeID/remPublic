@@ -8,6 +8,9 @@ import ru.x3m.rem.dto.*;
 import ru.x3m.rem.entity.*;
 import ru.x3m.rem.repository.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Service
@@ -41,7 +44,7 @@ public class ManagementService {
         return (List<Client>) clientRepo.findAll();
     }
 
-    public void saveClient(ClientDTO clientDTO) {
+    public void saveClient(ClientDTO clientDTO) throws IOException {
         Client client = new Client();
         client.setClientId(clientDTO.getClientId());
         client.setClientName(clientDTO.getClientName());
@@ -50,6 +53,9 @@ public class ManagementService {
         client.setClientPhone(clientDTO.getClientPhone());
         client.setClientMail(clientDTO.getClientMail());
         clientRepo.save(client);
+
+        String clientDir = client.getClientName();
+        Files.createDirectories(Paths.get("/home/x3m/Downloads/rem/clientFiles/" + clientDir));
     }
 
     public void deleteClient(Long clientId){

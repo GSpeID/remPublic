@@ -1,3 +1,82 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+
+<!--test-->
+<div th:fragment="test">
+    <div class="modal" tabindex="-1" id="test">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--client files list-->
+<div th:fragment="clientFiles">
+    <div class="modal" tabindex="-1" id="clientFiles">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Файлы</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <table class="table table-hover" id="clientFilesTable">
+                            <thead>
+                            <tr>
+                                <th scope="col">Файл</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:if="${#lists.isEmpty(files)}">
+                                <td class="text-center" colspan="5">Документы отсутсвуют</td>
+                            </tr>
+                            <tr th:each="file : ${files}">
+                                <th scope="row" th:text="*{files.getFileName()}"></th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br>
+                    <div class="container">
+                        <form th:action="@{/repair-service/upload}" method="post" enctype="multipart/form-data">
+                            <div class="input-group mb-3">
+                                <input aria-describedby="uploadBtn" aria-label="client file"
+                                       class="form-control"
+                                       id="file" name="file" placeholder="Выберите файл для загрузки"
+                                       type="file"
+                                       value=""
+                                />
+                                <input type="hidden" class="form-control"
+                                       id="clientDir" name="clientDir" value=""/>
+                                <input class="btn btn-outline-secondary" id="uploadBtn"
+                                       type="submit" value="Загрузить файл">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--event add\edit -->
 <div th:fragment="eventAddFragment">
     <form th:action="@{/calendar/saveEvent}" th:object="${eventDTO}" method="post">
@@ -261,7 +340,7 @@
 <!-- Modal Full Info Repair-->
 <div th:fragment="fullInfoFragment">
     <div id="fullInfoModal" class="modal fade" tabindex="-1" aria-labelledby="fullInfoModal" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="fullInfoLabel">Full Information</h5>
@@ -363,7 +442,7 @@
     <form th:action="@{/repair-service/create}" method="post">
         <div id="addRepairModal" class="modal fade" tabindex="-1"
              aria-labelledby="addRepairModal" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="addRepairModalLabel">Добавить новый заказ</h5>
@@ -492,7 +571,7 @@
     <form th:action="@{/repair-service/create}" method="post">
         <div id="editRepairModal" class="modal fade" tabindex="-1"
              aria-labelledby="editRepairModal" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editRepairModalLabel">Edit Repair</h5>

@@ -3,16 +3,18 @@ package ru.x3m.rem.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.x3m.rem.dto.*;
 import ru.x3m.rem.entity.*;
 import ru.x3m.rem.service.ManagementService;
 
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -55,15 +57,32 @@ public class ManagementController {
         return modelsList(model);
     }
 
+    @PostMapping("/repair-service/upload")
+    public String fileUpload(@RequestParam MultipartFile file, @RequestParam String clientDir,
+                             RedirectAttributes redirectAttributes, ModelMap modelMap) {
+        String fileName = file.getOriginalFilename();
+
+        modelMap.addAttribute("clientDir", clientDir.toLowerCase());
+        String uploadUrl = "/home/x3m/Downloads/rem/clientFiles/" + clientDir + "/" + fileName;
+        try {
+            file.transferTo(new File(uploadUrl));
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", "Не удвлось загрузить файл " +
+                    file.getOriginalFilename());
+        }
+        redirectAttributes.addFlashAttribute("message", "Файл " + file.getOriginalFilename() + " успешно загружен");
+        return "redirect:/repair-service/management";
+    }
+
     //----- Save\Delete Client
 
     @PostMapping("/repair-service/management/create-client")
     public String createClient(@ModelAttribute("clientDTO") @Valid ClientDTO clientDTO,
                                BindingResult result, Model model,
-                               @ModelAttribute("deviceDTO")  DeviceDTO deviceDTO,
-                               @ModelAttribute("clientTypeDTO")  ClientTypeDTO clientTypeDTO,
-                               @ModelAttribute("repairTypeDTO")  RepairTypeDTO repairTypeDTO,
-                               @ModelAttribute("repairStatusDTO")  RepairStatusDTO repairStatusDTO) {
+                               @ModelAttribute("deviceDTO") DeviceDTO deviceDTO,
+                               @ModelAttribute("clientTypeDTO") ClientTypeDTO clientTypeDTO,
+                               @ModelAttribute("repairTypeDTO") RepairTypeDTO repairTypeDTO,
+                               @ModelAttribute("repairStatusDTO") RepairStatusDTO repairStatusDTO) throws IOException {
         if (result.hasErrors()) {
             return modelsList(model);
         }

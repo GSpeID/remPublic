@@ -1,10 +1,43 @@
 $(document).ready(function () {
 
+    if ('message') {
+        swal("Are you sure you want to do this?", {
+            buttons: ["OK", true],
+        });
+    }
+
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
 
-    $('#clients').DataTable({
+    const table = $('#clients').DataTable({
+        language: {
+            url: '../localisation/ru.json'
+        }
+    });
+
+    $('#devices').DataTable({
+        language: {
+            url: '../localisation/ru.json'
+        }
+    });
+    $('#clientsTypes').DataTable({
+        language: {
+            url: '../localisation/ru.json'
+        }
+    });
+    $('#repairsTypes').DataTable({
+        language: {
+            url: '../localisation/ru.json'
+        }
+    });
+    $('#statuses').DataTable({
+        language: {
+            url: '../localisation/ru.json'
+        }
+    });
+
+    $('#clientFilesTable').DataTable({
         language: {
             url: '../localisation/ru.json'
         }
@@ -23,6 +56,31 @@ $(document).ready(function () {
                 $('#clientCardModal #clientPhone').val(client.clientPhone);
                 $('#clientCardModal #clientMail').val(client.clientMail);
             }
+        });
+    });
+
+    //загрузка файлов
+    $('table .clientFilesBtn').off("click").on("click", function () {
+        $('#clients tbody').off("click").on('click', 'tr', function (event) {
+            const clientDir = table.row($(this).closest('tr')).data()[1];
+            $('#clientDir').val(clientDir)
+            console.log(clientDir);
+            // $.ajax({
+            //     headers: {
+            //         'Accept': 'application/json',
+            //         'Content-Type': 'application/json'
+            //     },
+            //     url: '/rem/events/api/saveEvent',
+            //     type: 'POST',
+            //     data: JSON.stringify({}),
+            //     dataType: 'json',
+            //     success: function (data) {
+            //         $('#addEvent').modal('hide');
+            //     },
+            //     error: function (error) {
+            //         alert('error:' + eval(error));
+            //     }
+            // });
         });
     });
 

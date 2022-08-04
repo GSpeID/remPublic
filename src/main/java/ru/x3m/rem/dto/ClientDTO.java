@@ -28,6 +28,4 @@ public class ClientDTO {
     private String clientMail;
 
     private String clientTypeName;
-
-
 }

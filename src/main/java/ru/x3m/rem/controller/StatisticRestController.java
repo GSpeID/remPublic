@@ -59,15 +59,14 @@ public class StatisticRestController {
                 .collect(Collectors.toList());
     }
 
-    @RequestMapping(value = "/findItem/{id}", method = RequestMethod.GET)
-    public Optional<ItemDTO> getItemByIdRest(HttpServletRequest request,
-                                             @PathVariable("id") Long id) {
-        return statisticService.findItemById(id);
+    @GetMapping(value = "/findItem/{id}")
+    public ItemDTO getItemById(@PathVariable("id") Long id) {
+        return convertToDto(statisticService.findItemById(id));
     }
 
     @RequestMapping(value = "/findSubItem/{id}", method = RequestMethod.GET)
     public Optional<SubItemDTO> getSubItemByIdRest(HttpServletRequest request,
-                                                @PathVariable("id") Long id){
+                                                   @PathVariable("id") Long id) {
         return statisticService.findSubItemById(id);
     }
 

@@ -6,4 +6,5 @@ import ru.x3m.rem.entity.Item;
 
 @Repository
 public interface ItemRepo extends CrudRepository<Item, Long> {
+    Item findByItemId(Long id);
 }

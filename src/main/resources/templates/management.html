@@ -5,12 +5,13 @@
     <div th:replace="/custom/pagesTemplate :: css-head"></div>
     <div th:replace="/custom/pagesTemplate :: js-head"></div>
     <script src="../static/js/management.js" th:src="@{../js/management.js}"></script>
-    <script src="../static/js/dataTable.js" th:src="@{../js/dataTable.js}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>Управление</title>
 </head>
 <body>
 <div th:replace="~{/custom/pagesTemplate :: nav-bar(Управление)}"></div>
 <div class="accordion" id="accordionExample">
+
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingOne">
             <button aria-controls="collapseOne" aria-expanded="true" class="accordion-button"
@@ -112,9 +113,9 @@
                                        data-toggle="tooltip"
                                        th:href="@{findClient/(*{client.clientId})}" title="Редактировать"><i
                                             class="fa-regular fa-pen-to-square"></i></a>
-                                    <a class="btn btn-outline-secondary clientDocsBtn" data-bs-target="#clientDocsModal"
+                                    <a class="btn btn-outline-secondary clientFilesBtn" data-bs-target="#clientFiles"
                                        data-bs-toggle="modal" data-placement="top" data-toggle="tooltip"
-                                       th:href="@{findClient/(*{client.clientName})}" title="Открыть документы">
+                                       title="Открыть документы">
                                         <i class="fa-solid fa-book"></i></a>
                                     <a class="btn btn-outline-danger" data-placement="top" data-toggle="tooltip"
                                        th:href="@{/repair-service/management/delete-client/{id}(id=${client.clientId})}"
@@ -392,6 +393,9 @@
         </div>
     </div>
 </div>
+<!-- Modal Client card -->
 <div th:replace="/custom/modals :: clientCard"></div>
+<!-- Modal Client files -->
+<div th:replace="~{/custom/modals :: clientFiles}"></div>
 </body>
 </html>

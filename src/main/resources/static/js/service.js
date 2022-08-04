@@ -9,10 +9,38 @@ $(document).ready(function () {
     })
 
     const table = $('#r-services').DataTable({
-        columnDefs: [
-            {"visible": false, "targets": 7}
-        ],
-        language: {
+            footerCallback: function (row, data, start, end, display) {
+                const api = this.api();
+
+                // Remove the formatting to get integer data for summation
+                const intVal = function (i) {
+                    return typeof i === 'string' ? i.replace(/,/g, '') * 1 : typeof i === 'number' ? i : 0;
+                };
+
+                // Total over all pages
+                let total = api
+                    .column(5)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+                // Total over this page
+                let pageTotal = api
+                    .column(5, {page: 'current'})
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+                // Update footer
+                $(api.column(5).footer()).html('$' + pageTotal + ' ( $' + total + ' total)');
+            },
+            columnDefs: [
+                {"visible": false, "targets": 7}
+            ],
+
+            language: {
                 url: './localisation/ru.json'
             },
         }

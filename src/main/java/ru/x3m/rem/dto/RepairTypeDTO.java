@@ -3,7 +3,6 @@ package ru.x3m.rem.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.x3m.rem.entity.RepairType;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -18,11 +17,5 @@ public class RepairTypeDTO {
     @NotNull(message = "Не должно быть пустым")
     @Size(min = 2, max = 45, message = "Миинимум {min}, максимум {max} символов")
     private String repairTypeName;
-
-
-    public RepairTypeDTO(RepairType repairType) {
-        this.repairTypeId = repairType.getRepairTypeId();
-        this.repairTypeName = repairType.getRepairTypeName();
-    }
 
 }

@@ -18,7 +18,7 @@ public class ObjectMapperUtils {
      */
     static {
         modelMapper = new ModelMapper();
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
     }
 
     /**
@@ -66,3 +66,5 @@ public class ObjectMapperUtils {
         return destination;
     }
 }
+
+//List<PostDTO> listOfPostDTO = ObjectMapperUtils.mapAll(listOfPosts, PostDTO.class); usage//

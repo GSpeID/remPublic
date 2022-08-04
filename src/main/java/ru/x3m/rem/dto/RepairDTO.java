@@ -15,7 +15,6 @@ import java.time.LocalDate;
 @Setter
 public class RepairDTO {
 
-
     private Long repairId;
 
     @NotEmpty
@@ -56,13 +55,13 @@ public class RepairDTO {
     private Long statusId;
     private String statusName;
 
-    public float calcArrears(){
-        arrears=fullCost-paid;
+    public float calcArrears() {
+        arrears = fullCost - paid;
         return arrears;
     }
 
-    public float calcProfit(){
-        profit=fullCost-outlay;
+    public float calcProfit() {
+        profit = fullCost - outlay;
         return profit;
     }
 

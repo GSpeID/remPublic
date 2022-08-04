@@ -1,4 +1,21 @@
 $(document).ready(function () {
+
+    $('#stats').DataTable({
+        language: {
+            url: './localisation/ru.json'
+        }
+    });
+    $('#itms').DataTable({
+        language: {
+            url: './localisation/ru.json'
+        }
+    });
+    $('#subitms').DataTable({
+        language: {
+            url: './localisation/ru.json'
+        }
+    });
+
     // для выбора добавления статьи\подстатьи
     $('input[type="radio"]').click(function () {
         let inputValue = $(this).attr("value");

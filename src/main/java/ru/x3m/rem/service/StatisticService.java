@@ -77,16 +77,15 @@ public class StatisticService {
 
     //-- Item
 
-    public Optional<ItemDTO> findItemById(Long id) {
-        return itemRepo.findById(id)
-                .map(ItemDTO::new);
+    public Item findItemById(Long id) {
+        return itemRepo.findByItemId(id);
     }
 
     public List<Item> findAllItems() {
         return (List<Item>) itemRepo.findAll();
     }
 
-    public void saveItems(ItemDTO itemDTO){
+    public void saveItems(ItemDTO itemDTO) {
         Item item = new Item();
         item.setItemId(itemDTO.getItemId());
         item.setItemName(itemDTO.getItemName());
