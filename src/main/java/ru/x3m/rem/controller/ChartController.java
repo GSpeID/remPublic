@@ -17,7 +17,7 @@ public class ChartController {
 
     @GetMapping("/charts")
     public String chartPage() {
-        return "/charts";
+        return "charts";
     }
 
 }

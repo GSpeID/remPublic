@@ -4,10 +4,10 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <div th:replace="~{/custom/pagesTemplate :: css-head}"></div>
+    <div th:replace="~{custom/pagesTemplate :: css-head}"></div>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/main.min.css"/>
 
-    <div th:replace="~{/custom/pagesTemplate :: js-head}"></div>
+    <div th:replace="~{custom/pagesTemplate :: js-head}"></div>
     <script th:src="@{/js/calendar.js}" src="/static/js/calendar.js"></script>
 
     <script src="https://cdn.jsdelivr.net/combine/npm/fullcalendar@5.11.2/locales-all.min.js,npm/fullcalendar@5.11.2/main.min.js"></script>
@@ -20,14 +20,14 @@
     <title>Календарь</title>
 </head>
 <body>
-<div th:replace="~{/custom/pagesTemplate :: nav-bar(Календарь)}"></div>
+<div th:replace="~{custom/pagesTemplate :: nav-bar(Календарь)}"></div>
 <br>
 <div class="container">
     <div id='calendar'></div>
 </div>
 <!-- модальное окно редактирования -->
-<div th:replace="~{/custom/modals :: eventAddFragment}"></div>
+<div th:replace="~{custom/modals :: eventAddFragment}"></div>
 <!-- модальное окно полной информации о заказе -->
-<div th:replace="~{/custom/modals :: fullInfoFragment}"></div>
+<div th:replace="~{custom/modals :: fullInfoFragment}"></div>
 </body>
 </html>

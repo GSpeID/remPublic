@@ -3,8 +3,8 @@
       xmlns:th="http://www.thymeleaf.org"
 >
 <head>
-    <div th:replace="/custom/pagesTemplate :: css-head"></div>
-    <div th:replace="/custom/pagesTemplate :: js-head"></div>
+    <div th:replace="~{custom/pagesTemplate :: css-head}"></div>
+    <div th:replace="~{custom/pagesTemplate :: js-head}"></div>
     <!--    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcy_DKc4YeeDJtNBu1h8z2rtJxTxU1Vnw&libraries=places"></script>-->
     <!--    <script th:src="@{/js/address.js}" src="../static/js/address.js"></script>-->
 
@@ -13,7 +13,7 @@
 
 </head>
 <body>
-<div th:replace="~{/custom/pagesTemplate :: nav-bar(Заказы)}"></div>
+<div th:replace="~{custom/pagesTemplate :: nav-bar(Заказы)}"></div>
 <br>
 <div class="container-fluid" id="createRepairContainer">
     <form method="post" th:action="@{/repair-service/create}" th:object="${repairDTO}">
@@ -260,11 +260,11 @@
     <br>
 </div>
 <!-- Modal Add New Client -->
-<div th:replace="~{/custom/modals :: repairAddFragment}"></div>
+<div th:replace="~{custom/modals :: repairAddFragment}"></div>
     <!-- Modal Edit Repair -->
-<div th:replace="~{/custom/modals :: repairEditFragment}"></div>
+<div th:replace="~{custom/modals :: repairEditFragment}"></div>
     <!-- Modal Full Info -->
-<div th:replace="~{/custom/modals :: fullInfoFragment}"></div>
+<div th:replace="~{custom/modals :: fullInfoFragment}"></div>
 
 </body>
 </html>

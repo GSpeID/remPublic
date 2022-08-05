@@ -23,34 +23,58 @@ $(document).ready(function () {
     const table = $('#clients').DataTable({
         language: {
             url: '../localisation/ru.json'
-        }
+        },
+        rowReorder: {
+            selector: 'td:nth-child(2)'
+        },
+        responsive: true
     });
 
     $('#devices').DataTable({
         language: {
             url: '../localisation/ru.json'
-        }
+        },
+        rowReorder: {
+            selector: 'td:nth-child(2)'
+        },
+        responsive: true
     });
     $('#clientsTypes').DataTable({
         language: {
             url: '../localisation/ru.json'
-        }
+        },
+        rowReorder: {
+            selector: 'td:nth-child(2)'
+        },
+        responsive: true
     });
     $('#repairsTypes').DataTable({
         language: {
             url: '../localisation/ru.json'
-        }
+        },
+        rowReorder: {
+            selector: 'td:nth-child(2)'
+        },
+        responsive: true
     });
     $('#statuses').DataTable({
         language: {
             url: '../localisation/ru.json'
-        }
+        },
+        rowReorder: {
+            selector: 'td:nth-child(2)'
+        },
+        responsive: true
     });
 
     $('#clientFilesTable').DataTable({
         language: {
             url: '../localisation/ru.json'
-        }
+        },
+        rowReorder: {
+            selector: 'td:nth-child(2)'
+        },
+        responsive: true
     });
 
     //полная информация о клиенте

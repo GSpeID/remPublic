@@ -3,16 +3,59 @@ $(document).ready(function () {
     $('#stats').DataTable({
         language: {
             url: './localisation/ru.json'
-        }
+        },
+        rowReorder: {
+            selector: 'td:nth-child(2)'
+        },
+        responsive: true
     });
     $('#itms').DataTable({
         language: {
             url: './localisation/ru.json'
-        }
+        },
+        rowReorder: {
+            selector: 'td:nth-child(2)'
+        },
+        responsive: true
     });
-    $('#subitms').DataTable({
+    const groupColumn = 2;
+    const table = $('#subitms').DataTable({
+        columnDefs: [{visible: false, targets: groupColumn}],
+        order: [[groupColumn, 'asc']],
+        displayLength: 25,
+        drawCallback: function (settings) {
+            const api = this.api();
+            const rows = api.rows({page: 'current'}).nodes();
+            let last = null;
+
+            api
+                .column(groupColumn, {page: 'current'})
+                .data()
+                .each(function (group, i) {
+                    if (last !== group) {
+                        $(rows)
+                            .eq(i)
+                            .before('<tr class="group"><td colspan="5">' + group + '</td></tr>');
+
+                        last = group;
+                    }
+                });
+        },
         language: {
             url: './localisation/ru.json'
+        },
+        rowReorder: {
+            selector: 'td:nth-child(2)'
+        },
+        responsive: true
+    });
+    // Order by the grouping
+    $('#subitms tbody').on('click', 'tr.group', function () {
+        const currentOrder = table.order()[0];
+        if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
+            table.order([groupColumn, 'desc']).draw();
+        } else {
+            table.order([groupColumn, 'asc']).draw();
         }
     });
 

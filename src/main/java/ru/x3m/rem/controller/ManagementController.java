@@ -44,7 +44,7 @@ public class ManagementController {
     //---возыращения моделей для страницы с валидацией
     private String modelsList(Model model) {
         globalModelsList(model, managementService);
-        return "/management";
+        return "management";
     }
 
     @GetMapping("/repair-service/management")

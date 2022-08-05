@@ -26,35 +26,29 @@ $(document).ready(function () {
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
-    })
-
+    });
+    const groupColumn = 0;
     const table = $('#r-services').DataTable({
-        footerCallback: function (row, data, start, end, display) {
-            const api = this.api();
+            columnDefs: [{visible: false, targets: groupColumn}],
+            order: [[groupColumn, 'asc']],
+            displayLength: 25,
+            drawCallback: function (settings) {
+                const api = this.api();
+                const rows = api.rows({page: 'current'}).nodes();
+                let last = null;
 
-            // Remove the formatting to get integer data for summation
-            const intVal = function (i) {
-                return typeof i === 'string' ? i.replace(/,/g, '') * 1 : typeof i === 'number' ? i : 0;
-            };
-
-            // Total over all pages
-            let total = api
-                .column(5)
-                .data()
-                    .reduce(function (a, b) {
-                        return intVal(a) + intVal(b);
-                    }, 0);
-
-                // Total over this page
-                let pageTotal = api
-                    .column(5, {page: 'current'})
+                api
+                    .column(groupColumn, {page: 'current'})
                     .data()
-                    .reduce(function (a, b) {
-                        return intVal(a) + intVal(b);
-                    }, 0);
+                    .each(function (group, i) {
+                        if (last !== group) {
+                            $(rows)
+                                .eq(i)
+                                .before('<tr class="group"><td colspan="5">' + group + '</td></tr>');
 
-                // Update footer
-                $(api.column(5).footer()).html('$' + pageTotal + ' ( $' + total + ' total)');
+                            last = group;
+                        }
+                    });
             },
             columnDefs: [
                 {"visible": false, "targets": 7}
@@ -62,9 +56,18 @@ $(document).ready(function () {
 
             language: {
                 url: './localisation/ru.json'
-            },
+            }
         }
     );
+    // Order by the grouping
+    $('#r-services tbody').on('click', 'tr.group', function () {
+        const currentOrder = table.order()[0];
+        if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
+            table.order([groupColumn, 'desc']).draw();
+        } else {
+            table.order([groupColumn, 'asc']).draw();
+        }
+    });
 
     //редактирование заказа
     $('table .editRepairBtn').on('click', function (event) {
