@@ -14,6 +14,7 @@ import ru.x3m.rem.entity.Repair;
 import ru.x3m.rem.service.ManagementService;
 import ru.x3m.rem.service.RepairService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -35,6 +36,7 @@ public class RepairController {
 
     @GetMapping("/repair-service")
     public String allRepairsPage(Model model) {
+        model.addAttribute("repairDTO", new RepairDTO());
         List<Repair> repairs = repairService.findAllRepairs();
         model.addAttribute("repairs", repairs);
         ManagementController.globalModelsList(model, managementService);
@@ -42,7 +44,7 @@ public class RepairController {
     }
 
     @PostMapping("/repair-service/create")
-    public String createRepairPost(@ModelAttribute("repair")  RepairDTO repairDTO,
+    public String createRepairPost(@ModelAttribute("repairDTO") @Valid RepairDTO repairDTO,
                                    BindingResult result, Model model) {
         if (result.hasErrors()) {
             List<Repair> repairs = repairService.findAllRepairs();

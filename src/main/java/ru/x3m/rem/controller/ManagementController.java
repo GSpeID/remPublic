@@ -83,7 +83,7 @@ public class ManagementController {
                                @ModelAttribute("clientTypeDTO") ClientTypeDTO clientTypeDTO,
                                @ModelAttribute("repairTypeDTO") RepairTypeDTO repairTypeDTO,
                                @ModelAttribute("repairStatusDTO") RepairStatusDTO repairStatusDTO) throws IOException {
-        if (result.hasErrors()) {
+        if (result.hasErrors()) {//ToDo проврека на ifExist
             return modelsList(model);
         }
         managementService.saveClient(clientDTO);
@@ -106,7 +106,7 @@ public class ManagementController {
                                    @ModelAttribute("deviceDTO")  DeviceDTO deviceDTO,
                                    @ModelAttribute("repairTypeDTO")  RepairTypeDTO repairTypeDTO,
                                    @ModelAttribute("repairStatusDTO")  RepairStatusDTO repairStatusDTO) {
-        if (result.hasErrors()) {
+        if (result.hasErrors()) {//ToDo проврека на ifExist
             return modelsList(model);
         }
         managementService.saveClientType(clientTypeDTO);
@@ -128,7 +128,7 @@ public class ManagementController {
                                @ModelAttribute("clientTypeDTO")  ClientTypeDTO clientTypeDTO,
                                @ModelAttribute("repairTypeDTO")  RepairTypeDTO repairTypeDTO,
                                @ModelAttribute("repairStatusDTO")  RepairStatusDTO repairStatusDTO) {
-        if (result.hasErrors()) {
+        if (result.hasErrors()) {//ToDo проврека на ifExist
             return modelsList(model);
         }
         managementService.saveDevice(deviceDTO);
@@ -150,7 +150,7 @@ public class ManagementController {
                                    @ModelAttribute("deviceDTO")  DeviceDTO deviceDTO,
                                    @ModelAttribute("clientTypeDTO")  ClientTypeDTO clientTypeDTO,
                                    @ModelAttribute("repairStatusDTO")  RepairStatusDTO repairStatusDTO) {
-        if (result.hasErrors()) {
+        if (result.hasErrors()) {//ToDo проврека на ifExist
             return modelsList(model);
         }
         managementService.saveRepairType(repairTypeDTO);
@@ -173,7 +173,7 @@ public class ManagementController {
                                @ModelAttribute("clientTypeDTO") ClientTypeDTO clientTypeDTO,
                                @ModelAttribute("repairTypeDTO") RepairTypeDTO repairTypeDTO
                                ) {
-        if (result.hasErrors()) {
+        if (result.hasErrors()) {//ToDo проврека на ifExist
             return modelsList(model);
         }
         managementService.saveStatus(repairStatusDTO);

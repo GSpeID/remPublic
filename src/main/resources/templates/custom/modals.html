@@ -66,6 +66,8 @@
                                 <input class="btn btn-outline-secondary" id="uploadBtn"
                                        type="submit" value="Загрузить файл">
                             </div>
+                            <input class="form-control" id="message" name="message"
+                                   th:text="${message}" type="hidden" value=""/>
                         </form>
                     </div>
                 </div>
@@ -340,7 +342,7 @@
 <!-- Modal Full Info Repair-->
 <div th:fragment="fullInfoFragment">
     <div id="fullInfoModal" class="modal fade" tabindex="-1" aria-labelledby="fullInfoModal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-dialog scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="fullInfoLabel">Full Information</h5>
@@ -416,15 +418,15 @@
                                            id="repairDate" name="repairDate" value="" disabled/>
                                 </div>
                                 <br>
-                                <input type="checkbox" class="btn-check" autocomplete="off"
-                                       id="cash" name="cash" value="false" disabled>
-                                <label class="btn btn-outline-secondary" for="cash">Наличные</label>
-                                <br>
                                 <div class="form-group">
                                     <label for="statusName">Статус</label>
                                     <input type="text" class="form-control" required="required"
                                            id="statusName" name="statusName" value="" disabled/>
                                 </div>
+                                <br>
+                                <input autocomplete="off" class="btn-check" disabled
+                                       id="cash" name="cash" type="checkbox" value="false">
+                                <label class="btn btn-outline-secondary" for="cash">Наличные</label>
                             </div>
                         </div>
                     </div>

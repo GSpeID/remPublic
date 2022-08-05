@@ -32,7 +32,7 @@
                                 <div class="col">
                                     <select class="form-select" id="dropClientType" th:object="${clientTypes}"
                                     >
-                                        <option value="0">Выберите тип клиента</option>
+                                        <option value="">Выберите тип клиента</option>
                                         <option th:each="clientType : ${clientTypes}"
                                                 th:required="required"
                                                 th:text="${clientType.clientTypeName}"

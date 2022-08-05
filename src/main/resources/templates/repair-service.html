@@ -4,12 +4,11 @@
 >
 <head>
     <div th:replace="/custom/pagesTemplate :: css-head"></div>
-
     <div th:replace="/custom/pagesTemplate :: js-head"></div>
-    <script th:src="@{/js/service.js}" src="../static/js/service.js"></script>
     <!--    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcy_DKc4YeeDJtNBu1h8z2rtJxTxU1Vnw&libraries=places"></script>-->
     <!--    <script th:src="@{/js/address.js}" src="../static/js/address.js"></script>-->
 
+    <script src="/js/service.js" th:src="@{/js/service.js}"></script>
     <title>Заказы</title>
 
 </head>
@@ -17,7 +16,7 @@
 <div th:replace="~{/custom/pagesTemplate :: nav-bar(Заказы)}"></div>
 <br>
 <div class="container-fluid" id="createRepairContainer">
-    <form th:action="@{/repair-service/create}" method="post">
+    <form method="post" th:action="@{/repair-service/create}" th:object="${repairDTO}">
         <br>
         <div class=row>
             <div class="col">
@@ -25,7 +24,6 @@
                     <select class="form-select"
                             th:object="${clients}"
                             id="dropClient"
-                            onchange="update1()"
                             required
                     >
                         <option value="">Выбрать клиента</option>
@@ -40,7 +38,6 @@
                     <select class="form-select"
                             th:object="${repairTypes}"
                             id="dropRepairType"
-                            onchange="update3()"
                             required
                     >
                         <option value="">Выбрать тип ремонта</option>
@@ -55,7 +52,6 @@
                     <select class="form-select"
                             th:object="${devices}"
                             id="dropDevice"
-                            onchange="update4()"
                             required
                     >
                         <option value="">Выбрать технику</option>
@@ -70,7 +66,6 @@
                     <select class="form-select"
                             th:object="${repairStatuses}"
                             id="dropStatus"
-                            onchange="update5()"
                             required
                     >
                         <option value="">Статус</option>
@@ -80,26 +75,54 @@
                     </select>
                 </div>
             </div>
+            <input class="form-control" id="repairId"
+                   name="repairId" type="hidden" value=""/>
+            <input class="form-control" id="clientId"
+                   name="clientId" type="hidden" value=""/>
+            <input class="form-control" id="repairTypeId"
+                   name="repairTypeId" type="hidden" value=""/>
+            <input class="form-control" id="deviceId"
+                   name="deviceId" type="hidden" value=""/>
+            <input class="form-control" id="statusId"
+                   name="statusId" type="hidden" value=""/>
+        </div>
+        <div class="row">
+            <div class="col-md-auto">
+                <div class="error" th:errors="*{clientId}"
+                     th:if="${#fields.hasErrors('clientId')}"/>
+            </div>
+            <div class="col">
+                <div class="error" th:errors="*{repairTypeId}"
+                     th:if="${#fields.hasErrors('repairTypeId')}"/>
+            </div>
+            <div class="col">
+                <div class="error" th:errors="*{deviceId}"
+                     th:if="${#fields.hasErrors('deviceId')}"/>
+            </div>
+            <div class="col">
+                <div class="error" th:errors="*{statusId}"
+                     th:if="${#fields.hasErrors('statusId')}"/>
+            </div>
         </div>
         <div class="row">
             <div class="col">
                 <div class="form-group">
                     <input type="number" class="form-control" required="required"
-                           placeholder="Обьявленная стоимость" step="0.1" min="0"
+                           min="0" placeholder="Обьявленная стоимость" step="0.01"
                            id="fullCost" name="fullCost" value=""/>
                 </div>
             </div>
             <div class="col">
                 <div class="form-group">
                     <input type="number" class="form-control" required="required"
-                           placeholder="Получено средств" step="0.1" min="0"
+                           min="0" placeholder="Получено средств" step="0.01"
                            id="paid" name="paid" value=""/>
                 </div>
             </div>
             <div class="col">
                 <div class="form-group">
                     <input type="number" class="form-control" required="required"
-                           placeholder="Затраты" step="0.1" min="0"
+                           min="0" placeholder="Затраты" step="0.01"
                            id="outlay" name="outlay" value=""/>
                 </div>
             </div>
@@ -111,6 +134,24 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-auto">
+                <div class="error" th:errors="*{fullCost}"
+                     th:if="${#fields.hasErrors('fullCost')}"/>
+            </div>
+            <div class="col">
+                <div class="error" th:errors="*{paid}"
+                     th:if="${#fields.hasErrors('paid')}"/>
+            </div>
+            <div class="col">
+                <div class="error" th:errors="*{outlay}"
+                     th:if="${#fields.hasErrors('outlay')}"/>
+            </div>
+            <div class="col">
+                <div class="error" th:errors="*{repairDate}"
+                     th:if="${#fields.hasErrors('repairDate')}"/>
+            </div>
+        </div>
         <br>
         <div class="row">
             <div class="col-md-auto">
@@ -118,6 +159,7 @@
                        id="cash" name="cash" value="false">
                 <label class="btn btn-outline-secondary" for="cash">Наличные</label>
             </div>
+
             <div class="col">
                 <div class="form-group">
                     <input type="text" class="form-control" required="required"
@@ -140,25 +182,19 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <input type="hidden" class="form-control"
-                   id="repairId" name="repairId" value=""/>
-        </div>
-        <div class="form-group">
-            <input type="hidden" class="form-control"
-                   id="clientId" name="clientId" value=""/>
-        </div>
-        <div class="form-group">
-            <input type="hidden" class="form-control"
-                   id="repairTypeId" name="repairTypeId" value=""/>
-        </div>
-        <div class="form-group">
-            <input type="hidden" class="form-control"
-                   id="deviceId" name="deviceId" value=""/>
-        </div>
-        <div class="form-group">
-            <input type="hidden" class="form-control"
-                   id="statusId" name="statusId" value=""/>
+        <div class="row">
+            <div class="col-md-auto">
+                <div class="error" th:errors="*{cash}"
+                     th:if="${#fields.hasErrors('cash')}"/>
+            </div>
+            <div class="col">
+                <div class="error" th:errors="*{repairAddress}"
+                     th:if="${#fields.hasErrors('repairAddress')}"/>
+            </div>
+            <div class="col">
+                <div class="error" th:errors="*{repairDescription}"
+                     th:if="${#fields.hasErrors('repairDescription')}"/>
+            </div>
         </div>
         <br>
     </form>

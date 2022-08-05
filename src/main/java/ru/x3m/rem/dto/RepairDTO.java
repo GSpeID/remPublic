@@ -5,8 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 
@@ -17,50 +17,84 @@ public class RepairDTO {
 
     private Long repairId;
 
-    @NotEmpty
+    @Valid
+    @NotEmpty(message = "Укажите адрес")
+    @Size(min = 3, max = 255, message = "Минимум min{min}, максимум max{max} символов")
     private String repairAddress;
 
-    @NotEmpty
+    @Valid
+    @NotEmpty(message = "Укажите адрес")
+    @Size(min = 3, max = 255, message = "Минимум min{min}, максимум max{max} символов")
     private String repairDescription;
 
+    @Valid
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate repairDate;
 
-    @NotNull
-    private Float fullCost;
+    @Valid
+    @NotNull(message = "укажите суммму(или 0)")
+    @DecimalMin(value = "0", message = "точночть 1 копейка: 0.01")
+    @Digits(integer = 10, fraction = 2)
+    @Positive(message = "не может быть отрицательным")
+    private Double fullCost;
 
-    @NotNull
-    private Float paid;
+    @Valid
+    @NotNull(message = "укажите суммму(или 0)")
+    @DecimalMin(value = "0", message = "точночть 1 копейка: 0.01")
+    @Digits(integer = 10, fraction = 2)
+    @Positive(message = "не может быть отрицательным")
+    private Double paid;
 
-    @NotNull
-    private Float outlay;
+    @Valid
+    @NotNull(message = "укажите суммму(или 0)")
+    @DecimalMin(value = "0", message = "точночть 1 копейка: 0.01")
+    @Digits(integer = 10, fraction = 2)
+    @Positive(message = "не может быть отрицательным")
+    private Double outlay;
 
-    @NotNull
-    private Float arrears;
+    private Double arrears;
 
-    @NotNull
-    private Float profit;
+    private Double profit;
 
+    @NotNull(message = "Выберите способ расчёта")
     private Boolean cash;
 
+    @Valid
+    @NotNull(message = "необходимо выбрать из списка")
     private Long clientId;
+
     private String clientName;
+    @Valid
+    @NotNull(message = "необходимо выбрать из списка")
     private Long deviceId;
+
     private String deviceName;
+
+    @Valid
+    @NotNull(message = "необходимо выбрать из списка")
     private Long repairTypeId;
+
     private String repairTypeName;
+
+    @Valid
+    @NotNull(message = "необходимо выбрать из списка")
     private Long clientTypeId;
+
     private String clientTypeName;
+
+    @Valid
+    @NotNull(message = "необходимо выбрать из списка")
     private Long statusId;
+
     private String statusName;
 
-    public float calcArrears() {
+    public Double calcArrears() {
         arrears = fullCost - paid;
         return arrears;
     }
 
-    public float calcProfit() {
+    public Double calcProfit() {
         profit = fullCost - outlay;
         return profit;
     }

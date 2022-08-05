@@ -4,23 +4,43 @@ $(document).ready(function () {
         $(this).val($(this).prop('checked'));
     })
 
+    $("#dropClient").on('change', function () {
+        const clientId = $(this).find('option:selected').attr('value');
+        $('#clientId').val(clientId);
+    });
+
+    $("#dropRepairType").on('change', function () {
+        const repairTypeId = $(this).find('option:selected').attr('value');
+        $('#repairTypeId').val(repairTypeId);
+    });
+
+    $("#dropDevice").on('change', function () {
+        const deviceId = $(this).find('option:selected').attr('value');
+        $('#deviceId').val(deviceId);
+    });
+    $("#dropStatus").on('change', function () {
+        const statusId = $(this).find('option:selected').attr('value');
+        $('#statusId').val(statusId);
+    });
+
+
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
 
     const table = $('#r-services').DataTable({
-            footerCallback: function (row, data, start, end, display) {
-                const api = this.api();
+        footerCallback: function (row, data, start, end, display) {
+            const api = this.api();
 
-                // Remove the formatting to get integer data for summation
-                const intVal = function (i) {
-                    return typeof i === 'string' ? i.replace(/,/g, '') * 1 : typeof i === 'number' ? i : 0;
-                };
+            // Remove the formatting to get integer data for summation
+            const intVal = function (i) {
+                return typeof i === 'string' ? i.replace(/,/g, '') * 1 : typeof i === 'number' ? i : 0;
+            };
 
-                // Total over all pages
-                let total = api
-                    .column(5)
-                    .data()
+            // Total over all pages
+            let total = api
+                .column(5)
+                .data()
                     .reduce(function (a, b) {
                         return intVal(a) + intVal(b);
                     }, 0);
@@ -153,35 +173,4 @@ $(document).ready(function () {
             });
         });
     });
-
-
-    window.update1 = function () {
-        const select = document.getElementById('dropClient');
-        const option = select.options[select.selectedIndex];
-        document.getElementById('clientId').value = option.value;
-    }
-
-    window.update2 = function () {
-        const select = document.getElementById('dropClientType');
-        const option = select.options[select.selectedIndex];
-        document.getElementById('clientType').value = option.value;
-    }
-
-    window.update3 = function () {
-        const select = document.getElementById('dropRepairType');
-        const option = select.options[select.selectedIndex];
-        document.getElementById('repairTypeId').value = option.value;
-    }
-
-    window.update4 = function () {
-        const select = document.getElementById('dropDevice');
-        const option = select.options[select.selectedIndex];
-        document.getElementById('deviceId').value = option.value;
-    }
-    window.update5 = function () {
-        const select = document.getElementById('dropStatus');
-        const option = select.options[select.selectedIndex];
-        document.getElementById('statusId').value = option.value;
-    }
-
 });

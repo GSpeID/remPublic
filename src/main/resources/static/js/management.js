@@ -1,10 +1,20 @@
 $(document).ready(function () {
 
-    if ('message') {
-        swal("Are you sure you want to do this?", {
-            buttons: ["OK", true],
-        });
-    }
+    $('#message').off('change').on('change', function (e) {
+        const msg = $('#message').val();
+        console.log(msg)
+        // if(msg!=null){
+        //     e.preventDefault();
+        // }else {
+        //     return false;
+        // }
+    });
+
+    // if ('message') {
+    //     swal("Are you sure you want to do this?", {
+    //         buttons: ["OK", true],
+    //     });
+    // }
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
@@ -49,7 +59,7 @@ $(document).ready(function () {
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
         $.ajax({
             type: 'GET',
-            url: '/rem/repair-service/management/api/findClient/' + id,
+            url: '/rem/management/api/findClient/' + id,
             success: function (client) {
                 $('#clientCardModal #clientName').val(client.clientName);
                 $('#clientCardModal #clientContact').val(client.clientContact);
@@ -161,6 +171,7 @@ $(document).ready(function () {
     $("#dropClientType").on('change', function () {
         const clientTypeId = $(this).find('option:selected').attr('value');
         $('#clientType').val(clientTypeId);
+        console.log(clientTypeId)
     });
 
 });

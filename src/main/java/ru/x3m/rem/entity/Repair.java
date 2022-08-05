@@ -28,19 +28,19 @@ public class Repair {
     private LocalDate repairDate;
 
     @Column
-    private Float fullCost;
+    private Double fullCost;
 
     @Column
-    private Float paid;
+    private Double paid;
 
     @Column
-    private Float arrears;
+    private Double arrears;
 
     @Column
-    private Float outlay;
+    private Double outlay;
 
     @Column
-    private Float profit;
+    private Double profit;
 
     @Column(name = "cash")
     private Boolean cash;
