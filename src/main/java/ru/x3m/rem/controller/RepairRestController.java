@@ -29,13 +29,6 @@ public class RepairRestController {
         this.modelMapper = modelMapper;
     }
 
-//    @GetMapping("/findAllRepairs")
-//    public List<RepairDTO> findAllRepairs() {
-//        List<Repair> repairs = repairService.findAllRepairs();
-//        return repairs.stream()
-//                .map(this::convertToDto)
-//                .collect(Collectors.toList());
-//    }
 
     @GetMapping("/findAllRepairs")
     public List<RepairDTO> findAllRepairs() {

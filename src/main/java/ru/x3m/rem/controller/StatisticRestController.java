@@ -2,6 +2,8 @@ package ru.x3m.rem.controller;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.x3m.rem.dto.ItemDTO;
@@ -11,8 +13,10 @@ import ru.x3m.rem.entity.Item;
 import ru.x3m.rem.entity.Outlay;
 import ru.x3m.rem.entity.SubItem;
 import ru.x3m.rem.service.StatisticService;
+import ru.x3m.rem.utils.ObjectMapperUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,93 +36,81 @@ public class StatisticRestController {
         this.modelMapper = modelMapper;
     }
 
+    @PostMapping("/saveOutlay")
+//    @ResponseBody
+    @ResponseStatus(HttpStatus.CREATED)
+    public OutlayDTO saveOutlay(@RequestBody @Valid OutlayDTO outlayDTO,
+                                BindingResult result){
+        Outlay outlay = ObjectMapperUtils.map(outlayDTO, Outlay.class);
+        statisticService.saveOutlayRest(outlay);
+        return outlayDTO;
+    }
+
     @GetMapping("/finAllOutlays")
     @ResponseBody
     public List<OutlayDTO> getAllOutlays() {
         List<Outlay> outlays = statisticService.findAllOutlayRest();
-        return outlays.stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
+        return ObjectMapperUtils.mapAll(outlays, OutlayDTO.class);
     }
 
     @GetMapping("/findOutlayByItem")
     @ResponseBody
     public List<OutlayDTO> getAllOutlaysByItem(@RequestParam("itemId") Long itemId) {
         List<Outlay> outlays = statisticService.findOutlaysByItemIdRest(itemId);
-        return outlays.stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
+        return ObjectMapperUtils.mapAll(outlays, OutlayDTO.class);
     }
 
     @GetMapping("/findOutlayBySubitem")
     @ResponseBody
     public List<OutlayDTO> getAllOutlaysBySubitem(@RequestParam("subitemId") Long subitemId) {
         List<Outlay> outlays = statisticService.findOutlayBySubItemIdRest(subitemId);
-        return outlays.stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
+        return ObjectMapperUtils.mapAll(outlays, OutlayDTO.class);
+    }
+
+    @GetMapping("/findOutlayById")
+    @ResponseBody
+    public OutlayDTO getOutlayById(@RequestParam("id") Long id){
+        Outlay outlay = statisticService.findOutlayByIdRest(id);
+        return ObjectMapperUtils.map(outlay, OutlayDTO.class);
     }
 
     @GetMapping(value = "/findItem/{id}")
     public ItemDTO getItemById(@PathVariable("id") Long id) {
-        return convertToDto(statisticService.findItemById(id));
+        Item item = statisticService.findItemById(id);
+        return ObjectMapperUtils.map(item, ItemDTO.class);
     }
 
-    @RequestMapping(value = "/findSubItem/{id}", method = RequestMethod.GET)
-    public Optional<SubItemDTO> getSubItemByIdRest(HttpServletRequest request,
+    @GetMapping(value = "/findSubItem/{id}")
+    public SubItemDTO getSubItemByIdRest(HttpServletRequest request,
                                                    @PathVariable("id") Long id) {
-        return statisticService.findSubItemById(id);
+        SubItem subItem = statisticService.findSubItemById(id);
+        return ObjectMapperUtils.map(subItem, SubItemDTO.class);
     }
 
 
     @RequestMapping(value = "/items", method = RequestMethod.GET)
-    public List<Item> getItems(){
-        return statisticService.findAllItems();
+    public List<ItemDTO> getItems(){
+        List<Item> items = statisticService.findAllItems();
+        return ObjectMapperUtils.mapAll(items, ItemDTO.class);
     }
 
     @RequestMapping(value = "/subItems", method = RequestMethod.GET)
-    public List<SubItem> getSub() {
-        return statisticService.findAllSubItem();
+    public List<SubItemDTO> getSub() {
+        List<SubItem> subItems = statisticService.findAllSubItem();
+        return ObjectMapperUtils.mapAll(subItems, SubItemDTO.class);
     }
 
-    @RequestMapping(value = "/subItemsByItemsId", method = RequestMethod.GET)
-    public List<SubItem> getSubByItemsItemsId(@RequestParam("itemsItemId") Long itemsItemId) {
-        return statisticService.findAllSubByItemsItemId(itemsItemId);
+    @GetMapping(value = "/subItemsByItemsId")
+    public List<SubItemDTO>  getSubByItemsItemsId(@RequestParam("itemsItemId") Long itemsItemId) {
+        List<SubItem> subItems = statisticService.findAllSubByItemsItemId(itemsItemId);
+        return ObjectMapperUtils.mapAll(subItems, SubItemDTO.class);
     }
 
     @GetMapping(value = "/subItemsByItem")
     @ResponseBody
     public List<SubItemDTO> getSubByItemsByItem(@RequestParam("itemsItemId") Long itemsItemId) {
         List<SubItem> subItems = statisticService.findAllSubByItemsItemId(itemsItemId);
-        return subItems.stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
-    }
-
-    //--- entity to DTO
-    private OutlayDTO convertToDto(Outlay outlay) {
-        return modelMapper.map(outlay, OutlayDTO.class);
-    }
-
-    private SubItemDTO convertToDto(SubItem subItem) {
-        return modelMapper.map(subItem, SubItemDTO.class);
-    }
-
-    private ItemDTO convertToDto(Item item) {
-        return modelMapper.map(item, ItemDTO.class);
-    }
-
-    //--- DTO to entity
-    private Outlay convertToEntity(OutlayDTO outlayDTO) {
-        return modelMapper.map(outlayDTO, Outlay.class);
-    }
-
-    private SubItem convertToEntity(SubItemDTO subItemDTO) {
-        return modelMapper.map(subItemDTO, SubItem.class);
-    }
-
-    private Item convertToEntity(ItemDTO itemDTO) {
-        return modelMapper.map(itemDTO, Item.class);
+        return ObjectMapperUtils.mapAll(subItems, SubItemDTO.class);
     }
 
 }

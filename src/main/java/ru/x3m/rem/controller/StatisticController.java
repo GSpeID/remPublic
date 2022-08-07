@@ -30,8 +30,8 @@ public class StatisticController {
     }
 
     private void models(Model model) {
-        List<Outlay> outlays = statisticService.findAllOutlay();
-        model.addAttribute("outlays" , outlays);
+        List<OutlayDTO> outlaysDTO = statisticService.findAllOutlay();
+        model.addAttribute("outlays" , outlaysDTO);
         List<SubItem> subItems = statisticService.findAllSubItem();
         model.addAttribute("subItems", subItems);
         List<Item> items = statisticService.findAllItems();

@@ -203,7 +203,7 @@
              data-bs-parent="#accordionExample"
              id="collapseOne">
             <div class="accordion-body">
-                <form id="outlaySubmit" method="post" th:action="@{/stat/saveOutlay}" th:object="${outlayDTO}">
+                <form id="outlaySubmit" method="post" th:action="@{/stat/saveOutlay}" th:object="${outlays}">
                     <div class="row">
                         <div class="col">
                             <select class="form-select"
@@ -282,8 +282,8 @@
                         </tr>
                         <tr th:each="outlayList : ${outlays}">
                             <th scope="row"
-                                th:text="${outlayList.getSubItem().getItem().getItemName()}"></th>
-                            <td th:text="${outlayList.getSubItem().getSubitemName()}"></td>
+                                th:text="${outlayList.itemName()}"></th>
+                            <td th:text="${outlayList.subitemName()}"></td>
                             <td th:text="${outlayList.description}"></td>
                             <td th:text="${outlayList.price}"></td>
                             <td th:text="${outlayList.date}"></td>

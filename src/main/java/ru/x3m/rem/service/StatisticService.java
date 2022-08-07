@@ -12,6 +12,7 @@ import ru.x3m.rem.entity.SubItem;
 import ru.x3m.rem.repository.ItemRepo;
 import ru.x3m.rem.repository.OutlayRepo;
 import ru.x3m.rem.repository.SubItemRepo;
+import ru.x3m.rem.utils.ObjectMapperUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,13 +34,9 @@ public class StatisticService {
 
     //-- Outlay
 
-    public List<Outlay> findAllOutlay() {
-        return (List<Outlay>) outlayRepo.findAll();
-    }
-
-    public Optional<OutlayDTO> findOutlayById(Long id) {
-        return outlayRepo.findById(id)
-                .map(OutlayDTO::new);
+    public List<OutlayDTO> findAllOutlay() {
+        List<Outlay> outlays = (List<Outlay>) outlayRepo.findAll();
+        return ObjectMapperUtils.mapAll(outlays, OutlayDTO.class);
     }
 
     public void saveOutlay(OutlayDTO outlayDTO) {
@@ -50,6 +47,16 @@ public class StatisticService {
         outlay.setDate(outlayDTO.getDate());
         outlay.setItemsItemId(outlayDTO.getItemsItemId());
         outlay.setSubitemsSubitemId(outlayDTO.getSubitemsSubitemId());
+        outlayRepo.save(outlay);
+    }
+
+    public void saveOutlayRest(Outlay outlay) {
+        outlay.setOutlayId(outlay.getOutlayId());
+        outlay.setDescription(outlay.getDescription());
+        outlay.setPrice(outlay.getPrice());
+        outlay.setDate(outlay.getDate());
+        outlay.setItemsItemId(outlay.getItemsItemId());
+        outlay.setSubitemsSubitemId(outlay.getSubitemsSubitemId());
         outlayRepo.save(outlay);
     }
 
@@ -99,9 +106,8 @@ public class StatisticService {
 
     //-- SubItem
 
-    public Optional<SubItemDTO> findSubItemById(Long id){
-        return subItemRepo.findById(id)
-                .map(SubItemDTO::new);
+    public SubItem findSubItemById(Long id){
+        return subItemRepo.findBySubitemId(id);
     }
 
     public List<SubItem> findAllSubItem(){
