@@ -2,10 +2,13 @@ package ru.x3m.rem.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.x3m.rem.dto.EventDTO;
+import ru.x3m.rem.dto.EventGroupDTO;
 import ru.x3m.rem.entity.Event;
 import ru.x3m.rem.entity.EventGroup;
 import ru.x3m.rem.repository.EventGroupRepo;
 import ru.x3m.rem.repository.EventRepo;
+import ru.x3m.rem.utils.ObjectMapperUtils;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -24,25 +27,20 @@ public class EventService {
     }
 
     //--- Events
-    public List<Event> findAllEvents(){
-        return (List<Event>) eventRepo.findAll();
+    public List<EventDTO> findAllEvents() {
+        List<Event> events = (List<Event>) eventRepo.findAll();
+        return ObjectMapperUtils.mapAll(events, EventDTO.class);
     }
 
-    public Event findEventById(Long id){
-        return eventRepo.findEventById(id);
+    public EventDTO findEventById(Long id) {
+        Event event = eventRepo.findEventById(id);
+        return ObjectMapperUtils.map(event, EventDTO.class);
     }
 
-    public Event saveEventRest(Event event){
-        event.setId(event.getId());
-        event.setTitle(event.getTitle());
-        event.setStart(event.getStart());
-        event.setEnd(event.getEnd());
-        event.setAllDay(event.getAllDay());
-        event.setGroupId(event.getGroupId());
-        event.setBackgroundColor(event.getBackgroundColor());
-        event.setUrl(event.getUrl());
+    public EventDTO saveEventRest(EventDTO eventDTO) {
+        Event event = ObjectMapperUtils.map(eventDTO, Event.class);
         eventRepo.save(event);
-        return event;
+        return eventDTO;
     }
 
     public void deleteEvent(Long id) {
@@ -51,13 +49,15 @@ public class EventService {
     }
 
 
-    public List<Event> findEventsInDateRange(String start, String end) {
-        return eventRepo.findAllByStartAfterAndEndBefore(start, end);
+    public List<EventDTO> findEventsInDateRange(String start, String end) {
+        List<Event> events = eventRepo.findAllByStartAfterAndEndBefore(start, end);
+        return ObjectMapperUtils.mapAll(events, EventDTO.class);
     }
 
     //--Groups
-    public List<EventGroup> findAllGroups() {
-        return (List<EventGroup>) eventGroupRepo.findAll();
+    public List<EventGroupDTO> findAllGroups() {
+        List<EventGroup> eventGroups = (List<EventGroup>) eventGroupRepo.findAll();
+        return ObjectMapperUtils.mapAll(eventGroups, EventGroupDTO.class);
     }
 
     public EventGroup findGroupById(Long id) {

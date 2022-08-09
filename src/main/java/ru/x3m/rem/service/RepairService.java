@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.x3m.rem.dto.RepairDTO;
 import ru.x3m.rem.entity.Repair;
 import ru.x3m.rem.repository.RepairRepo;
+import ru.x3m.rem.utils.ObjectMapperUtils;
 
 import java.util.List;
 
@@ -21,34 +22,22 @@ public class RepairService {
         this.repairRepo = repairRepo;
     }
 
-    public Repair findRepairById(Long id) {
-        return repairRepo.findByRepairId(id);
+    public List<RepairDTO> findAllRepairs() {
+        List<Repair> repairs = (List<Repair>) repairRepo.findAll();
+        return ObjectMapperUtils.mapAll(repairs, RepairDTO.class);
     }
 
-    public List<Repair> findAllRepairs() {
-        return (List<Repair>) repairRepo.findAll();
+    public RepairDTO findRepairById(Long id) {
+        Repair repair = repairRepo.findByRepairId(id);
+        return ObjectMapperUtils.map(repair, RepairDTO.class);
     }
 
     public void saveRepair(RepairDTO repairDTO) {
-        Repair repair = new Repair();
-        repair.setRepairId(repairDTO.getRepairId());
-        repair.setRepairAddress(repairDTO.getRepairAddress());
-        repair.setRepairDescription(repairDTO.getRepairDescription());
-        repair.setRepairDate(repairDTO.getRepairDate());
-        repair.setDeviceId(repairDTO.getDeviceId());
-        repair.setClientId(repairDTO.getClientId());
-        repair.setRepairTypeId(repairDTO.getRepairTypeId());
-        repair.setStatusId(repairDTO.getStatusId());
-        repair.setFullCost(repairDTO.getFullCost());
-        repair.setPaid(repairDTO.getPaid());
-        repair.setArrears(repairDTO.calcArrears());
-        repair.setOutlay(repairDTO.getOutlay());
-        repair.setProfit(repairDTO.calcProfit());
-        repair.setCash(repairDTO.getCash());
+        Repair repair = ObjectMapperUtils.map(repairDTO, Repair.class);
         repairRepo.save(repair);
     }
 
-    public void deleteRepair(Long repair_id){
+    public void deleteRepair(Long repair_id) {
         repairRepo.findById(repair_id)
                 .ifPresent(repairRepo::delete);
     }

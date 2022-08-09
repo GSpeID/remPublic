@@ -64,17 +64,23 @@
                         </tr>
                         <tr th:each="itemList : ${items}">
                             <th scope="row"
-                                th:text="${itemList.getItemId()}"></th>
-                            <td th:text="${itemList.getItemName()}"></td>
+                                th:text="${itemList.itemId}"></th>
+                            <td th:text="${itemList.itemName}"></td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a class="btn btn-outline-warning editOutlayBtn"
+                                    <a class="btn btn-outline-secondary editOutlayBtn"
                                        data-bs-target="#editOutlayModal"
                                        data-bs-toggle="modal"
-                                       th:href="@{findItem/(*{itemList.itemId})}">Редактировать</a>
+                                       data-placement="top" data-toggle="tooltip"
+                                       th:href="@{findItem/(*{itemList.itemId})}"
+                                       title="Редактировать">
+                                        <i class="fa-regular fa-pen-to-square"></i>
+                                    </a>
                                     <a class="btn btn-outline-danger"
+                                       data-placement="top" data-toggle="tooltip" title="Удалить"
                                        th:href="@{/stat/deleteItem/{id}(id=${itemList.itemId})}">
-                                        Удалить</a>
+                                        <i class="fa-solid fa-folder-minus"></i>
+                                    </a>
                                 </div>
                             </td>
                         </tr>
@@ -163,16 +169,22 @@
                             <th scope="row"
                                 th:text="${subitemList.getSubitemId()}"></th>
                             <td th:text="${subitemList.getSubitemName()}"></td>
-                            <td th:text="${subitemList.getItem().getItemName()}"></td>
+                            <td th:text="${subitemList.itemName}"></td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a class="btn btn-outline-warning editOutlayBtn"
+                                    <a class="btn btn-outline-secondary editOutlayBtn"
                                        data-bs-target="#editOutlayModal"
                                        data-bs-toggle="modal"
-                                       th:href="@{findSubitem/(*{subitemList.subitemId})}">Редактировать</a>
+                                       data-placement="top" data-toggle="tooltip"
+                                       th:href="@{findSubitem/(*{subitemList.subitemId})}"
+                                       title="Редактировать">
+                                        <i class="fa-regular fa-pen-to-square"></i>
+                                    </a>
                                     <a class="btn btn-outline-danger"
+                                       data-placement="top" data-toggle="tooltip" title="Удалить"
                                        th:href="@{/stat/deleteSubItem/{id}(id=${subitemList.subitemId})}">
-                                        Удалить</a>
+                                        <i class="fa-solid fa-folder-minus"></i>
+                                    </a>
                                 </div>
                             </td>
                         </tr>
@@ -203,7 +215,7 @@
              data-bs-parent="#accordionExample"
              id="collapseOne">
             <div class="accordion-body">
-                <form id="outlaySubmit" method="post" th:action="@{/stat/saveOutlay}" th:object="${outlays}">
+                <form id="outlaySubmit" method="post" th:action="@{/stat/saveOutlay}" th:object="${outlayDTO}">
                     <div class="row">
                         <div class="col">
                             <select class="form-select"
@@ -235,7 +247,7 @@
                         <div class="col">
                             <input class="form-control" id="price"
                                    min="0" placeholder="Введите сумму"
-                                   step="0.1" th:field="*{price}"
+                                   step="0.01" th:field="*{price}"
                                    type="number"
                             />
                             <div class="error" th:errors="*{price}" th:if="${#fields.hasErrors('price')}"/>
@@ -282,20 +294,26 @@
                         </tr>
                         <tr th:each="outlayList : ${outlays}">
                             <th scope="row"
-                                th:text="${outlayList.itemName()}"></th>
-                            <td th:text="${outlayList.subitemName()}"></td>
+                                th:text="${outlayList.itemName}"></th>
+                            <td th:text="${outlayList.subitemName}"></td>
                             <td th:text="${outlayList.description}"></td>
                             <td th:text="${outlayList.price}"></td>
                             <td th:text="${outlayList.date}"></td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a class="btn btn-outline-warning editOutlayBtn"
+                                    <a class="btn btn-outline-secondary editOutlayBtn"
                                        data-bs-target="#editOutlayModal"
                                        data-bs-toggle="modal"
-                                       th:href="@{findOutlay/(*{outlayList.outlayId})}">Редактировать</a>
+                                       data-placement="top" data-toggle="tooltip"
+                                       th:href="@{findOutlay/(*{outlayList.outlayId})}"
+                                       title="Редактировать">
+                                        <i class="fa-regular fa-pen-to-square"></i>
+                                    </a>
                                     <a class="btn btn-outline-danger"
+                                       data-placement="top" data-toggle="tooltip" title="Удалить"
                                        th:href="@{/stat/deleteOutlay/{id}(id=${outlayList.outlayId})}">
-                                        Удалить</a>
+                                        <i class="fa-solid fa-folder-minus"></i>
+                                    </a>
                                 </div>
                             </td>
                         </tr>

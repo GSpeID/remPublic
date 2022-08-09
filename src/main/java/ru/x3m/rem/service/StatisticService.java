@@ -15,7 +15,6 @@ import ru.x3m.rem.repository.SubItemRepo;
 import ru.x3m.rem.utils.ObjectMapperUtils;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -39,24 +38,24 @@ public class StatisticService {
         return ObjectMapperUtils.mapAll(outlays, OutlayDTO.class);
     }
 
-    public void saveOutlay(OutlayDTO outlayDTO) {
-        Outlay outlay = new Outlay();
-        outlay.setOutlayId(outlayDTO.getOutlayId());
-        outlay.setDescription(outlayDTO.getDescription());
-        outlay.setPrice(outlayDTO.getPrice());
-        outlay.setDate(outlayDTO.getDate());
-        outlay.setItemsItemId(outlayDTO.getItemsItemId());
-        outlay.setSubitemsSubitemId(outlayDTO.getSubitemsSubitemId());
-        outlayRepo.save(outlay);
+    public OutlayDTO findOutlayById(Long id) {
+        Outlay outlay = outlayRepo.findByOutlayId(id);
+        return ObjectMapperUtils.map(outlay, OutlayDTO.class);
     }
 
-    public void saveOutlayRest(Outlay outlay) {
-        outlay.setOutlayId(outlay.getOutlayId());
-        outlay.setDescription(outlay.getDescription());
-        outlay.setPrice(outlay.getPrice());
-        outlay.setDate(outlay.getDate());
-        outlay.setItemsItemId(outlay.getItemsItemId());
-        outlay.setSubitemsSubitemId(outlay.getSubitemsSubitemId());
+    public List<OutlayDTO> findAllOutlaysByItemId(Long id) {
+        List<Outlay> outlays = outlayRepo.findAllByItemsItemId(id);
+        return ObjectMapperUtils.mapAll(outlays, OutlayDTO.class);
+    }
+
+    public List<OutlayDTO> findOutlayBySubItemId(Long id) {
+        List<Outlay> outlays = outlayRepo.findAllBySubitemsSubitemId(id);
+        return ObjectMapperUtils.mapAll(outlays, OutlayDTO.class);
+    }
+
+
+    public void saveOutlay(OutlayDTO outlayDTO) {
+        Outlay outlay = ObjectMapperUtils.map(outlayDTO, Outlay.class);
         outlayRepo.save(outlay);
     }
 
@@ -65,70 +64,53 @@ public class StatisticService {
                 .ifPresent(outlayRepo::delete);
     }
 
-    //Outlay Rest
-    public List<Outlay> findAllOutlayRest() {
-        return (List<Outlay>) outlayRepo.findAll();
-    }
-
-    public List<Outlay> findOutlaysByItemIdRest(Long id) {
-        return outlayRepo.findAllByItemsItemId(id);
-    }
-
-    public List<Outlay> findOutlayBySubItemIdRest(Long id) {
-        return outlayRepo.findAllBySubitemsSubitemId(id);
-    }
-
-    public Outlay findOutlayByIdRest(Long id) {
-        return outlayRepo.findByOutlayId(id);
-    }
-
     //-- Item
 
-    public Item findItemById(Long id) {
-        return itemRepo.findByItemId(id);
+    public ItemDTO findItemById(Long id) {
+        Item item = itemRepo.findByItemId(id);
+        return ObjectMapperUtils.map(item, ItemDTO.class);
     }
 
-    public List<Item> findAllItems() {
-        return (List<Item>) itemRepo.findAll();
+    public List<ItemDTO> findAllItems() {
+        List<Item> items = (List<Item>) itemRepo.findAll();
+        return ObjectMapperUtils.mapAll(items, ItemDTO.class);
     }
 
     public void saveItems(ItemDTO itemDTO) {
-        Item item = new Item();
-        item.setItemId(itemDTO.getItemId());
-        item.setItemName(itemDTO.getItemName());
+        Item item = ObjectMapperUtils.map(itemDTO, Item.class);
         itemRepo.save(item);
     }
 
-    public void deleteItem(Long id){
+    public void deleteItem(Long id) {
         itemRepo.findById(id)
                 .ifPresent(itemRepo::delete);
     }
 
     //-- SubItem
 
-    public SubItem findSubItemById(Long id){
-        return subItemRepo.findBySubitemId(id);
+    public SubItemDTO findSubItemById(Long id) {
+        SubItem subItem = subItemRepo.findBySubitemId(id);
+        return ObjectMapperUtils.map(subItem, SubItemDTO.class);
     }
 
-    public List<SubItem> findAllSubItem(){
-        return (List<SubItem>) subItemRepo.findAll();
-    }
-
-
-    public List<SubItem> findAllSubByItemsItemId(Long id){
-        return subItemRepo.findAllByItemsItemId(id);
+    public List<SubItemDTO> findAllSubItem() {
+        List<SubItem> subItems = (List<SubItem>) subItemRepo.findAll();
+        return ObjectMapperUtils.mapAll(subItems, SubItemDTO.class);
     }
 
 
-    public void saveSubItem(SubItemDTO subItemDTO){
-        SubItem subItem = new SubItem();
-        subItem.setSubitemId(subItemDTO.getSubitemId());
-        subItem.setSubitemName(subItemDTO.getSubitemName());
-        subItem.setItemsItemId(subItemDTO.getItemsItemId());
+    public List<SubItemDTO> findAllSubByItemsItemId(Long id) {
+        List<SubItem> subItems = (List<SubItem>) subItemRepo.findAll();
+        return ObjectMapperUtils.mapAll(subItems, SubItemDTO.class);
+    }
+
+
+    public void saveSubItem(SubItemDTO subItemDTO) {
+        SubItem subItem = ObjectMapperUtils.map(subItemDTO, SubItem.class);
         subItemRepo.save(subItem);
     }
 
-    public void deleteSubItem(Long id){
+    public void deleteSubItem(Long id) {
         subItemRepo.findById(id)
                 .ifPresent(subItemRepo::delete);
     }

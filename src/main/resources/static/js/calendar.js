@@ -9,14 +9,19 @@ $(document).ready(function () {
         const color = $(this).find('option:selected').attr('id');
         $('#backgroundColor').val(color);
     });
-
+    $('#addEvent').on('hidden.bs.modal', function (e) {
+        $(this)
+            .find("input,textarea,select")
+            .val('')
+            .end()
+            .find("input[type=checkbox], input[type=radio]")
+            .prop("checked", "")
+            .end();
+    });
 });
 
-
 document.addEventListener('DOMContentLoaded', function () {
-    $('#addEvent').modal('hide').on('hidden.bs.modal', function () {
-        $(this).find('form').trigger('reset');
-    })
+
     $('#fullInfoModal').modal('hide').on('hidden.bs.modal', function () {
         $(this).find('form').trigger('reset');
     })
@@ -45,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
         dayMaxEvents: true,
         nowIndicator: true,
         selectable: true,
-        // selectHelper: true,
+        selectHelper: true,
         views: {
             listDay: {buttonText: 'За день'},
             listWeek: {buttonText: 'За неделю'},
@@ -59,7 +64,6 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         dateClick: function (start, end) {
             $('#addEvent').modal('toggle');
-
             $('#saveEventBtn').off("click").on("click", function () {
                 const title = $('#title').val();
                 const start = $('#start').val();
@@ -68,8 +72,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 const groupId = $('#groupId').val();
                 const backgroundColor = $('#backgroundColor').val();
                 const url = $('#url').val();
+                const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
                 $.ajax({
                     headers: {
+                        'X-CSRF-TOKEN': csrfToken,
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
@@ -87,6 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 });
             });
+
         },
         select: function (start, end, allDays) {
 
@@ -105,8 +112,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!allDay) {
                     end = moment(info.event.endStr).format('YYYY-MM-DD HH:mm:ss');
                 }
+                const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
                 $.ajax({
                     headers: {
+                        'X-XSRF-TOKEN': csrfToken,
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
@@ -119,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         calendar.refetchEvents();
                     },
                     error: function (msg) {
-                        alert('We are unable to process your request');
+                        alert('Что-то сломалось, обратитесь куда-нибудь');
                     }
                 });
             }
@@ -163,9 +172,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     });
                 $('#fullInfoModal').modal('toggle');
-                $('#fullInfoModal').modal('hide').on('hidden.bs.modal', function () {
-                    $(this).find('form').trigger('reset');
-                })
             } else {
                 // вызов модального + заполнение полей
                 $('#addEvent').modal('toggle');
@@ -195,8 +201,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     const groupId = $('#groupId').val();
                     const backgroundColor = $('#backgroundColor').val();
                     const url = $('#url').val();
+                    const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
                     $.ajax({
                         headers: {
+                            'X-XSRF-TOKEN': csrfToken,
                             'Accept': 'application/json',
                             'Content-Type': 'application/json'
                         },
@@ -217,9 +225,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 // удалить ивент
                 $('#deleteEventBtn').off("click").on("click", function () {
                     const deleteMsg = confirm("Do you really want to delete?");
+                    const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
                     if (deleteMsg) {
                         $.ajax({
                             headers: {
+                                'X-XSRF-TOKEN': csrfToken,
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json'
                             },

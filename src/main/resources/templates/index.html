@@ -21,8 +21,7 @@
     <div style="text-align: center;">OJC "SPACE SHIP CRAFT ENGINEERING"</div>
     <br>
     <div style="text-align: center;" sec:authorize="isAnonymous()">
-        ЗАЛОГИНЬСЯ,<br>
-        РАБОТА САМА СЕБЯ НЕ СДЕЛАЕТ!
+        ЗАЛОГИНЬСЯ
     </div>
 </div>
 <br>
@@ -57,9 +56,19 @@
     </a>
 </div>
 <br>
-<div class="text-center" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')">
+<div class="text-center" sec:authorize="hasAnyRole('ROLE_ADMIN')">
     <a href="" th:href="@{/events}">
         <button name="Register" type="button" class="btn btn-warning">Календарь</button>
+    </a>
+</div>
+<br>
+<div class="text-center" sec:authorize="authenticated">
+    <a>
+        <form>
+            <a class="btn btn-outline-primary" data-placement="top"
+               data-toggle="tooltip" th:href="@{/logout}" title="Выйти"
+            ><i class="fa-solid fa-joint"></i></a>
+        </form>
     </a>
 </div>
 </body>

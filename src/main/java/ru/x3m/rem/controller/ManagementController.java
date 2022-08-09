@@ -9,12 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.x3m.rem.dto.*;
-import ru.x3m.rem.entity.*;
 import ru.x3m.rem.service.ManagementService;
 
 import javax.validation.Valid;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -29,15 +27,15 @@ public class ManagementController {
 
     //--- для повторного использования в качестве метода, вместо дублирования кода
     static void globalModelsList(Model model, ManagementService managementService) {
-        List<Client> clients = managementService.findAllClients();
+        List<ClientDTO> clients = managementService.findAllClients();
         model.addAttribute("clients", clients);
-        List<Device> devices = managementService.findAllDevices();
+        List<DeviceDTO> devices = managementService.findAllDevices();
         model.addAttribute("devices", devices);
-        List<ClientType> clientTypes = managementService.findAllClientTypes();
+        List<ClientTypeDTO> clientTypes = managementService.findAllClientTypes();
         model.addAttribute("clientTypes", clientTypes);
-        List<RepairType> repairTypes = managementService.findAllRepairTypes();
+        List<RepairTypeDTO> repairTypes = managementService.findAllRepairTypes();
         model.addAttribute("repairTypes", repairTypes);
-        List<RepairStatus> repairStatuses = managementService.findAllRepairStatuses();
+        List<RepairStatusDTO> repairStatuses = managementService.findAllRepairStatuses();
         model.addAttribute("repairStatuses", repairStatuses);
     }
 
@@ -82,7 +80,7 @@ public class ManagementController {
                                @ModelAttribute("deviceDTO") DeviceDTO deviceDTO,
                                @ModelAttribute("clientTypeDTO") ClientTypeDTO clientTypeDTO,
                                @ModelAttribute("repairTypeDTO") RepairTypeDTO repairTypeDTO,
-                               @ModelAttribute("repairStatusDTO") RepairStatusDTO repairStatusDTO) throws IOException {
+                               @ModelAttribute("repairStatusDTO") RepairStatusDTO repairStatusDTO) {
         if (result.hasErrors()) {//ToDo проврека на ifExist
             return modelsList(model);
         }

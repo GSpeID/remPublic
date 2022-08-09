@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head>
     <div th:replace="~{custom/pagesTemplate :: css-head}"></div>
@@ -29,7 +30,9 @@
                         <option value="">Выбрать клиента</option>
                         <option th:each="client : ${clients}"
                                 th:value="${client.clientId}"
-                                th:text="${client.clientName}"></option>
+                                th:text="${client.clientName}">
+
+                        </option>
                     </select>
                 </div>
             </div>
@@ -201,7 +204,7 @@
 </div>
 <div class="container-fluid" id="r-table">
     <br>
-    <table id="r-services" class="table table-hover">
+    <table class="display responsive nowrap" id="r-services" width="100%">
         <thead>
         <tr class="bg-light">
             <th scope="col">Клиент</th>
@@ -212,6 +215,7 @@
             <th scope="col">Стоимость</th>
             <th scope="col">Дата</th>
             <th scope="col">ID</th>
+            <th scope="col">contactPhone</th>
             <th scope="col">Действия</th>
         </tr>
         </thead>
@@ -221,31 +225,40 @@
         </tr>
         <tr th:each="repair : ${repairs}">
             <th scope="row"
-                th:text="${repair.getClient().getClientName()}"></th>
-            <td th:text="${repair.repairType.getRepairTypeName()}"></td>
-            <td th:text="${repair.getRepairAddress()}"></td>
-            <td th:text="${repair.getRepairDescription()}"></td>
-            <td th:text="${repair.getDevice().getDeviceName()}"></td>
-            <td th:text="${repair.getFullCost()}"></td>
-            <td th:text="${repair.getRepairDate()}"></td>
-            <td th:text="${repair.getRepairId()}"></td>
+                th:text="${repair.clientName}"></th>
+            <td th:text="${repair.repairTypeName}"></td>
+            <td th:text="${repair.repairAddress}"></td>
+            <td th:text="${repair.repairDescription}"></td>
+            <td th:text="${repair.deviceName}"></td>
+            <td th:text="${repair.fullCost}"></td>
+            <td th:text="${repair.repairDate}"></td>
+            <td th:text="${repair.repairId}"></td>
+            <td th:text="${repair.clientPhone}"></td>
             <td>
 
                 <div class="btn-group" role="group">
                     <a th:href="@{findRepairById/(*{repair.repairId})}" class="btn btn-outline-info fullInfoBtn"
                        data-toggle="tooltip" data-placement="top" title="Полная информация"
-                       data-bs-toggle="modal" data-bs-target="#fullInfoModal"><i class="fa-regular fa-folder-open"></i></a>
+                       data-bs-target="#fullInfoModal" data-bs-toggle="modal">
+                        <i class="fa-regular fa-folder-open"></i></a>
                     <a th:href="@{findRepairById/(*{repair.repairId})}" class="btn btn-outline-secondary editRepairBtn"
                        data-toggle="tooltip" data-placement="top" title="Редактировать"
-                       data-bs-toggle="modal" data-bs-target="#editRepairModal"><i
-                            class="fa-regular fa-pen-to-square"></i></a>
+                       data-bs-target="#editRepairModal" data-bs-toggle="modal">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </a>
                     <a class="btn btn-outline-secondary saveRepairEventBtn" type="button" id="saveRepairEventBtn"
-                       data-toggle="tooltip" data-placement="top" title="Сохранить в календарь">
-                        <i class="fa-regular fa-calendar-plus"></i></a>
+                       data-placement="top" data-toggle="tooltip" sec:authorize="hasAnyRole('ROLE_ADMIN')"
+                       title="Сохранить в календарь"
+                    >
+                        <i class="fa-regular fa-calendar-plus"></i>
+                    </a>
                     <a class="btn btn-outline-danger"
                        data-toggle="tooltip" data-placement="top" title="Удалить"
-                       th:href="@{/repair-service/delete/{id}(id=${repair.repairId})}"><i
-                            class="fa-solid fa-folder-minus"></i></a>
+                       sec:authorize="hasAnyRole('ROLE_ADMIN')"
+                       th:href="@{/repair-service/delete/{id}(id=${repair.repairId})}"
+                    >
+                        <i class="fa-solid fa-folder-minus"></i>
+                    </a>
                 </div>
             </td>
         </tr>

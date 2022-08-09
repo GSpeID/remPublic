@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
-import ru.x3m.rem.entity.Outlay;
 
 import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
@@ -44,16 +43,5 @@ public class OutlayDTO {
     private String subitemName;
 
     private String itemName;
-
-    public OutlayDTO(Outlay outlay) {
-        this.outlayId = outlay.getOutlayId();
-        this.description = outlay.getDescription();
-        this.price = outlay.getPrice();
-        this.date = outlay.getDate();
-        this.subitemsSubitemId = outlay.getSubitemsSubitemId();
-        this.itemsItemId = outlay.getItemsItemId();
-        this.subitemName = outlay.getSubItem().getSubitemName();
-        this.itemName = outlay.getItem().getItemName();
-    }
 
 }

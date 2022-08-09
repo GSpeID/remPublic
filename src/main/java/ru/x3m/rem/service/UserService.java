@@ -9,10 +9,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.x3m.rem.dto.*;
-import ru.x3m.rem.entity.*;
-import ru.x3m.rem.repository.*;
-
+import ru.x3m.rem.dto.UserDTO;
+import ru.x3m.rem.entity.User;
+import ru.x3m.rem.repository.RoleRepo;
+import ru.x3m.rem.repository.UserRepo;
+import ru.x3m.rem.utils.ObjectMapperUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,10 +38,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void create(UserDTO userDTO) {
-        User user = new User();
-        user.setUsername(userDTO.getUsername());
-        user.setRoleId(userDTO.getRoleId());
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        User user = ObjectMapperUtils.map(userDTO, User.class);
         userRepo.save(user);
     }
 

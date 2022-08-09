@@ -92,58 +92,60 @@
                     <div class="modal-body">
                         <div class="container">
                             <div class="col-12">
-                                <input type="checkbox"
-                                       name="allDay" id="allDay" value="true" checked="checked"
-                                />
-                                <label class="form-check-label" th:for="${allDay}">На протяжении всего дня</label>
-                                <br>
-                                <br>
-                                <select class="form-select"
-                                        id="dropGroups"
-                                        required="required"
-                                        onchange="update9()"
-                                        th:object="${groupList}"
-                                >
-                                    <option value="">Тип мероприятия</option>
-                                    <option th:each="group : ${groupList}"
-                                            th:value="${group.groupId}"
-                                            th:text="${group.groupName}"
-                                            th:id="${group.backgroundColor}"
-                                    ></option>
-                                </select>
-                                <div th:if="${#fields.hasErrors('groupId')}" th:errors="*{groupId}" class="error"/>
-                                <br>
-                                <input type="text" class="form-control" placeholder="Описание мероприятия"
-                                       minlength="5" maxlength="255"
-                                       th:field="*{title}"
-                                       id="title" name="title"
-                                       value="" required="required"
-                                />
-                                <br>
-                                <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error"/>
-                                <label>Начало мероприятия</label>
-                                <input type="datetime-local" class="form-control"
-                                       th:field="*{start}"
-                                       id="start" name="start"
-                                       value="" required="required"
-                                />
-                                <div th:if="${#fields.hasErrors('start')}" th:errors="*{start}" class="error"/>
-                                <br>
-                                <label>Завершение мероприятия</label>
-                                <input type="datetime-local" class="form-control"
-                                       th:field="*{end}"
-                                       id="end" name="end"
-                                       value="" required="required"
-                                />
-                                <div th:if="${#fields.hasErrors('end')}" th:errors="*{end}" class="error"/>
-                                <input type="hidden" class="form-control"
-                                       id="groupId" name="groupId" value=""/>
-                                <input type="hidden" class="form-control"
-                                       id="id" name="id" value=""/>
-                                <input type="hidden" class="form-control"
-                                       id="backgroundColor" name="backgroundColor" value=""/>
-                                <input type="hidden" class="form-control"
-                                       id="url" name="url" value=""/>
+                                <form>
+                                    <input checked="checked"
+                                           id="allDay" name="allDay" type="checkbox" value="true"
+                                    />
+                                    <label class="form-check-label" th:for="${allDay}">На протяжении всего дня</label>
+                                    <br>
+                                    <br>
+                                    <select class="form-select"
+                                            id="dropGroups"
+                                            onchange="update9()"
+                                            required="required"
+                                            th:object="${groupList}"
+                                    >
+                                        <option value="">Тип мероприятия</option>
+                                        <option th:each="group : ${groupList}"
+                                                th:id="${group.backgroundColor}"
+                                                th:text="${group.groupName}"
+                                                th:value="${group.groupId}"
+                                        ></option>
+                                    </select>
+                                    <div class="error" th:errors="*{groupId}" th:if="${#fields.hasErrors('groupId')}"/>
+                                    <br>
+                                    <input class="form-control" id="title" maxlength="255"
+                                           minlength="5" name="title"
+                                           placeholder="Описание мероприятия"
+                                           required="required" th:field="*{title}"
+                                           type="text" value=""
+                                    />
+                                    <br>
+                                    <div class="error" th:errors="*{title}" th:if="${#fields.hasErrors('title')}"/>
+                                    <label>Начало мероприятия</label>
+                                    <input class="form-control" id="start"
+                                           name="start"
+                                           required="required" th:field="*{start}"
+                                           type="datetime-local" value=""
+                                    />
+                                    <div class="error" th:errors="*{start}" th:if="${#fields.hasErrors('start')}"/>
+                                    <br>
+                                    <label>Завершение мероприятия</label>
+                                    <input class="form-control" id="end"
+                                           name="end"
+                                           required="required" th:field="*{end}"
+                                           type="datetime-local" value=""
+                                    />
+                                    <div class="error" th:errors="*{end}" th:if="${#fields.hasErrors('end')}"/>
+                                    <input class="form-control" id="groupId"
+                                           name="groupId" type="hidden" value=""/>
+                                    <input class="form-control" id="id"
+                                           name="id" type="hidden" value=""/>
+                                    <input class="form-control" id="backgroundColor"
+                                           name="backgroundColor" type="hidden" value=""/>
+                                    <input class="form-control" id="url"
+                                           name="url" type="hidden" value=""/>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -342,18 +344,17 @@
 <!-- Modal Full Info Repair-->
 <div th:fragment="fullInfoFragment">
     <div id="fullInfoModal" class="modal fade" tabindex="-1" aria-labelledby="fullInfoModal" aria-hidden="true">
-        <div class="modal-dialog scrollable">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="fullInfoLabel">Full Information</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class id="fullInfo">
-                    <div class="modal-body">
-                        <div class="container">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="clientName">Клиент</label>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="clientName">Клиент</label>
                                     <input type="text" class="form-control" required="required"
                                            id="clientName" name="clientName" value="" disabled/>
                                 </div>
@@ -430,7 +431,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
@@ -459,7 +459,7 @@
                                     <div class="form-group mb-3">
                                         <select class="form-select" th:object="${clients}" id="dropClient"
                                                 onchange="update1()">
-                                            <option value="0">Выбрать клиента</option>
+                                            <option value="">Выбрать клиента</option>
                                             <option th:each="client : ${clients}"
                                                     th:value="${client.clientId}"
                                                     th:text="${client.clientName}"></option>
@@ -469,7 +469,7 @@
                                     <div class="input-group mb-3">
                                         <select class="form-select" th:object="${repairTypes}" id="dropRepairType"
                                                 onchange="update3()">
-                                            <option value="0">Выбрать тип ремонта</option>
+                                            <option value="">Выбрать тип ремонта</option>
                                             <option th:each="repairType : ${repairTypes}"
                                                     th:value="${repairType.repairTypeId}"
                                                     th:text="${repairType.repairTypeName}"></option>
@@ -490,7 +490,7 @@
                                     <div class="form-group mb-3">
                                         <select class="form-select" th:object="${devices}" id="dropDevice"
                                                 onchange="update4()">
-                                            <option value="0">Выбрать технику</option>
+                                            <option value="">Выбрать технику</option>
                                             <option th:each="device : ${devices}"
                                                     th:value="${device.deviceId}"
                                                     th:text="${device.deviceName}"></option>
@@ -573,18 +573,17 @@
     <form th:action="@{/repair-service/create}" method="post">
         <div id="editRepairModal" class="modal fade" tabindex="-1"
              aria-labelledby="editRepairModal" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editRepairModalLabel">Edit Repair</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class id="editRepair">
-                        <div class="modal-body">
-                            <div class="container">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <input type="hidden" class="form-control"
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <input type="hidden" class="form-control"
                                                id="repairId" name="repairId" value=""/>
                                     </div>
                                     <div class="form-group">
@@ -599,57 +598,94 @@
                                         <input type="hidden" class="form-control"
                                                id="repairTypeId" name="repairTypeId" value=""/>
                                     </div>
-                                    <div class="form-group">
-                                        <input type="hidden" class="form-control"
-                                               id="statusId" name="statusId" value=""/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="clientName">Клиент</label>
-                                        <input type="text" class="form-control" required="required"
-                                               id="clientName" name="clientName" value="" disabled/>
-                                    </div>
-                                    <br>
-                                    <div class="form-group">
-                                        <label for="repairTypeName">Вид ремонта</label>
-                                        <input type="text" class="form-control" required="required"
-                                               id="repairTypeName" name="repairTypeName" value=""/>
-                                    </div>
-                                    <br>
-                                    <div class="form-group">
-                                        <label for="repairAddress">Адрес проведения ремонта</label>
-                                        <input type="text" class="form-control" required="required"
-                                               id="repairAddress" name="repairAddress" value=""/>
-                                    </div>
-                                    <br>
-                                    <div class="form-group">
+                                <div class="form-group">
+                                    <input type="hidden" class="form-control"
+                                           id="statusId" name="statusId" value=""/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="clientName">Клиент</label>
+                                    <input type="text" class="form-control" required="required"
+                                           id="clientName" name="clientName" value="" disabled/>
+                                </div>
+                                <br>
+                                <div class="form-group mb-3">
+                                    <select class="form-select"
+                                            id="dropDevice"
+                                            required
+                                            th:object="${devices}"
+                                    >
+                                        <option value="">Выбрать технику</option>
+                                        <option th:each="device : ${devices}"
+                                                th:text="${device.deviceName}"
+                                                th:value="${device.deviceId}"></option>
+                                    </select>
+                                </div>
+                                <br>
+                                <div class="input-group mb-3">
+                                    <select class="form-select"
+                                            id="dropRepairType"
+                                            required
+                                            th:object="${repairTypes}"
+                                    >
+                                        <option value="">Выбрать тип ремонта</option>
+                                        <option th:each="repairType : ${repairTypes}"
+                                                th:text="${repairType.repairTypeName}"
+                                                th:value="${repairType.repairTypeId}"></option>
+                                    </select>
+                                </div>
+                                <br>
+                                <div class="form-group mb-3">
+                                    <select class="form-select"
+                                            id="dropStatus"
+                                            required
+                                            th:object="${repairStatuses}"
+                                    >
+                                        <option value="">Статус</option>
+                                        <option th:each="repairStatus : ${repairStatuses}"
+                                                th:text="${repairStatus.statusName}"
+                                                th:value="${repairStatus.statusId}"></option>
+                                    </select>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <label for="repairAddress">Адрес проведения ремонта</label>
+                                    <input type="text" class="form-control" required="required"
+                                           id="repairAddress" maxlength="255" minlength="5"
+                                           name="repairAddress" value=""
+                                    />
+                                </div>
+                                <br>
+                                <div class="form-group">
                                         <label for="repairDescription">Описание</label>
-                                        <input type="text" class="form-control" required="required"
-                                               id="repairDescription" name="repairDescription" value=""/>
+                                    <input type="text" class="form-control" required="required"
+                                           id="repairDescription" maxlength="255" minlength="5"
+                                           name="repairDescription" value=""
+                                    />
                                     </div>
                                     <br>
-                                    <div class="form-group">
-                                        <label for="deviceName">Техника</label>
-                                        <input type="text" class="form-control" required="required"
-                                               id="deviceName" name="deviceName" value=""/>
-                                    </div>
+                                <div class="form-group">
+                                    <label for="fullCost">Обьявленная стомость работ</label>
+                                    <input class="form-control" id="fullCost" min="0"
+                                           name="fullCost" required="required" step="0.01"
+                                           type="number" value=""
+                                    />
+                                </div>
                                     <br>
-                                    <div class="form-group">
-                                        <label for="fullCost">Обьявленная стомость работ</label>
-                                        <input type="text" class="form-control" required="required"
-                                               id="fullCost" name="fullCost" value=""/>
-                                    </div>
+                                <div class="form-group">
+                                    <label for="outlay">Затраты</label>
+                                    <input class="form-control" id="outlay" min="0"
+                                           name="outlay" required="required" step="0.01"
+                                           type="number" value=""
+                                    />
+                                </div>
                                     <br>
-                                    <div class="form-group">
-                                        <label for="outlay">Затраты</label>
-                                        <input type="text" class="form-control" required="required"
-                                               id="outlay" name="outlay" value=""/>
-                                    </div>
-                                    <br>
-                                    <div class="form-group">
-                                        <label for="paid">Получено</label>
-                                        <input type="text" class="form-control" required="required"
-                                               id="paid" name="paid" value=""/>
-                                    </div>
+                                <div class="form-group">
+                                    <label for="paid">Получено</label>
+                                    <input class="form-control" id="paid" min="0"
+                                           name="paid" required="required" step="0.01"
+                                           type="number" value=""
+                                    />
+                                </div>
                                     <br>
                                     <div class="form-group">
                                         <label for="arrears">Задолжность</label>
@@ -662,26 +698,24 @@
                                         <input type="text" class="form-control" required="required"
                                                id="profit" name="profit" value="" disabled/>
                                     </div>
-                                    <br>
-                                    <div class="form-group">
-                                        <label for="repairDate">Дата проведения ремонта</label>
-                                        <input type="date" class="form-control" required="required"
-                                               id="repairDate" name="repairDate" value=""/>
-                                    </div>
-                                    <br>
-                                    <div class="form-group">
-                                        <label for="statusName">Статус</label>
-                                        <input type="text" class="form-control" required="required"
-                                               id="statusName" name="statusName" value=""/>
-                                    </div>
-                                    <br>
-                                    <button type="submit" class="btn btn-outline-primary" value="save">Submit</button>
+                                <br>
+                                <div class="form-group">
+                                    <label for="repairDate">Дата проведения ремонта</label>
+                                    <input type="date" class="form-control" required="required"
+                                           id="repairDate" name="repairDate" value=""/>
+                                </div>
+                                <br>
+                                <div class="col-md-auto">
+                                    <input autocomplete="off" class="btn-check" id="cash"
+                                           name="cash" required type="checkbox" value="false">
+                                    <label class="btn btn-outline-secondary" for="cash">Наличные</label>
                                 </div>
                             </div>
+                            </div>
                         </div>
-                    </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-outline-secondary" data-bs-dismiss="modal" type="button">Закрыть</button>
+                        <button class="btn btn-outline-primary" type="submit" value="save">Сохранить</button>
                     </div>
                 </div>
             </div>

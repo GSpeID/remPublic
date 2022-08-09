@@ -29,16 +29,17 @@ $(document).ready(function () {
     });
     const groupColumn = 0;
     const table = $('#r-services').DataTable({
-            columnDefs: [{visible: false, targets: groupColumn}],
-            order: [[groupColumn, 'asc']],
-            displayLength: 25,
-            drawCallback: function (settings) {
-                const api = this.api();
-                const rows = api.rows({page: 'current'}).nodes();
-                let last = null;
+        responsive: true,
+        columnDefs: [{visible: false, targets: groupColumn}],
+        order: [[groupColumn, 'asc']],
+        displayLength: 25,
+        drawCallback: function (settings) {
+            const api = this.api();
+            const rows = api.rows({page: 'current'}).nodes();
+            let last = null;
 
-                api
-                    .column(groupColumn, {page: 'current'})
+            api
+                .column(groupColumn, {page: 'current'})
                     .data()
                     .each(function (group, i) {
                         if (last !== group) {
@@ -51,7 +52,8 @@ $(document).ready(function () {
                     });
             },
             columnDefs: [
-                {"visible": false, "targets": 7}
+                {"visible": false, "targets": 7},
+                {"visible": false, "targets": 8}
             ],
 
             language: {
@@ -77,6 +79,9 @@ $(document).ready(function () {
             type: 'GET',
             url: '/rem/repair-service/api/findRepairById/' + id,
             success: function (repair) {
+                $('#editRepairModal #dropDevice').val(repair.deviceId);
+                $('#editRepairModal #dropRepairType').val(repair.repairTypeId);
+                $('#editRepairModal #dropStatus').val(repair.statusId);
                 $('#editRepairModal #repairId').val(repair.repairId);
                 $('#editRepairModal #repairAddress').val(repair.repairAddress);
                 $('#editRepairModal #repairDescription').val(repair.repairDescription);
@@ -156,10 +161,10 @@ $(document).ready(function () {
         const groupId = '1';
             const backgroundColor = '#4da843';
             const url = '/rem/repair-service/api/findRepairById/' + repairId;
-        console.log(repairId);
-        console.log(url);
+            const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
             $.ajax({
                 headers: {
+                    'X-XSRF-TOKEN': csrfToken,
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },

@@ -35,10 +35,7 @@ public class ChartRestController {
 
     @GetMapping("/getItems")
     public List<ItemDTO> getItems() {
-        List<Item> items = statisticService.findAllItems();
-        return items.stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
+        return statisticService.findAllItems();
     }
 
     @PostMapping("/getCharts")

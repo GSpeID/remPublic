@@ -7,11 +7,13 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.x3m.rem.dto.*;
 import ru.x3m.rem.entity.*;
 import ru.x3m.rem.repository.*;
+import ru.x3m.rem.utils.ObjectMapperUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -36,26 +38,26 @@ public class ManagementService {
 
 
     //--- Clients
-    public Client findClientById(Long id) {
-        return clientRepo.findClientByClientId(id);
+    public ClientDTO findClientById(Long id) {
+        Client client = clientRepo.findClientByClientId(id);
+        return ObjectMapperUtils.map(client, ClientDTO.class);
     }
 
-    public List<Client> findAllClients(){
-        return (List<Client>) clientRepo.findAll();
+    public List<ClientDTO> findAllClients() {
+        List<Client> clients = (List<Client>) clientRepo.findAll();
+        return ObjectMapperUtils.mapAll(clients, ClientDTO.class);
     }
 
-    public void saveClient(ClientDTO clientDTO) throws IOException {
-        Client client = new Client();
-        client.setClientId(clientDTO.getClientId());
-        client.setClientName(clientDTO.getClientName());
-        client.setClientTypeId(clientDTO.getClientTypeId());
-        client.setClientContact(clientDTO.getClientContact());
-        client.setClientPhone(clientDTO.getClientPhone());
-        client.setClientMail(clientDTO.getClientMail());
+    public void saveClient(ClientDTO clientDTO) {
+        Client client = ObjectMapperUtils.map(clientDTO, Client.class);
         clientRepo.save(client);
 
         String clientDir = client.getClientName();
-        Files.createDirectories(Paths.get("/home/x3m/Downloads/rem/clientFiles/" + clientDir));
+        try {
+            Files.createDirectories(Paths.get("/home/x3m/Downloads/rem/clientFiles/" + clientDir));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void deleteClient(Long clientId){
@@ -64,61 +66,61 @@ public class ManagementService {
     }
 
     //--- Client type
-    public ClientType findClientTypeById(Long id) {
-        return clientTypeRepo.findByClientTypeId(id);
+    public ClientTypeDTO findClientTypeById(Long id) {
+        ClientType clientType = clientTypeRepo.findByClientTypeId(id);
+        return ObjectMapperUtils.map(clientType, ClientTypeDTO.class);
     }
 
-    public List<ClientType> findAllClientTypes(){
-        return (List<ClientType>) clientTypeRepo.findAll();
+    public List<ClientTypeDTO> findAllClientTypes() {
+        List<ClientType> clientTypes = (List<ClientType>) clientTypeRepo.findAll();
+        return ObjectMapperUtils.mapAll(clientTypes, ClientTypeDTO.class);
     }
 
-    public void saveClientType(ClientTypeDTO clientTypeDTO){
-        ClientType clientType = new ClientType();
-        clientType.setClientTypeId(clientTypeDTO.getClientTypeId());
-        clientType.setClientTypeName(clientTypeDTO.getClientTypeName());
+    public void saveClientType(ClientTypeDTO clientTypeDTO) {
+        ClientType clientType = ObjectMapperUtils.map(clientTypeDTO, ClientType.class);
         clientTypeRepo.save(clientType);
     }
 
-    public void deleteClientType(Long clientTypeId){
+    public void deleteClientType(Long clientTypeId) {
         clientTypeRepo.findById(clientTypeId)
                 .ifPresent(clientTypeRepo::delete);
     }
 
     //--- Device
-    public Device findDeviceById(Long id) {
-        return deviceRepo.findByDeviceId(id);
+    public DeviceDTO findDeviceById(Long id) {
+        Optional<Device> device = deviceRepo.findById(id);
+        return ObjectMapperUtils.map(device, DeviceDTO.class);
     }
 
-    public List<Device> findAllDevices(){
-        return (List<Device>) deviceRepo.findAll();
+    public List<DeviceDTO> findAllDevices() {
+        List<Device> devices = (List<Device>) deviceRepo.findAll();
+        return ObjectMapperUtils.mapAll(devices, DeviceDTO.class);
     }
 
-    public void saveDevice(DeviceDTO deviceDTO){
-        Device device = new Device();
-        device.setDeviceId(deviceDTO.getDeviceId());
-        device.setDeviceName(deviceDTO.getDeviceName());
+    public void saveDevice(DeviceDTO deviceDTO) {
+        Device device = ObjectMapperUtils.map(deviceDTO, Device.class);
         deviceRepo.save(device);
 
     }
 
-    public void deleteDevice(Long deviceId){
+    public void deleteDevice(Long deviceId) {
         deviceRepo.findById(deviceId)
                 .ifPresent(deviceRepo::delete);
     }
 
     //--- Repair type
-    public RepairType findRepairTypeById(Long id) {
-        return repairTypeRepo.findByRepairTypeId(id);
+    public RepairTypeDTO findRepairTypeById(Long id) {
+        RepairType repairType = repairTypeRepo.findByRepairTypeId(id);
+        return ObjectMapperUtils.map(repairType, RepairTypeDTO.class);
     }
 
-    public List<RepairType> findAllRepairTypes(){
-        return (List<RepairType>) repairTypeRepo.findAll();
+    public List<RepairTypeDTO> findAllRepairTypes() {
+        List<RepairType> repairTypes = (List<RepairType>) repairTypeRepo.findAll();
+        return ObjectMapperUtils.mapAll(repairTypes, RepairTypeDTO.class);
     }
 
-    public void saveRepairType(RepairTypeDTO repairTypeDTO){
-        RepairType repairType = new RepairType();
-        repairType.setRepairTypeId(repairTypeDTO.getRepairTypeId());
-        repairType.setRepairTypeName(repairTypeDTO.getRepairTypeName());
+    public void saveRepairType(RepairTypeDTO repairTypeDTO) {
+        RepairType repairType = ObjectMapperUtils.map(repairTypeDTO, RepairType.class);
         repairTypeRepo.save(repairType);
     }
 
@@ -128,18 +130,18 @@ public class ManagementService {
     }
 
     //--- Repair status
-    public RepairStatus findRepairStatusById(Long id) {
-        return repairStatusRepo.findByStatusId(id);
+    public RepairStatusDTO findRepairStatusById(Long id) {
+        Optional<RepairStatus> repairStatus = repairStatusRepo.findById(id);
+        return ObjectMapperUtils.map(repairStatus, RepairStatusDTO.class);
     }
 
-    public List<RepairStatus> findAllRepairStatuses() {
-        return (List<RepairStatus>) repairStatusRepo.findAll();
+    public List<RepairStatusDTO> findAllRepairStatuses() {
+        List<RepairStatus> repairStatuses = (List<RepairStatus>) repairStatusRepo.findAll();
+        return ObjectMapperUtils.mapAll(repairStatuses, RepairStatusDTO.class);
     }
 
     public void saveStatus(RepairStatusDTO repairStatusDTO) {
-        RepairStatus repairStatus = new RepairStatus();
-        repairStatus.setStatusId(repairStatusDTO.getStatusId());
-        repairStatus.setStatusName(repairStatusDTO.getStatusName());
+        RepairStatus repairStatus = ObjectMapperUtils.map(repairStatusDTO, RepairStatus.class);
         repairStatusRepo.save(repairStatus);
     }
 

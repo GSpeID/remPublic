@@ -1,3 +1,4 @@
+
 package ru.x3m.rem.utils;
 
 import org.modelmapper.ModelMapper;
@@ -6,6 +7,12 @@ import org.modelmapper.convention.MatchingStrategies;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+
+
+/**
+ * позаимствовано:
+ * https://stackoverflow.com/questions/47929674/modelmapper-mapping-list-of-entites-to-list-of-dto-objects
+ */
 
 public class ObjectMapperUtils {
 

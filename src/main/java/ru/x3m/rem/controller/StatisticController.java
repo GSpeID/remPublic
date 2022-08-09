@@ -4,37 +4,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import ru.x3m.rem.dto.ItemDTO;
 import ru.x3m.rem.dto.OutlayDTO;
 import ru.x3m.rem.dto.SubItemDTO;
-import ru.x3m.rem.entity.Item;
-import ru.x3m.rem.entity.Outlay;
-import ru.x3m.rem.entity.SubItem;
-import ru.x3m.rem.repository.OutlayRepo;
 import ru.x3m.rem.service.StatisticService;
 
-import javax.validation.*;
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 public class StatisticController {
 
     private final StatisticService statisticService;
-    private final OutlayRepo outlayRepo;
 
     @Autowired
-    public StatisticController(StatisticService statisticService, OutlayRepo outlayRepo) {
+    public StatisticController(StatisticService statisticService) {
         this.statisticService = statisticService;
-        this.outlayRepo = outlayRepo;
     }
 
     private void models(Model model) {
         List<OutlayDTO> outlaysDTO = statisticService.findAllOutlay();
         model.addAttribute("outlays" , outlaysDTO);
-        List<SubItem> subItems = statisticService.findAllSubItem();
+        List<SubItemDTO> subItems = statisticService.findAllSubItem();
         model.addAttribute("subItems", subItems);
-        List<Item> items = statisticService.findAllItems();
+        List<ItemDTO> items = statisticService.findAllItems();
         model.addAttribute("items", items);
     }
 
@@ -59,10 +56,9 @@ public class StatisticController {
     //----- Save\Delete Outlay
 
     @PostMapping(value = "/stat/saveOutlay")
-    public String saveOutlay(@ModelAttribute("outlayDTO") @Valid OutlayDTO outlayDTO, BindingResult result,
-                             Model model,
+    public String saveOutlay(@ModelAttribute("outlayDTO") @Valid OutlayDTO outlayDTO, BindingResult result, Model model,
                              @ModelAttribute("subItemDTO") SubItemDTO subItemDTO,
-                             @ModelAttribute("itemDTO") ItemDTO itemDTO){
+                             @ModelAttribute("itemDTO") ItemDTO itemDTO) {
         if (resendModels(result, model))
             return "stat";
         statisticService.saveOutlay(outlayDTO);
@@ -78,10 +74,9 @@ public class StatisticController {
     //----- Save\Delete Item
 
     @PostMapping(value = "/stat/saveItem")
-    public String saveItem(@ModelAttribute("itemDTO") @Valid ItemDTO itemDTO, BindingResult result,
-                           Model model,
+    public String saveItem(@ModelAttribute("itemDTO") @Valid ItemDTO itemDTO, BindingResult result, Model model,
                            @ModelAttribute("subItemDTO") SubItemDTO subItemDTO,
-                           @ModelAttribute("outlayDTO") OutlayDTO outlayDTO){
+                           @ModelAttribute("outlayDTO") OutlayDTO outlayDTO) {
         if (resendModels(result, model)) return "stat";
         statisticService.saveItems(itemDTO);
         return "redirect:/stat";
@@ -96,10 +91,9 @@ public class StatisticController {
     //----- Save\Delete SubItem
 
     @PostMapping("/stat/saveSubItem")
-    public String saveSubItem(@ModelAttribute("subItemDTO") @Valid SubItemDTO subItemDTO, BindingResult result,
-                              Model model,
+    public String saveSubItem(@ModelAttribute("subItemDTO") @Valid SubItemDTO subItemDTO, BindingResult result, Model model,
                               @ModelAttribute("itemDTO") ItemDTO itemDTO,
-                              @ModelAttribute("outlayDTO") OutlayDTO outlayDTO){
+                              @ModelAttribute("outlayDTO") OutlayDTO outlayDTO) {
         if (resendModels(result, model)) return "stat";
         statisticService.saveSubItem(subItemDTO);
         return "redirect:/stat";
