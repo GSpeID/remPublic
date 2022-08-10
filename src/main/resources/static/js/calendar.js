@@ -1,13 +1,12 @@
 $(document).ready(function () {
 
-    window.update9 = function () {
-        const select = document.getElementById('dropGroups');
-        const option = select.options[select.selectedIndex];
-        document.getElementById('groupId').value = option.value;
-    }
     $("#dropGroups").on('change', function () {
         const color = $(this).find('option:selected').attr('id');
+        const groupId = $(this).find('option:selected').attr('value');
         $('#backgroundColor').val(color);
+        $('#groupId').val(groupId);
+        console.log(color);
+        console.log(groupId);
     });
     $('#addEvent').on('hidden.bs.modal', function (e) {
         $(this)

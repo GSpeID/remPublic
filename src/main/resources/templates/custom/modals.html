@@ -1,6 +1,6 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
->
+      xmlns="http://www.w3.org/1999/html">
 
 <!--test-->
 <div th:fragment="test">
@@ -101,7 +101,6 @@
                                     <br>
                                     <select class="form-select"
                                             id="dropGroups"
-                                            onchange="update9()"
                                             required="required"
                                             th:object="${groupList}"
                                     >
@@ -211,7 +210,7 @@
 
 <!-- Modal Edit\Add Client-->
 <div th:fragment="clientEditFragment">
-    <form th:action="@{/management/saveClient}" th:object="${client}" method="post">
+    <form method="post" th:action="@{/management/create-client}" th:object="${client}">
         <div id="editClientModal" class="modal fade" tabindex="-1" aria-labelledby="editClientModal" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -224,28 +223,37 @@
                             <div class="container">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <input type="hidden" class="form-control" id="clientId" name="clientId"
+                                        <input class="form-control" id="clientId0"
+                                               name="clientId"
+                                               type="hidden"
+                                               value=""/>
+                                        <input class="form-control" id="clientTypeId0"
+                                               name="clientTypeId"
+                                               type="hidden"
                                                value=""/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="clientName">Client Name</label>
-                                        <input type="text" class="form-control" required="required" id="clientName"
-                                               name="clientName" value=""/>
+                                        <label for="clientName">Имя клинта\Название организации</label>
+                                        <input class="form-control"
+                                               id="clientName0"
+                                               maxlength="250"
+                                               minlength="5"
+                                               name="clientName" placeholder="Имя\Название клиента"
+                                               required="required"
+                                               type="text"
+                                               value=""
+                                        />
                                     </div>
                                     <br>
                                     <div class="form-group mb-3">
-                                        <select class="form-select" th:object="${clientTypes}" id="dropClientType"
-                                                onchange="update2()">
-                                            <option value="0">Select Client Type</option>
+                                        <select class="form-select" id="dropClientType0" th:object="${clientTypes}">
+                                            <option value="">Выберите тип клиента</option>
                                             <option th:each="clientType : ${clientTypes}"
                                                     th:value="${clientType.clientTypeId}"
                                                     th:text="${clientType.clientTypeName}"
+                                                    th:id="${clientType.clientTypeId}"
                                                     th:required="required"></option>
                                         </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" required="required"
-                                               id="clientType" name="clientTypeId" value="" hidden/>
                                     </div>
                                     <br>
                                     <button type="submit" class="btn btn-outline-primary" value="save">Submit</button>
@@ -264,7 +272,7 @@
 
 <!-- Modal Edit\Add Client Type-->
 <div th:fragment="editClientTypeFragment">
-    <form th:action="@{/management/saveClientType}" th:object="${clientType}" method="post">
+    <form method="post" th:action="@{/management/create-client-type}" th:object="${clientType}">
         <div id="editClientTypeModal" class="modal fade" tabindex="-1" aria-labelledby="editClientTypeModal"
              aria-hidden="true">
             <div class="modal-dialog">
@@ -282,10 +290,14 @@
                                                value=""/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="clientTypeName">Client Type Name</label>
-                                        <input type="text" class="form-control" required="required" id="clientTypeName"
+                                        <input class="form-control" id="clientTypeName"
+                                               maxlength="250"
                                                name="clientTypeName"
-                                               value=""/>
+                                               minlength="5" placeholder="Тип клиента"
+                                               required="required"
+                                               type="text"
+                                               value=""
+                                        />
                                     </div>
                                     <br>
                                     <button type="submit" class="btn btn-outline-primary" value="save">Submit</button>
@@ -304,7 +316,7 @@
 
 <!-- Modal Edit\Add Device-->
 <div th:fragment="deviceEditFragment">
-    <form th:action="@{/management/saveDevice}" th:object="${device}" method="post">
+    <form method="post" th:action="@{/management/create-device}" th:object="${device}">
         <div id="editDeviceModal" class="modal fade" tabindex="-1" aria-labelledby="editDeviceModal" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -321,10 +333,13 @@
                                                value=""/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="deviceName">Device Name</label>
                                         <input type="text" class="form-control" id="deviceName"
                                                name="deviceName"
-                                               value=""/>
+                                               maxlength="250" minlength="5"
+                                               placeholder="Наименование\Модель техники"
+                                               required="required"
+                                               value=""
+                                        />
                                     </div>
                                     <br>
                                     <button type="submit" class="btn btn-outline-primary" value="save">Submit</button>
@@ -725,74 +740,87 @@
 
 <!-- Modal Edit\Add Status-->
 <div th:fragment="statusEditFragment">
-    <div id="editStatusModal" class="modal fade" tabindex="-1" aria-labelledby="editStatusModal" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editStatusModalLabel">Add or Edit Status</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class id="editStatus">
-                    <div class="modal-body">
-                        <div class="container">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <input type="hidden" class="form-control" id="statusId" name="statusId"
-                                           value=""/>
+    <form method="post" th:action="@{/management/create-status}">
+        <div aria-hidden="true" aria-labelledby="editStatusModal" class="modal fade" id="editStatusModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editStatusModalLabel">Add or Edit Status</h5>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                    </div>
+                    <div class id="editStatus">
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <input class="form-control" id="statusId" name="statusId" type="hidden"
+                                               value=""/>
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" id="statusName"
+                                               maxlength="250" minlength="5"
+                                               name="statusName" placeholder="Статус ремонта"
+                                               required="required"
+                                               type="text"
+                                               value=""
+                                        />
+                                    </div>
+                                    <br>
+                                    <button class="btn btn-outline-primary" type="submit" value="save">Submit</button>
                                 </div>
-                                <div class="form-group">
-                                    <label for="statusName">Status Name</label>
-                                    <input type="text" class="form-control" required="required"
-                                           id="statusName" name="statusName" value=""/>
-                                </div>
-                                <br>
-                                <button type="submit" class="btn btn-outline-primary" value="save">Submit</button>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 
 <!-- Modal Edit\Add Repair Type-->
 <div th:fragment="editRepairTypeFragment">
-    <div id="editRepairTypeModal" class="modal fade" tabindex="-1" aria-labelledby="editRepairTypeModal"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editRepairTypeModalLabel">Add or Edit Repair Type</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class id="editRepairType">
-                    <div class="modal-body">
-                        <div class="container">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <input type="hidden" class="form-control" id="repairTypeId" name="repairTypeId"
-                                           value=""/>
+    <form method="post" th:action="@{/management/create-repair-type}">
+        <div aria-hidden="true" aria-labelledby="editRepairTypeModal" class="modal fade" id="editRepairTypeModal"
+             tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editRepairTypeModalLabel">Редактирование типа\вида ремонта</h5>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                    </div>
+                    <div class id="editRepairType">
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <input class="form-control" id="repairTypeId" name="repairTypeId" type="hidden"
+                                               value=""/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="repairTypeName">Вид ремонта</label>
+                                        <input class="form-control" id="repairTypeName"
+                                               maxlength="250"
+                                               minlength="5"
+                                               name="repairTypeName" placeholder="Вид ремонта"
+                                               required="required"
+                                               type="text"
+                                               value=""
+                                        />
+                                    </div>
+                                    <br>
+                                    <button class="btn btn-outline-primary" type="submit" value="save">Submit</button>
                                 </div>
-                                <div class="form-group">
-                                    <label for="repairTypeName">Repair Type Name</label>
-                                    <input type="text" class="form-control" required="required" id="repairTypeName"
-                                           name="repairTypeName"
-                                           value=""/>
-                                </div>
-                                <br>
-                                <button type="submit" class="btn btn-outline-primary" value="save">Submit</button>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>

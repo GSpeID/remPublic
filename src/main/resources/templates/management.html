@@ -6,7 +6,7 @@
 <head>
     <div th:replace="custom/pagesTemplate :: css-head"></div>
     <div th:replace="custom/pagesTemplate :: js-head"></div>
-    <script src="../static/js/management.js" th:src="@{../js/management.js}"></script>
+    <script src="/js/management.js" th:src="@{/js/management.js}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>Управление</title>
 </head>
@@ -28,7 +28,7 @@
             <div class="accordion-body">
                 <div class="col-12">
                     <div>
-                        <form method="post" th:action="@{/repair-service/management/create-client}"
+                        <form method="post" th:action="@{/management/create-client}"
                               th:object="${clientDTO}">
                             <div class="row">
                                 <div class="col">
@@ -115,21 +115,18 @@
                                        th:href="@{findClient/(*{client.clientId})}" title="Полная информация">
                                         <i class="fa-regular fa-folder-open"></i></a>
                                     <a class="btn btn-outline-secondary editClientBtn" data-bs-target="#editClientModal"
-                                       data-bs-toggle="modal" data-placement="top"
-                                       data-toggle="tooltip"
+                                       data-bs-toggle="modal" data-placement="top" data-toggle="tooltip"
                                        th:href="@{findClient/(*{client.clientId})}" title="Редактировать">
                                         <i class="fa-regular fa-pen-to-square"></i></a>
                                     <a class="btn btn-outline-secondary clientFilesBtn" data-bs-target="#clientFiles"
                                        data-bs-toggle="modal" data-placement="top" data-toggle="tooltip"
                                        sec:authorize="hasAnyRole('ROLE_ADMIN')"
-                                       title="Открыть документы"
-                                    >
+                                       title="Открыть документы">
                                         <i class="fa-solid fa-book"></i></a>
                                     <a class="btn btn-outline-danger" data-placement="top" data-toggle="tooltip"
-                                       th:href="@{/repair-service/management/delete-client/{id}(id=${client.clientId})}"
+                                       th:href="@{/management/delete-client/{id}(id=${client.clientId})}"
                                        sec:authorize="hasAnyRole('ROLE_ADMIN')"
-                                       title="Удалить"
-                                    >
+                                       title="Удалить">
                                         <i class="fa-solid fa-folder-minus"></i>
                                     </a>
                                 </div>
@@ -155,7 +152,7 @@
              id="collapseTwo">
             <div class="accordion-body">
                 <div>
-                    <form class="row" method="post" th:action="@{/repair-service/management/create-device/}"
+                    <form class="row" method="post" th:action="@{/management/create-device/}"
                           th:object="${deviceDTO}">
                         <div class="input-group mb-3">
                             <input aria-describedby="button-addon2" aria-label="device name" class="form-control"
@@ -200,7 +197,7 @@
                                     <a class="btn btn-outline-danger"
                                        data-placement="top" data-toggle="tooltip"
                                        sec:authorize="hasAnyRole('ROLE_ADMIN')"
-                                       th:href="@{/repair-service/management/delete-device/{id}(id=${device.deviceId})}"
+                                       th:href="@{/management/delete-device/{id}(id=${device.deviceId})}"
                                        title="Удалить"
                                     >
                                         <i class="fa-solid fa-folder-minus"></i>
@@ -230,7 +227,7 @@
                 <div class="col-12">
                     <div>
                         <form class="row" method="post"
-                              th:action="@{/repair-service/management/create-client-type/}"
+                              th:action="@{/management/create-client-type/}"
                               th:object="${clientTypeDTO}">
                             <div class="input-group mb-3">
                                 <input aria-describedby="button-addon3" aria-label="client type name"
@@ -276,7 +273,7 @@
                                     <a class="btn btn-outline-danger"
                                        data-placement="top" data-toggle="tooltip"
                                        sec:authorize="hasAnyRole('ROLE_ADMIN')"
-                                       th:href="@{/repair-service/management/delete-client-type/{id}(id=${clientType.clientTypeId})}"
+                                       th:href="@{/management/delete-client-type/{id}(id=${clientType.clientTypeId})}"
                                        title="Удалить"
                                     >
                                         <i class="fa-solid fa-folder-minus"></i>
@@ -305,7 +302,7 @@
             <div class="accordion-body">
                 <div>
                     <form class="row" method="post"
-                          th:action="@{/repair-service/management/create-repair-type/}" th:object="${repairTypeDTO}">
+                          th:action="@{/management/create-repair-type/}" th:object="${repairTypeDTO}">
                         <div class="input-group mb-3">
                             <input aria-describedby="button-addon4" aria-label="repair type name" class="form-control"
                                    id="repairTypeName" name="repairTypeName" placeholder="Введите тип ремонта"
@@ -350,7 +347,7 @@
                                     <a class="btn btn-outline-danger"
                                        data-placement="top" data-toggle="tooltip"
                                        sec:authorize="hasAnyRole('ROLE_ADMIN')"
-                                       th:href="@{/repair-service/management/delete-repair-type/{id}(id=${repairType.repairTypeId})}"
+                                       th:href="@{/management/delete-repair-type/{id}(id=${repairType.repairTypeId})}"
                                        title="Удалить"
                                     >
                                         <i class="fa-solid fa-folder-minus"></i>
@@ -381,7 +378,7 @@
                 <div class="col-12">
                     <div>
                         <form class="row" method="post"
-                              th:action="@{/repair-service/management/create-status/}" th:object="${repairStatusDTO}">
+                              th:action="@{/management/create-status/}" th:object="${repairStatusDTO}">
                             <div class="input-group mb-3">
                                 <input aria-describedby="button-addon5" aria-label="status name" class="form-control"
                                        id="statusName" name="statusName" placeholder="Введите статус заказа"
@@ -422,7 +419,7 @@
                                     <a class="btn btn-outline-danger"
                                        data-placement="top" data-toggle="tooltip"
                                        sec:authorize="hasAnyRole('ROLE_ADMIN')"
-                                       th:href="@{/repair-service/management/delete-status/{id}(id=${status.statusId})}"
+                                       th:href="@{/management/delete-status/{id}(id=${status.statusId})}"
                                        title="Удалить"
                                     >
                                         <i class="fa-solid fa-folder-minus"></i>
@@ -442,5 +439,15 @@
 <div th:replace="~{custom/modals :: clientCard}"></div>
 <!-- Modal Client files -->
 <div th:replace="~{custom/modals :: clientFiles}"></div>
+<!-- Modal Client edit -->
+<div th:replace="~{custom/modals :: clientEditFragment}"></div>
+<!-- Modal Device edit -->
+<div th:replace="~{custom/modals :: deviceEditFragment}"></div>
+<!-- Modal ClientType edit -->
+<div th:replace="~{custom/modals :: editClientTypeFragment}"></div>
+<!-- Modal RepairType edit -->
+<div th:replace="~{custom/modals :: editRepairTypeFragment}"></div>
+<!-- Modal Status edit -->
+<div th:replace="~{custom/modals :: statusEditFragment}"></div>
 </body>
 </html>

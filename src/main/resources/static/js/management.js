@@ -1,5 +1,13 @@
 $(document).ready(function () {
 
+    const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
+
+    $('#dropClientType0').on('change', function () {
+        const TypeId = $(this).find('option:selected').attr('id');
+        $('#clientTypeId0').val(TypeId);
+        console.log(TypeId)
+    });
+
     $('#message').off('change').on('change', function (e) {
         const msg = $('#message').val();
         console.log(msg)
@@ -22,7 +30,7 @@ $(document).ready(function () {
 
     const table = $('#clients').DataTable({
         language: {
-            url: '../localisation/ru.json'
+            url: './localisation/ru.json'
         },
         rowReorder: {
             selector: 'td:nth-child(2)'
@@ -32,7 +40,7 @@ $(document).ready(function () {
 
     $('#devices').DataTable({
         language: {
-            url: '../localisation/ru.json'
+            url: './localisation/ru.json'
         },
         rowReorder: {
             selector: 'td:nth-child(2)'
@@ -41,7 +49,7 @@ $(document).ready(function () {
     });
     $('#clientsTypes').DataTable({
         language: {
-            url: '../localisation/ru.json'
+            url: './localisation/ru.json'
         },
         rowReorder: {
             selector: 'td:nth-child(2)'
@@ -50,7 +58,7 @@ $(document).ready(function () {
     });
     $('#repairsTypes').DataTable({
         language: {
-            url: '../localisation/ru.json'
+            url: './localisation/ru.json'
         },
         rowReorder: {
             selector: 'td:nth-child(2)'
@@ -59,7 +67,7 @@ $(document).ready(function () {
     });
     $('#statuses').DataTable({
         language: {
-            url: '../localisation/ru.json'
+            url: './localisation/ru.json'
         },
         rowReorder: {
             selector: 'td:nth-child(2)'
@@ -69,7 +77,7 @@ $(document).ready(function () {
 
     $('#clientFilesTable').DataTable({
         language: {
-            url: '../localisation/ru.json'
+            url: './localisation/ru.json'
         },
         rowReorder: {
             selector: 'td:nth-child(2)'
@@ -81,7 +89,12 @@ $(document).ready(function () {
     $('table .fullInfoClientBtn').on('click', function (event) {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
+        console.log(csrfToken);
+        console.log(id);
         $.ajax({
+            // headers: {
+            //     'X-CSRF-TOKEN': csrfToken,
+            // },
             type: 'GET',
             url: '/rem/management/api/findClient/' + id,
             success: function (client) {
@@ -123,12 +136,17 @@ $(document).ready(function () {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
         $.ajax({
+            // headers: {
+            //     'X-CSRF-TOKEN': csrfToken,
+            // },
             type: 'GET',
-            url: '/rem/repair-service/management/api/findClient/' + id,
+            url: '/rem/management/api/findClient/' + id,
             success: function (client) {
-                $('#editClientModal #clientId').val(client.clientId);
-                $('#editClientModal #clientName').val(client.clientName);
-                $('#editClientModal #clientTypeId').val(client.clientTypeId);
+                $('#editClientModal #clientId0').val(client.clientId);
+                $('#editClientModal #clientName0').val(client.clientName);
+                $('#editClientModal #clientTypeId0').val(client.clientTypeId);
+                $('#editClientModal #dropClientType0').val(client.clientTypeId);
+                console.log(client);
             }
         });
 
@@ -139,8 +157,11 @@ $(document).ready(function () {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
         $.ajax({
+            // headers: {
+            //     'X-CSRF-TOKEN': csrfToken,
+            // },
             type: 'GET',
-            url: '/rem/repair-service/management/api/findDevice/' + id,
+            url: '/rem/management/api/findDevice/' + id,
             success: function (device) {
                 $('#editDeviceModal #deviceId').val(device.deviceId);
                 $('#editDeviceModal #deviceName').val(device.deviceName);
@@ -154,8 +175,11 @@ $(document).ready(function () {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
         $.ajax({
+            // headers: {
+            //     'X-CSRF-TOKEN': csrfToken,
+            // },
             type: 'GET',
-            url: '/rem/repair-service/management/api/findClientType/' + id,
+            url: '/rem/management/api/findClientType/' + id,
             success: function (clientType) {
                 $('#editClientTypeModal #clientTypeId').val(clientType.clientTypeId);
                 $('#editClientTypeModal #clientTypeName').val(clientType.clientTypeName);
@@ -169,8 +193,11 @@ $(document).ready(function () {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
         $.ajax({
+            // headers: {
+            //     'X-CSRF-TOKEN': csrfToken,
+            // },
             type: 'GET',
-            url: '/rem/repair-service/management/api/findRepairType/' + id,
+            url: '/rem/management/api/findRepairType/' + id,
             success: function (repairType) {
                 $('#editRepairTypeModal #repairTypeId').val(repairType.repairTypeId);
                 $('#editRepairTypeModal #repairTypeName').val(repairType.repairTypeName);
@@ -183,19 +210,16 @@ $(document).ready(function () {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
         $.ajax({
+            // headers: {
+            //     'X-CSRF-TOKEN': csrfToken,
+            // },
             type: 'GET',
-            url: '/rem/repair-service/management/api/findStatus/' + id,
+            url: '/rem/management/api/findStatus/' + id,
             success: function (status) {
                 $('#editStatusModal #statusId').val(status.statusId);
                 $('#editStatusModal #statusName').val(status.statusName);
             }
         });
-    });
-
-    $("#dropClientType").on('change', function () {
-        const clientTypeId = $(this).find('option:selected').attr('value');
-        $('#clientType').val(clientTypeId);
-        console.log(clientTypeId)
     });
 
 });

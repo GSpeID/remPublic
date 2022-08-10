@@ -45,7 +45,7 @@ public class ManagementController {
         return "management";
     }
 
-    @GetMapping("/repair-service/management")
+    @GetMapping("/management")
     public String allManagementPage(Model model) {
         model.addAttribute("clientDTO", new ClientDTO());
         model.addAttribute("deviceDTO", new DeviceDTO());
@@ -55,7 +55,7 @@ public class ManagementController {
         return modelsList(model);
     }
 
-    @PostMapping("/repair-service/upload")
+    @PostMapping("/management/upload")
     public String fileUpload(@RequestParam MultipartFile file, @RequestParam String clientDir,
                              RedirectAttributes redirectAttributes, ModelMap modelMap) {
         String fileName = file.getOriginalFilename();
@@ -69,12 +69,12 @@ public class ManagementController {
                     file.getOriginalFilename());
         }
         redirectAttributes.addFlashAttribute("message", "Файл " + file.getOriginalFilename() + " успешно загружен");
-        return "redirect:/repair-service/management";
+        return "redirect:/management";
     }
 
     //----- Save\Delete Client
 
-    @PostMapping("/repair-service/management/create-client")
+    @PostMapping("/management/create-client")
     public String createClient(@ModelAttribute("clientDTO") @Valid ClientDTO clientDTO,
                                BindingResult result, Model model,
                                @ModelAttribute("deviceDTO") DeviceDTO deviceDTO,
@@ -85,10 +85,10 @@ public class ManagementController {
             return modelsList(model);
         }
         managementService.saveClient(clientDTO);
-        return "redirect:/repair-service/management";
+        return "redirect:/management";
     }
 
-    @GetMapping("/repair-service/management/delete-client/{clientId}")
+    @GetMapping("/management/delete-client/{clientId}")
     public String deleteClient(@PathVariable Long clientId) {
         managementService.deleteClient(clientId);
         return "redirect:/repair-service/management";
@@ -97,7 +97,7 @@ public class ManagementController {
     //----- Save\Delete Client Type
 
 
-    @PostMapping("/repair-service/management/create-client-type")
+    @PostMapping("/management/create-client-type")
     public String createClientType(@ModelAttribute("clientTypeDTO") @Valid  ClientTypeDTO clientTypeDTO,
                                    BindingResult result,Model model,
                                    @ModelAttribute("clientDTO") ClientDTO clientDTO,
@@ -108,18 +108,18 @@ public class ManagementController {
             return modelsList(model);
         }
         managementService.saveClientType(clientTypeDTO);
-        return "redirect:/repair-service/management";
+        return "redirect:/management";
     }
 
-    @GetMapping("/repair-service/management/delete-client-type/{clientTypeId}")
+    @GetMapping("/management/delete-client-type/{clientTypeId}")
     public String deleteClientType(@PathVariable Long clientTypeId) {
         managementService.deleteClientType(clientTypeId);
-        return "redirect:/repair-service/management";
+        return "redirect:/management";
     }
 
     //----- Save\Delete Device
 
-    @PostMapping("/repair-service/management/create-device")
+    @PostMapping("/management/create-device")
     public String createDevice(@ModelAttribute("deviceDTO") @Valid  DeviceDTO deviceDTO,
                                BindingResult result, Model model,
                                @ModelAttribute("clientDTO") ClientDTO clientDTO,
@@ -130,18 +130,18 @@ public class ManagementController {
             return modelsList(model);
         }
         managementService.saveDevice(deviceDTO);
-        return "redirect:/repair-service/management";
+        return "redirect:/management";
     }
 
-    @GetMapping("/repair-service/management/delete-device/{deviceId}")
+    @GetMapping("/management/delete-device/{deviceId}")
     public String deleteDevice(@PathVariable Long deviceId) {
         managementService.deleteDevice(deviceId);
-        return "redirect:/repair-service/management";
+        return "redirect:/management";
     }
 
     //----- Save\Delete Repair Type
 
-    @PostMapping("/repair-service/management/create-repair-type")
+    @PostMapping("/management/create-repair-type")
     public String createRepairType(@ModelAttribute("repairTypeDTO") @Valid  RepairTypeDTO repairTypeDTO,
                                    BindingResult result, Model model,
                                    @ModelAttribute("clientDTO") ClientDTO clientDTO,
@@ -152,18 +152,18 @@ public class ManagementController {
             return modelsList(model);
         }
         managementService.saveRepairType(repairTypeDTO);
-        return "redirect:/repair-service/management";
+        return "redirect:/management";
     }
 
-    @GetMapping("/repair-service/management/delete-repair-type/{repairTypeId}")
+    @GetMapping("/management/delete-repair-type/{repairTypeId}")
     public String deleteRepairType(@PathVariable Long repairTypeId) {
         managementService.deleteRepairType(repairTypeId);
-        return "redirect:/repair-service/management";
+        return "redirect:/management";
     }
 
     //----- Save\Delete Statuses
 
-    @PostMapping("/repair-service/management/create-status")
+    @PostMapping("/management/create-status")
     public String createStatus(@ModelAttribute("repairStatusDTO") @Valid RepairStatusDTO repairStatusDTO,
                                BindingResult result, Model model,
                                @ModelAttribute("clientDTO") ClientDTO clientDTO,
@@ -175,13 +175,13 @@ public class ManagementController {
             return modelsList(model);
         }
         managementService.saveStatus(repairStatusDTO);
-        return "redirect:/repair-service/management";
+        return "redirect:/management";
     }
 
-    @GetMapping("/repair-service/management/delete-status/{statusId}")
+    @GetMapping("/management/delete-status/{statusId}")
     public String deleteStatus(@PathVariable Long statusId){
         managementService.deleteStatus(statusId);
-        return "redirect:/repair-service/management";
+        return "redirect:/management";
     }
 
 }
