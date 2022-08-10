@@ -16,7 +16,6 @@ import ru.x3m.rem.repository.UserRepo;
 import ru.x3m.rem.utils.ObjectMapperUtils;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -33,8 +32,14 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Optional<User> findUserById(Long id) {
-        return userRepo.findById(id);
+    public UserDTO findUserById(Long id) {
+        User user = userRepo.findByUserId(id);
+        return ObjectMapperUtils.map(user, UserDTO.class);
+    }
+
+    public List<UserDTO> findAllUsers() {
+        List<User> users = (List<User>) userRepo.findAll();
+        return ObjectMapperUtils.mapAll(users, UserDTO.class);
     }
 
     public void create(UserDTO userDTO) {
