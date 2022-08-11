@@ -43,12 +43,25 @@ public class UserService implements UserDetailsService {
     }
 
     public void create(UserDTO userDTO) {
-        User user = ObjectMapperUtils.map(userDTO, User.class);
+        User user = new User();
+        user.setUserId(userDTO.getUserId());
+        user.setUsername(userDTO.getUsername());
+        user.setRoleId(userDTO.getRoleId());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         userRepo.save(user);
     }
 
+    public void deleteUser(Long id) {
+        userRepo.findById(id)
+                .ifPresent(userRepo::delete);
+    }
+
+    public boolean ifUserExist(String username) {
+        return userRepo.existsByUsername(username);
+    }
+
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        User user = userRepo.getUserByUsername(userName);
+        User user = userRepo.findByUsername(userName);
         if (user == null) {
             return null;
         }

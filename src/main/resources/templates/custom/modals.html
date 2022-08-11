@@ -23,6 +23,164 @@
     </div>
 </div>
 
+<!--stat edit items-->
+<div th:fragment="itemEdit">
+    <form method="post" th:action="@{/stat/saveItem}" th:object="${itemDTO}">
+        <div class="modal" id="itemEdit" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Редактирование статьи расходов</h5>
+                        <button aria-label="Закрыть" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-body">
+                            <input class="form-control"
+                                   id="itemName" maxlength="255" minlength="2" name="itemName"
+                                   placeholder="Введите название статьи расходов" required="required"
+                                   th:field="*{itemName}" type="text"
+                                   value=""
+                            />
+                            <input id="itemId" name="itemId" type="hidden">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Закрыть</button>
+                        <button class="btn btn-primary" type="submit">Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--client edit subitems-->
+<div th:fragment="subItemEdit">
+    <form method="post" th:action="@{/stat/saveSubItem}" th:object="${subItemDTO}">
+        <div class="modal" id="subItemEdit" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Редактирование подстатьи расходов</h5>
+                        <button aria-label="Закрыть" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col">
+                            <select class="form-select"
+                                    id="dropItemsEdit"
+                                    required
+                                    th:object="${items}"
+                            >
+                                <option value="">Выбрать статью</option>
+                                <option th:each="item : ${items}"
+                                        th:text="${item.itemName}"
+                                        th:value="${item.itemId}"></option>
+                            </select>
+                            <div class="error" th:errors="*{itemsItemId}"
+                                 th:if="${#fields.hasErrors('itemsItemId')}"/>
+                        </div>
+                        <br>
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <input class="form-control"
+                                       id="subitemName" maxlength="255" minlength="2" name="subitemName"
+                                       placeholder="Введите название подстатьи" required="required"
+                                       th:field="*{subitemName}" type="text"
+                                       value=""
+                                />
+                            </div>
+                            <div class="error" th:errors="*{subitemName}"
+                                 th:if="${#fields.hasErrors('subitemName')}"/>
+                        </div>
+                        <input class="form-control" id="itemsItemIdEditSub"
+                               name="itemsItemId" type="hidden" value=""/>
+                        <input class="form-control" id="subitemId"
+                               name="subitemId" type="hidden" value=""/>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Закрыть</button>
+                        <button class="btn btn-primary" type="submit">Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--client edit outlays-->
+<div th:fragment="outlayEdit">
+    <form method="post" th:action="@{/stat/saveOutlay}" th:object="${outlayDTO}">
+        <div class="modal" id="outlayEdit" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Редактирование затрат</h5>
+                        <button aria-label="Закрыть" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col">
+                            <select class="form-select"
+                                    id="dropItemsId"
+                                    name="dropItemsName"
+                                    required
+                            >
+                                <option value="">Выбрать статью</option>
+                            </select>
+                            <div class="error" th:errors="*{itemsItemId}" th:if="${#fields.hasErrors('itemsItemId')}"/>
+                        </div>
+                        <br>
+                        <div class="col">
+                            <select class="form-select"
+                                    id="dropSubItemsId"
+                                    name="dropSubItemsName"
+                                    onchange="update8()"
+                                    required
+                            >
+                                <option selected value="">Выбрать подстатью</option>
+                            </select>
+                            <div class="error" th:errors="*{subitemsSubitemId}"
+                                 th:if="${#fields.hasErrors('subitemsSubitemId')}"/>
+                        </div>
+                        <br>
+                        <div class="col">
+                            <input class="form-control" id="date" name="date"
+                                   placeholder="Укажите дату" required="required" type="date" value=""/>
+                        </div>
+                        <br>
+                        <div class="col">
+                            <input class="form-control" id="price"
+                                   min="0" placeholder="Введите сумму"
+                                   step="0.01" th:field="*{price}"
+                                   type="number"
+                            />
+                            <div class="error" th:errors="*{price}" th:if="${#fields.hasErrors('price')}"/>
+                        </div>
+                        <br>
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <input class="form-control"
+                                       id="description" maxlength="255" minlength="3"
+                                       placeholder="Описание затрат" th:field="*{description}"
+                                       type="text"
+                                />
+                            </div>
+                            <div class="error" th:errors="*{description}" th:if="${#fields.hasErrors('description')}"/>
+                        </div>
+                        <input id="itemsItemId0"
+                               name="itemsItemId" type="hidden" value=""/>
+                        <input id="subitemsSubitemId"
+                               name="subitemsSubitemId" type="hidden" value=""/>
+                        <input id="outlayId"
+                               name="outlayId" type="hidden" value=""/>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Закрыть</button>
+                            <button class="btn btn-primary" type="submit">Сохранить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </form>
+</div>
 
 <!--client files list-->
 <div th:fragment="clientFiles">
@@ -38,7 +196,7 @@
                         <table class="table table-hover" id="clientFilesTable">
                             <thead>
                             <tr>
-                                <th scope="col">Файл</th>
+                                <th scope="col">Файлы</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -87,14 +245,14 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Мероприятие</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button aria-label="Закрыть" class="btn-close" data-bs-dismiss="modal" type="button"></button>
                     </div>
                     <div class="modal-body">
                         <div class="container">
                             <div class="col-12">
                                 <form>
-                                    <input checked="checked"
-                                           id="allDay" name="allDay" type="checkbox" value="true"
+                                    <input checked="checked" id="allDay" name="allDay"
+                                           type="checkbox" value="true"
                                     />
                                     <label class="form-check-label" th:for="${allDay}">На протяжении всего дня</label>
                                     <br>
@@ -114,7 +272,7 @@
                                     <div class="error" th:errors="*{groupId}" th:if="${#fields.hasErrors('groupId')}"/>
                                     <br>
                                     <input class="form-control" id="title" maxlength="255"
-                                           minlength="5" name="title"
+                                           minlength="3" name="title"
                                            placeholder="Описание мероприятия"
                                            required="required" th:field="*{title}"
                                            type="text" value=""
@@ -166,7 +324,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="clientCardLabel">Карточка клиента</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button aria-label="Закрыть" class="btn-close" data-bs-dismiss="modal" type="button"></button>
                 </div>
                 <div class id="clientCard">
                     <div class="modal-body">
@@ -201,7 +359,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-outline-secondary" data-bs-dismiss="modal" type="button">Закрыть</button>
                 </div>
             </div>
         </div>
@@ -215,7 +373,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editClientModalLabel">Add or Edit Client</h5>
+                        <h5 class="modal-title" id="editClientModalLabel">Редактирование клиента</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class id="editClient">
@@ -256,13 +414,14 @@
                                         </select>
                                     </div>
                                     <br>
-                                    <button type="submit" class="btn btn-outline-primary" value="save">Submit</button>
+                                    <button class="btn btn-outline-primary" type="submit" value="save">Сохранить
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-outline-secondary" data-bs-dismiss="modal" type="button">Закрыть</button>
                     </div>
                 </div>
             </div>
@@ -278,8 +437,8 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editClientTypeModalLabel">Add or Edit Client Type</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h5 class="modal-title" id="editClientTypeModalLabel">Редактирование тип клиента</h5>
+                        <button aria-label="Закрыть" class="btn-close" data-bs-dismiss="modal" type="button"></button>
                     </div>
                     <div class id="editClientType">
                         <div class="modal-body">
@@ -293,20 +452,21 @@
                                         <input class="form-control" id="clientTypeName"
                                                maxlength="250"
                                                name="clientTypeName"
-                                               minlength="5" placeholder="Тип клиента"
+                                               minlength="3" placeholder="Тип клиента"
                                                required="required"
                                                type="text"
                                                value=""
                                         />
                                     </div>
                                     <br>
-                                    <button type="submit" class="btn btn-outline-primary" value="save">Submit</button>
+                                    <button class="btn btn-outline-primary" type="submit" value="save">Сохранить
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-outline-secondary" data-bs-dismiss="modal" type="button">Закрыть</button>
                     </div>
                 </div>
             </div>
@@ -321,8 +481,8 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editDeviceModalLabel">Add or Edit Device</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h5 class="modal-title" id="editDeviceModalLabel">Редактирование техники</h5>
+                        <button aria-label="Закрыть" class="btn-close" data-bs-dismiss="modal" type="button"></button>
                     </div>
                     <div class id="editDevice">
                         <div class="modal-body">
@@ -335,20 +495,21 @@
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="deviceName"
                                                name="deviceName"
-                                               maxlength="250" minlength="5"
+                                               maxlength="250" minlength="3"
                                                placeholder="Наименование\Модель техники"
                                                required="required"
                                                value=""
                                         />
                                     </div>
                                     <br>
-                                    <button type="submit" class="btn btn-outline-primary" value="save">Submit</button>
+                                    <button class="btn btn-outline-primary" type="submit" value="save">Сохранить
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-outline-secondary" data-bs-dismiss="modal" type="button">Закрыть</button>
                     </div>
                 </div>
             </div>
@@ -362,8 +523,8 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="fullInfoLabel">Full Information</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="fullInfoLabel">Полная информация озаказе</h5>
+                    <button aria-label="Закрыть" class="btn-close" data-bs-dismiss="modal" type="button"></button>
                 </div>
                 <div class="modal-body">
                     <div class="container">
@@ -447,7 +608,7 @@
                         </div>
                     </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-outline-secondary" data-bs-dismiss="modal" type="button">Закрыть</button>
                 </div>
             </div>
         </div>
@@ -464,7 +625,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="addRepairModalLabel">Добавить новый заказ</h5>
                         <button type="button" class="btn-close"
-                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                aria-label="Закрыть" data-bs-dismiss="modal"></button>
                     </div>
                     <div class id="addRepair">
                         <div class="modal-body">
@@ -472,8 +633,7 @@
                                 <div class="col-12">
                                     <br>
                                     <div class="form-group mb-3">
-                                        <select class="form-select" th:object="${clients}" id="dropClient"
-                                                onchange="update1()">
+                                        <select class="form-select" id="dropClient" th:object="${clients}">
                                             <option value="">Выбрать клиента</option>
                                             <option th:each="client : ${clients}"
                                                     th:value="${client.clientId}"
@@ -482,8 +642,7 @@
                                     </div>
                                     <br>
                                     <div class="input-group mb-3">
-                                        <select class="form-select" th:object="${repairTypes}" id="dropRepairType"
-                                                onchange="update3()">
+                                        <select class="form-select" id="dropRepairType" th:object="${repairTypes}">
                                             <option value="">Выбрать тип ремонта</option>
                                             <option th:each="repairType : ${repairTypes}"
                                                     th:value="${repairType.repairTypeId}"
@@ -566,7 +725,7 @@
                                     </div>
                                     <br>
                                     <button type="submit" id="saveRepairBtn" class="btn btn-outline-primary"
-                                            value="save">Submit
+                                            value="save">Сохранить
                                     </button>
                                 </div>
                             </div>
@@ -574,7 +733,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary"
-                                data-bs-dismiss="modal">Close
+                                data-bs-dismiss="modal">Закрыть
                         </button>
                     </div>
                 </div>
@@ -591,8 +750,8 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editRepairModalLabel">Edit Repair</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h5 class="modal-title" id="editRepairModalLabel">Редактирование заказа</h5>
+                        <button aria-label="Закрыть" class="btn-close" data-bs-dismiss="modal" type="button"></button>
                     </div>
                     <div class="modal-body">
                         <div class="container">
@@ -665,7 +824,7 @@
                                 <div class="form-group">
                                     <label for="repairAddress">Адрес проведения ремонта</label>
                                     <input type="text" class="form-control" required="required"
-                                           id="repairAddress" maxlength="255" minlength="5"
+                                           id="repairAddress" maxlength="255" minlength="3"
                                            name="repairAddress" value=""
                                     />
                                 </div>
@@ -745,8 +904,9 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editStatusModalLabel">Add or Edit Status</h5>
-                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                        <h5 class="modal-title" id="editStatusModalLabel">Редактирование статуса</h5>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button">Закрыть
+                        </button>
                     </div>
                     <div class id="editStatus">
                         <div class="modal-body">
@@ -758,7 +918,7 @@
                                     </div>
                                     <div class="form-group">
                                         <input class="form-control" id="statusName"
-                                               maxlength="250" minlength="5"
+                                               maxlength="250" minlength="3"
                                                name="statusName" placeholder="Статус ремонта"
                                                required="required"
                                                type="text"
@@ -766,13 +926,14 @@
                                         />
                                     </div>
                                     <br>
-                                    <button class="btn btn-outline-primary" type="submit" value="save">Submit</button>
+                                    <button class="btn btn-outline-primary" type="submit" value="save">Сохранить
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-outline-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                        <button class="btn btn-outline-secondary" data-bs-dismiss="modal" type="button">Закрыть</button>
                     </div>
                 </div>
             </div>
@@ -789,7 +950,8 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editRepairTypeModalLabel">Редактирование типа\вида ремонта</h5>
-                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button">Закрыть
+                        </button>
                     </div>
                     <div class id="editRepairType">
                         <div class="modal-body">
@@ -811,13 +973,14 @@
                                         />
                                     </div>
                                     <br>
-                                    <button class="btn btn-outline-primary" type="submit" value="save">Submit</button>
+                                    <button class="btn btn-outline-primary" type="submit" value="save">Сохранить
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-outline-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                        <button class="btn btn-outline-secondary" data-bs-dismiss="modal" type="button">Закрыть</button>
                     </div>
                 </div>
             </div>

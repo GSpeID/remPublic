@@ -54,9 +54,9 @@ public class StatisticRestController {
         return statisticService.findOutlayBySubItemId(subitemId);
     }
 
-    @GetMapping("/findOutlayById")
+    @GetMapping("/findOutlayById/{id}")
     @ResponseBody
-    public OutlayDTO getOutlayById(@RequestParam("id") Long id){
+    public OutlayDTO getOutlayById(@PathVariable("id") Long id) {
         return statisticService.findOutlayById(id);
     }
 

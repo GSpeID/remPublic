@@ -7,9 +7,10 @@ import ru.x3m.rem.entity.User;
 @Repository
 public interface UserRepo extends CrudRepository<User, Long> {
 
-    boolean existsUserByUsername(String user_name);
 
-    User getUserByUsername(String user_name);
+    boolean existsByUsername(String username);
+
+    User findByUsername(String username);
 
     User findByUserId(Long id);
 }

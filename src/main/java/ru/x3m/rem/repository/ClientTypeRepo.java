@@ -9,4 +9,6 @@ public interface ClientTypeRepo extends CrudRepository<ClientType, Long> {
 
     ClientType findByClientTypeId(Long id);
 
+    boolean existsByClientTypeName(String clientTypeName);
+
 }

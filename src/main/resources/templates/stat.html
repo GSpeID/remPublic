@@ -36,9 +36,10 @@
                     <form class="row" method="post" th:action="@{/stat/saveItem}" th:object="${itemDTO}">
                         <div class="input-group mb-3">
                             <input aria-describedby="button-addon2" aria-label="item name" class="form-control"
-                                   id="itemName" minlength="2" maxlength="255" name="itemName"
+                                   id="itemName" maxlength="255"
+                                   minlength="2" name="itemName"
                                    placeholder="Введите название статьи расходов" required="required"
-                                   th:field="*{itemName}" type="text"
+                                   type="text"
                                    value=""
                             />
                             <button class="btn btn-outline-secondary"
@@ -68,8 +69,8 @@
                             <td th:text="${itemList.itemName}"></td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a class="btn btn-outline-secondary editOutlayBtn"
-                                       data-bs-target="#editOutlayModal"
+                                    <a class="btn btn-outline-secondary editItemBtn"
+                                       data-bs-target="#itemEdit"
                                        data-bs-toggle="modal"
                                        data-placement="top" data-toggle="tooltip"
                                        th:href="@{findItem/(*{itemList.itemId})}"
@@ -116,12 +117,11 @@
                         <form class="row" method="post" th:action="@{/stat/saveSubItem}" th:object="${subItemDTO}">
                             <div class="col">
                                 <select class="form-select"
-                                        id="dropItems"
-                                        onchange="update6()"
+                                        id="dropItemsForSub"
                                         required
                                         th:object="${items}"
                                 >
-                                    <option value="0">Выбрать статью</option>
+                                    <option value="">Выбрать статью</option>
                                     <option th:each="item : ${items}"
                                             th:text="${item.itemName}"
                                             th:value="${item.itemId}"></option>
@@ -146,7 +146,7 @@
                                 <div class="error" th:errors="*{subitemName}"
                                      th:if="${#fields.hasErrors('subitemName')}"/>
                             </div>
-                            <input class="form-control" id="itemsItemId"
+                            <input class="form-control" id="itemsItemIdForSub"
                                    name="itemsItemId" type="hidden" value=""/>
                             <input class="form-control" id="subitemId"
                                    name="subitemId" type="hidden" value=""/>
@@ -172,8 +172,8 @@
                             <td th:text="${subitemList.itemName}"></td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a class="btn btn-outline-secondary editOutlayBtn"
-                                       data-bs-target="#editOutlayModal"
+                                    <a class="btn btn-outline-secondary editSubItemBtn"
+                                       data-bs-target="#subItemEdit"
                                        data-bs-toggle="modal"
                                        data-placement="top" data-toggle="tooltip"
                                        th:href="@{findSubitem/(*{subitemList.subitemId})}"
@@ -196,7 +196,7 @@
     </div>
 </div>
 <br>
-<div class="accordion" id="accordionExample">
+<div class="accordion" id="accordionOutlays">
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingOne">
             <button aria-controls="collapseOne"
@@ -221,10 +221,14 @@
                             <select class="form-select"
                                     id="dropItemsId"
                                     name="dropItemsName"
-                                    onchange="update7()"
                                     required
+                                    th:object="${items}"
                             >
                                 <option value="">Выбрать статью</option>
+                                <option th:each="item : ${items}"
+                                        th:text="${item.itemName}"
+                                        th:value="${item.itemId}">
+                                </option>
                             </select>
                             <div class="error" th:errors="*{itemsItemId}" th:if="${#fields.hasErrors('itemsItemId')}"/>
                         </div>
@@ -232,10 +236,15 @@
                             <select class="form-select"
                                     id="dropSubItemsId"
                                     name="dropSubItemsName"
-                                    onchange="update8()"
                                     required
-                            >
+                                    th:object="${subItems}">
                                 <option selected value="">Выбрать подстатью</option>
+                                <option th:each="subItem : ${subItems}"
+                                        th:text="${subItem.subitemName}"
+                                        th:value="${subItem.subitemId}">
+
+                                </option>
+
                             </select>
                             <div class="error" th:errors="*{subitemsSubitemId}"
                                  th:if="${#fields.hasErrors('subitemsSubitemId')}"/>
@@ -302,7 +311,7 @@
                             <td>
                                 <div class="btn-group" role="group">
                                     <a class="btn btn-outline-secondary editOutlayBtn"
-                                       data-bs-target="#editOutlayModal"
+                                       data-bs-target="#outlayEdit"
                                        data-bs-toggle="modal"
                                        data-placement="top" data-toggle="tooltip"
                                        th:href="@{findOutlay/(*{outlayList.outlayId})}"
@@ -324,5 +333,13 @@
         </div>
     </div>
 </div>
+
+<!-- Modal edit item -->
+<div th:replace="~{custom/modals :: itemEdit}"></div>
+<!-- Modal Edit subItem -->
+<div th:replace="~{custom/modals :: subItemEdit}"></div>
+<!-- Modal Edit outlay -->
+<div th:replace="~{custom/modals :: outlayEdit}"></div>
+
 </body>
 </html>

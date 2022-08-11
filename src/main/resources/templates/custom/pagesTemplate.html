@@ -5,7 +5,7 @@
 <nav class="navbar bg-light" th:fragment="nav-bar(activeTab)">
     <form class="container-fluid justify-content-start">
         <a href="" th:href="@{/}">
-            <button class="btn btn-outline-primary me-2" type="button"><i class="fa-solid fa-house"></i></button>
+            <button class="btn btn-outline-success me-2" type="button"><i class="fa-solid fa-house"></i></button>
             <a/>
             <a href="" th:href="@{/repair-service}">
                 <button class="btn btn-outline-success me-2" type="button"
@@ -20,32 +20,32 @@
                 ><i class="fa-solid fa-table-list"></i></button>
             </a>
             <a href="" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/stat}">
-                <button class="btn btn-outline-warning me-2" type="button"
+                <button class="btn btn-outline-success me-2" type="button"
                         data-toggle="tooltip" data-placement="top" title="Расходы"
                         th:classappend="${activeTab == 'Расходы' ? 'active' : ''}"
                 ><i class="fa-solid fa-money-check-dollar"></i></button>
             </a>
             <a href="" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/events}">
-                <button class="btn btn-outline-warning me-2" type="button"
+                <button class="btn btn-outline-success me-2" type="button"
                         data-toggle="tooltip" data-placement="top" title="Календарь"
                         th:classappend="${activeTab == 'Календарь' ? 'active' : ''}"
                 ><i class="fa-regular fa-calendar"></i></button>
             </a>
             <a href="" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/charts}">
-                <button class="btn btn-outline-warning me-2" type="button"
+                <button class="btn btn-outline-success me-2" type="button"
                         data-toggle="tooltip" data-placement="top" title="Графики"
                         th:classappend="${activeTab == 'Графики' ? 'active' : ''}"
                 ><i class="fa-solid fa-chart-line"></i></button>
             </a>
-            <a href="" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/register}">
-                <button class="btn btn-outline-danger me-2" type="button"
+            <a href="" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/adminPanel}">
+                <button class="btn btn-outline-success me-2" type="button"
                         data-toggle="tooltip" data-placement="top" title="Добавить пользователя"
                         th:classappend="${activeTab == 'Регистрация' ? 'active' : ''}"
                 ><i class="fa-solid fa-user-plus"></i></button>
             </a>
             <a>
                 <form>
-                    <a class="btn btn-outline-primary" th:href="@{/logout}"
+                    <a class="btn btn-outline-success" th:href="@{/logout}"
                        data-toggle="tooltip" data-placement="top" title="Выйти"
                     ><i class="fa-solid fa-joint"></i></a>
                 </form>

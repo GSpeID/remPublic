@@ -66,6 +66,10 @@ public class StatisticService {
 
     //-- Item
 
+    public boolean ifItemExist(String itemName) {
+        return itemRepo.existsByItemName(itemName);
+    }
+
     public ItemDTO findItemById(Long id) {
         Item item = itemRepo.findByItemId(id);
         return ObjectMapperUtils.map(item, ItemDTO.class);
@@ -87,6 +91,10 @@ public class StatisticService {
     }
 
     //-- SubItem
+
+    public boolean ifSubitemNameExist(String subitemName) {
+        return subItemRepo.existsBySubitemName(subitemName);
+    }
 
     public SubItemDTO findSubItemById(Long id) {
         SubItem subItem = subItemRepo.findBySubitemId(id);

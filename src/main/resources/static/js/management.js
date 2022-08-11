@@ -8,6 +8,12 @@ $(document).ready(function () {
         console.log(TypeId)
     });
 
+    $('#dropClientType1').on('change', function () {
+        const TypeId = $(this).find('option:selected').attr('value');
+        $('#clientType').val(TypeId);
+        console.log(TypeId)
+    });
+
     $('#message').off('change').on('change', function (e) {
         const msg = $('#message').val();
         console.log(msg)

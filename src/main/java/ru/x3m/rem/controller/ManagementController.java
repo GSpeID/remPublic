@@ -13,7 +13,12 @@ import ru.x3m.rem.service.ManagementService;
 
 import javax.validation.Valid;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Controller
 public class ManagementController {
@@ -72,6 +77,20 @@ public class ManagementController {
         return "redirect:/management";
     }
 
+    @GetMapping("/getFilesList/{clientName}")
+    public Model filesList(@PathVariable("clientName") String clientName, Model model) {
+        String pathUrl = "/home/x3m/Downloads/rem/clientFiles/" + clientName;
+        try (Stream<Path> paths = Files.walk(Paths.get(pathUrl))) {
+            paths
+                    .filter(Files::isRegularFile)
+                    .forEach(System.out::println);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+//        model.addAttribute("files", filesList);
+        return model;
+    }
+
     //----- Save\Delete Client
 
     @PostMapping("/management/create-client")
@@ -81,7 +100,11 @@ public class ManagementController {
                                @ModelAttribute("clientTypeDTO") ClientTypeDTO clientTypeDTO,
                                @ModelAttribute("repairTypeDTO") RepairTypeDTO repairTypeDTO,
                                @ModelAttribute("repairStatusDTO") RepairStatusDTO repairStatusDTO) {
-        if (result.hasErrors()) {//ToDo проврека на ifExist
+        if (result.hasErrors()) {
+            return modelsList(model);
+        }
+        if (managementService.existClientByName(clientDTO.getClientName())) {
+            result.rejectValue("clientName", "", "Такой клиент уже есть");
             return modelsList(model);
         }
         managementService.saveClient(clientDTO);
@@ -91,7 +114,7 @@ public class ManagementController {
     @GetMapping("/management/delete-client/{clientId}")
     public String deleteClient(@PathVariable Long clientId) {
         managementService.deleteClient(clientId);
-        return "redirect:/repair-service/management";
+        return "redirect:/management";
     }
 
     //----- Save\Delete Client Type
@@ -104,7 +127,11 @@ public class ManagementController {
                                    @ModelAttribute("deviceDTO")  DeviceDTO deviceDTO,
                                    @ModelAttribute("repairTypeDTO")  RepairTypeDTO repairTypeDTO,
                                    @ModelAttribute("repairStatusDTO")  RepairStatusDTO repairStatusDTO) {
-        if (result.hasErrors()) {//ToDo проврека на ifExist
+        if (result.hasErrors()) {
+            return modelsList(model);
+        }
+        if (managementService.existByClientTypeName(clientTypeDTO.getClientTypeName())) {
+            result.rejectValue("clientTypeName", "", "Уже существует");
             return modelsList(model);
         }
         managementService.saveClientType(clientTypeDTO);
@@ -126,7 +153,11 @@ public class ManagementController {
                                @ModelAttribute("clientTypeDTO")  ClientTypeDTO clientTypeDTO,
                                @ModelAttribute("repairTypeDTO")  RepairTypeDTO repairTypeDTO,
                                @ModelAttribute("repairStatusDTO")  RepairStatusDTO repairStatusDTO) {
-        if (result.hasErrors()) {//ToDo проврека на ifExist
+        if (result.hasErrors()) {
+            return modelsList(model);
+        }
+        if (managementService.existByDeviceName(deviceDTO.getDeviceName())) {
+            result.rejectValue("deviceName", "", "Техника с таким названием уже существует");
             return modelsList(model);
         }
         managementService.saveDevice(deviceDTO);
@@ -148,7 +179,11 @@ public class ManagementController {
                                    @ModelAttribute("deviceDTO")  DeviceDTO deviceDTO,
                                    @ModelAttribute("clientTypeDTO")  ClientTypeDTO clientTypeDTO,
                                    @ModelAttribute("repairStatusDTO")  RepairStatusDTO repairStatusDTO) {
-        if (result.hasErrors()) {//ToDo проврека на ifExist
+        if (result.hasErrors()) {
+            return modelsList(model);
+        }
+        if (managementService.existByRepairTypeName(repairTypeDTO.getRepairTypeName())) {
+            result.rejectValue("repairTypeName", "", "C таким названием уже существует");
             return modelsList(model);
         }
         managementService.saveRepairType(repairTypeDTO);
@@ -171,7 +206,11 @@ public class ManagementController {
                                @ModelAttribute("clientTypeDTO") ClientTypeDTO clientTypeDTO,
                                @ModelAttribute("repairTypeDTO") RepairTypeDTO repairTypeDTO
                                ) {
-        if (result.hasErrors()) {//ToDo проврека на ifExist
+        if (result.hasErrors()) {
+            return modelsList(model);
+        }
+        if (managementService.existByStatusName(repairStatusDTO.getStatusName())) {
+            result.rejectValue("statusName", "", "С таким названием уже существует");
             return modelsList(model);
         }
         managementService.saveStatus(repairStatusDTO);

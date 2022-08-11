@@ -1,8 +1,13 @@
 $(document).ready(function () {
 
-    $('#cash').change(function () {
-        $(this).val($(this).prop('checked'));
-    })
+
+    $('#cashId0').change(function () {
+        if ($("#cashId0").is(':checked')) {
+            $("#cashId0").prop('checked', true)
+        } else {
+            $("#cashId0").prop('checked', false)
+        }
+    });
 
     $("#dropClient").on('change', function () {
         const clientId = $(this).find('option:selected').attr('value');
@@ -29,7 +34,6 @@ $(document).ready(function () {
     });
     const groupColumn = 0;
     const table = $('#r-services').DataTable({
-        responsive: true,
         columnDefs: [{visible: false, targets: groupColumn}],
         order: [[groupColumn, 'asc']],
         displayLength: 25,

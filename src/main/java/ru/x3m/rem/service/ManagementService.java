@@ -38,6 +38,11 @@ public class ManagementService {
 
 
     //--- Clients
+
+    public boolean existClientByName(String clientName) {
+        return clientRepo.existsByClientName(clientName);
+    }
+
     public ClientDTO findClientById(Long id) {
         Client client = clientRepo.findClientByClientId(id);
         return ObjectMapperUtils.map(client, ClientDTO.class);
@@ -60,12 +65,16 @@ public class ManagementService {
         }
     }
 
-    public void deleteClient(Long clientId){
+    public void deleteClient(Long clientId) {
         clientRepo.findById(clientId)
                 .ifPresent(clientRepo::delete);
     }
 
     //--- Client type
+    public boolean existByClientTypeName(String clientTypeName) {
+        return clientTypeRepo.existsByClientTypeName(clientTypeName);
+    }
+
     public ClientTypeDTO findClientTypeById(Long id) {
         ClientType clientType = clientTypeRepo.findByClientTypeId(id);
         return ObjectMapperUtils.map(clientType, ClientTypeDTO.class);
@@ -87,6 +96,10 @@ public class ManagementService {
     }
 
     //--- Device
+    public boolean existByDeviceName(String deviceName) {
+        return deviceRepo.existsByDeviceName(deviceName);
+    }
+
     public DeviceDTO findDeviceById(Long id) {
         Optional<Device> device = deviceRepo.findById(id);
         return ObjectMapperUtils.map(device, DeviceDTO.class);
@@ -109,6 +122,10 @@ public class ManagementService {
     }
 
     //--- Repair type
+    public boolean existByRepairTypeName(String repairTypeName) {
+        return repairTypeRepo.existsByRepairTypeName(repairTypeName);
+    }
+
     public RepairTypeDTO findRepairTypeById(Long id) {
         RepairType repairType = repairTypeRepo.findByRepairTypeId(id);
         return ObjectMapperUtils.map(repairType, RepairTypeDTO.class);
@@ -130,6 +147,10 @@ public class ManagementService {
     }
 
     //--- Repair status
+    public boolean existByStatusName(String statusName) {
+        return repairStatusRepo.existsByStatusName(statusName);
+    }
+
     public RepairStatusDTO findRepairStatusById(Long id) {
         Optional<RepairStatus> repairStatus = repairStatusRepo.findById(id);
         return ObjectMapperUtils.map(repairStatus, RepairStatusDTO.class);

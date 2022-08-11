@@ -9,4 +9,6 @@ public interface DeviceRepo extends CrudRepository<Device, Long> {
 
     Device findByDeviceId(Long id);
 
+    boolean existsByDeviceName(String deviceName);
+
 }

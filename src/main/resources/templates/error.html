@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <div th:replace="~{custom/pagesTemplate :: css-head}"></div>
+    <div th:replace="~{custom/pagesTemplate :: js-head}"></div>
+
+    <title>ERROR</title>
+
+
+</head>
+
+<body>
+
+<img class="errorImg" th:src="@{/images/error.jpg}">
+<br>
+<div class="container" id="errorText">
+    <h5>Что-то пошло не так...</h5>
+    <td th:text="${timestamp}"/>
+    <br>
+    <td th:text="${path}"/>
+    <br>
+    <td th:text="${error}"/>
+    <br>
+    <td th:text="${status}"/>
+    <br>
+    <td th:text="${message}"/>
+    <br>
+    <td th:text="${exception}"/>
+    <br>
+    <td th:text="${trace}"/>
+</div>
+
+
+</body>
+</html>

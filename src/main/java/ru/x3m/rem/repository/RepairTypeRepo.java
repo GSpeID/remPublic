@@ -9,4 +9,6 @@ public interface RepairTypeRepo extends CrudRepository<RepairType, Long> {
 
     RepairType findByRepairTypeId(Long id);
 
+    boolean existsByRepairTypeName(String repairTypeName);
+
 }

@@ -16,26 +16,28 @@
 <div class="container">
     <div class="row py-2">
         <div class="col-12">
-            <form th:action="@{/register}" method="post" th:object="${user}">
+            <form method="post" th:action="@{/adminPanel/createUser}" th:object="${newUser}">
                 <div class="form-group">
                     <label>User name</label>
                     <input type="text" class="form-control" th:field="*{username}" placeholder="Enter user name">
-                    <small class="text-danger" th:each="err: ${#fields.errors('username')}" th:text="${err}"></small>
+                    <small class="text-danger" th:errors="*{username}" th:if="${#fields.hasErrors('username')}"></small>
                 </div>
                 <div class="form-group">
                     <label>User role</label>
-                    <input type="text" class="form-control" th:field="*{roleId}" placeholder="Выберите роль пользователя">
-                    <small class="text-danger" th:each="err: ${#fields.errors('roleId')}" th:text="${err}"></small>
+                    <input type="text" class="form-control" th:field="*{roleId}"
+                           placeholder="Выберите роль пользователя">
+                    <small class="text-danger" th:errors="*{roleId}" th:if="${#fields.hasErrors('roleId')}"></small>
                 </div>
                 <div class="form-group">
                     <label>Password</label>
                     <input type="password" class="form-control" th:field="*{password}" placeholder="Password">
-                    <small class="text-danger" th:each="err: ${#fields.errors('password')}" th:text="${err}"></small>
+                    <small class="text-danger" th:errors="*{password}" th:if="${#fields.hasErrors('password')}"></small>
                 </div>
                 <div class="form-group">
                     <label>Repeat password</label>
                     <input type="password" class="form-control" th:field="*{matchingPassword}" placeholder="Repeat password">
-                    <small class="text-danger" th:each="err: ${#fields.errors('matchingPassword')}" th:text="${err}"></small>
+                    <small class="text-danger" th:errors="*{matchingPassword}"
+                           th:if="${#fields.hasErrors('matchingPassword')}"></small>
                 </div>
                 <br>
                 <button type="submit" class="btn btn-primary">Register</button>

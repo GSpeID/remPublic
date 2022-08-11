@@ -77,7 +77,15 @@ public class StatisticController {
     public String saveItem(@ModelAttribute("itemDTO") @Valid ItemDTO itemDTO, BindingResult result, Model model,
                            @ModelAttribute("subItemDTO") SubItemDTO subItemDTO,
                            @ModelAttribute("outlayDTO") OutlayDTO outlayDTO) {
-        if (resendModels(result, model)) return "stat";
+        if (resendModels(result, model)) {
+            return "stat";
+        }
+        if (statisticService.ifItemExist(itemDTO.getItemName())) {
+            result.rejectValue("itemName", "", "Уже существует");
+            resendModels(result, model);
+            return "stat";
+        }
+
         statisticService.saveItems(itemDTO);
         return "redirect:/stat";
     }
@@ -94,7 +102,13 @@ public class StatisticController {
     public String saveSubItem(@ModelAttribute("subItemDTO") @Valid SubItemDTO subItemDTO, BindingResult result, Model model,
                               @ModelAttribute("itemDTO") ItemDTO itemDTO,
                               @ModelAttribute("outlayDTO") OutlayDTO outlayDTO) {
-        if (resendModels(result, model)) return "stat";
+        if (resendModels(result, model))
+            return "stat";
+        if (statisticService.ifSubitemNameExist(subItemDTO.getSubitemName())) {
+            result.rejectValue("subitemName", "", "Такая подстатья уже существует");
+            resendModels(result, model);
+            return "stat";
+        }
         statisticService.saveSubItem(subItemDTO);
         return "redirect:/stat";
     }

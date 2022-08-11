@@ -45,7 +45,7 @@ public class RepairDTO {
     @NotNull(message = "укажите суммму(или 0)")
     @DecimalMin(value = "0", message = "точночть 1 копейка: 0.01")
     @Digits(integer = 10, fraction = 2)
-    @Positive(message = "не может быть отрицательным")
+//    @Positive(message = "не может быть отрицательным")
     private Double fullCost;
 
     @Getter
@@ -54,7 +54,7 @@ public class RepairDTO {
     @NotNull(message = "укажите суммму(или 0)")
     @DecimalMin(value = "0", message = "точночть 1 копейка: 0.01")
     @Digits(integer = 10, fraction = 2)
-    @Positive(message = "не может быть отрицательным")
+//    @Positive(message = "не может быть отрицательным")
     private Double paid;
 
     @Getter
@@ -63,7 +63,7 @@ public class RepairDTO {
     @NotNull(message = "укажите суммму(или 0)")
     @DecimalMin(value = "0", message = "точночть 1 копейка: 0.01")
     @Digits(integer = 10, fraction = 2)
-    @Positive(message = "не может быть отрицательным")
+//    @Positive(message = "не может быть отрицательным")
     private Double outlay;
 
     @Getter

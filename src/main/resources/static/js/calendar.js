@@ -23,10 +23,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     $('#fullInfoModal').modal('hide').on('hidden.bs.modal', function () {
         $(this).find('form').trigger('reset');
-    })
+    });
     $('#allDay').change(function () {
         $(this).val($(this).prop('checked'));
-    })
+    });
     const calendarEl = document.getElementById('calendar');
     const calendar = new FullCalendar.Calendar(calendarEl, {
         eventDidMount: function (info) {
@@ -72,23 +72,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 const backgroundColor = $('#backgroundColor').val();
                 const url = $('#url').val();
                 const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
+                console.log(csrfToken);
                 $.ajax({
                     headers: {
-                        'X-CSRF-TOKEN': csrfToken,
+                        'X-XSRF-TOKEN': csrfToken,
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    url: '/rem/events/api/saveEvent',
                     type: 'POST',
+                    url: '/rem/events/api/saveEvent',
                     data: JSON.stringify({title, start, end, allDay, groupId, backgroundColor, url}),
                     dataType: 'json',
+                    traditional: true,
                     success: function (data) {
-
                         $('#addEvent').modal('hide');
                         calendar.refetchEvents();
                     },
-                    error: function (error) {
-                        alert('error:' + eval(error));
+                    done: function (data) {
+                        swal('Мероприятие добавлено');
+                    },
+                    error: function (data) {
+                        swal('Что-то сломалось, обратитесь куда-нибудь');
                     }
                 });
             });

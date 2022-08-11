@@ -19,57 +19,71 @@
 <br>
 <div class="indexFont">
     <div style="text-align: center;">OJC "SPACE SHIP CRAFT ENGINEERING"</div>
-    <br>
-    <div style="text-align: center;" sec:authorize="isAnonymous()">
-        ЗАЛОГИНЬСЯ
+</div>
+<br>
+<br>
+<div class="d-grid gap-2 col-6 mx-auto">
+    <div class="text-center" sec:authorize="isAnonymous()">
+        <a href="" th:href="@{/login}">
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button class="btn btn-outline-secondary" name="LogIn" type="button">ВОЙТИ</button>
+            </div>
+        </a>
     </div>
-</div>
-<br>
-<br>
-<div class="text-center" sec:authorize="isAnonymous()">
-    <a href="" th:href="@{/login}">
-        <button name="LogIn" type="button" class="btn btn-primary">ВОЙТИ</button>
-    </a>
-</div>
-<br>
-<div class="text-center" sec:authorize="hasAnyRole('ROLE_ADMIN')">
-    <a href="" th:href="@{/register}">
-        <button name="Register" type="button" class="btn btn-warning">Регистрация пользователя</button>
-    </a>
-</div>
-<br>
-<div class="text-center" sec:authorize="hasAnyRole('ROLE_ADMIN')">
-    <a href="" th:href="@{/stat}">
-        <button name="Register" type="button" class="btn btn-warning">Расходы</button>
-    </a>
-</div>
-<br>
-<div class="text-center" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')">
-    <a href="" th:href="@{/repair-service}">
-        <button name="Register" type="button" class="btn btn-warning">Заказы</button>
-    </a>
-</div>
-<br>
-<div class="text-center" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')">
-    <a href="" th:href="@{/management}">
-        <button name="Register" type="button" class="btn btn-warning">Данные для заказов</button>
-    </a>
-</div>
-<br>
-<div class="text-center" sec:authorize="hasAnyRole('ROLE_ADMIN')">
-    <a href="" th:href="@{/events}">
-        <button name="Register" type="button" class="btn btn-warning">Календарь</button>
-    </a>
-</div>
-<br>
-<div class="text-center" sec:authorize="authenticated">
-    <a>
-        <form>
-            <a class="btn btn-outline-primary" data-placement="top"
-               data-toggle="tooltip" th:href="@{/logout}" title="Выйти"
-            ><i class="fa-solid fa-joint"></i></a>
-        </form>
-    </a>
+    <br>
+    <div class="text-center" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')">
+        <a href="" th:href="@{/repair-service}">
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button class="btn btn-outline-secondary" name="Register" type="button">Заказы</button>
+            </div>
+        </a>
+    </div>
+    <br>
+    <div class="text-center" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')">
+        <a href="" th:href="@{/management}">
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button class="btn btn-outline-secondary" name="Register" type="button">Данные для заказов</button>
+            </div>
+        </a>
+    </div>
+    <br>
+    <div class="text-center" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+        <a href="" th:href="@{/stat}">
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button class="btn btn-outline-secondary" name="Register" type="button">Расходы</button>
+            </div>
+        </a>
+    </div>
+    <br>
+    <div class="text-center" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+        <a href="" th:href="@{/events}">
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button class="btn btn-outline-secondary" name="Register" type="button">Календарь</button>
+            </div>
+        </a>
+    </div>
+    <br>
+    <div class="text-center" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+        <a href="" th:href="@{/adminPanel}">
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button class="btn btn-outline-secondary" name="Register" th:href="@{/adminPanel}" type="button">
+                    Регистрация пользователя
+                </button>
+            </div>
+        </a>
+    </div>
+    <br>
+    <div class="text-center" sec:authorize="authenticated">
+        <a>
+            <form>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <a class="btn btn-outline-secondary" data-placement="top"
+                       data-toggle="tooltip" th:href="@{/logout}" title="Выйти"
+                    ><i class="fa-solid fa-joint"></i></a>
+                </div>
+            </form>
+        </a>
+    </div>
 </div>
 </body>
 </html>
