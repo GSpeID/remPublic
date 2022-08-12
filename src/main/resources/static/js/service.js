@@ -1,12 +1,8 @@
 $(document).ready(function () {
 
 
-    $('#cashId0').change(function () {
-        if ($("#cashId0").is(':checked')) {
-            $("#cashId0").prop('checked', true)
-        } else {
-            $("#cashId0").prop('checked', false)
-        }
+    $('#cashBtnId0').change(function () {
+        $(this).val($(this).prop('checked'));
     });
 
     $("#dropClient").on('change', function () {
@@ -33,17 +29,17 @@ $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip()
     });
     const groupColumn = 0;
-    const table = $('#r-services').DataTable({
-        columnDefs: [{visible: false, targets: groupColumn}],
-        order: [[groupColumn, 'asc']],
-        displayLength: 25,
-        drawCallback: function (settings) {
-            const api = this.api();
-            const rows = api.rows({page: 'current'}).nodes();
-            let last = null;
+    const table = $('#r-service').DataTable({
+            columnDefs: [{visible: false, targets: groupColumn}],
+            order: [[groupColumn, 'asc']],
+            displayLength: 25,
+            drawCallback: function (settings) {
+                const api = this.api();
+                const rows = api.rows({page: 'current'}).nodes();
+                let last = null;
 
-            api
-                .column(groupColumn, {page: 'current'})
+                api
+                    .column(groupColumn, {page: 'current'})
                     .data()
                     .each(function (group, i) {
                         if (last !== group) {
@@ -66,7 +62,7 @@ $(document).ready(function () {
         }
     );
     // Order by the grouping
-    $('#r-services tbody').on('click', 'tr.group', function () {
+    $('#r-service tbody').on('click', 'tr.group', function () {
         const currentOrder = table.order()[0];
         if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
             table.order([groupColumn, 'desc']).draw();

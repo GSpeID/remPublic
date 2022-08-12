@@ -41,6 +41,8 @@ public class RepairController {
     @PostMapping("/repair-service/create")
     public String createRepair(@ModelAttribute("repairDTO") @Valid RepairDTO repairDTO,
                                BindingResult result, Model model) {
+        repairDTO.setArrears(repairDTO.calcArrears());
+        repairDTO.setProfit(repairDTO.calcProfit());
         if (result.hasErrors()) {
             List<RepairDTO> repairs = repairService.findAllRepairs();
             model.addAttribute("repairs", repairs);

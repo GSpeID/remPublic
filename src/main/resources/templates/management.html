@@ -12,8 +12,8 @@
 </head>
 <body>
 <div th:replace="~{custom/pagesTemplate :: nav-bar(Управление)}"></div>
-<div class="accordion" id="accordionExample">
 
+<div class="accordion" id="accordionExample">
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingOne">
             <button aria-controls="collapseOne" aria-expanded="true" class="accordion-button"
@@ -121,6 +121,7 @@
                                     <form method="get"
                                           th:action="@{/management/getFilesList/{clientName}(clientName=${client.clientName})}">
                                         <a class="btn btn-outline-secondary clientFilesBtn"
+                                           th:href="@{/management/getFilesList/{clientName}(clientName=${client.clientName})}"
                                            data-bs-target="#clientFiles"
                                            data-bs-toggle="modal" data-placement="top" data-toggle="tooltip"
                                            sec:authorize="hasAnyRole('ROLE_ADMIN')"

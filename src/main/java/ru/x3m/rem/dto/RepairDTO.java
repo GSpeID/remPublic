@@ -11,36 +11,27 @@ import java.time.LocalDate;
 
 
 @NoArgsConstructor
-
+@Getter
+@Setter
 public class RepairDTO {
 
-    @Getter
-    @Setter
     private Long repairId;
 
-    @Getter
-    @Setter
     @Valid
     @NotEmpty(message = "Укажите адрес")
     @Size(min = 3, max = 255, message = "Минимум min{min}, максимум max{max} символов")
     private String repairAddress;
 
-    @Getter
-    @Setter
     @Valid
     @NotEmpty(message = "Укажите адрес")
     @Size(min = 3, max = 255, message = "Минимум min{min}, максимум max{max} символов")
     private String repairDescription;
 
-    @Getter
-    @Setter
     @Valid
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate repairDate;
 
-    @Getter
-    @Setter
     @Valid
     @NotNull(message = "укажите суммму(или 0)")
     @DecimalMin(value = "0", message = "точночть 1 копейка: 0.01")
@@ -48,8 +39,6 @@ public class RepairDTO {
 //    @Positive(message = "не может быть отрицательным")
     private Double fullCost;
 
-    @Getter
-    @Setter
     @Valid
     @NotNull(message = "укажите суммму(или 0)")
     @DecimalMin(value = "0", message = "точночть 1 копейка: 0.01")
@@ -57,8 +46,6 @@ public class RepairDTO {
 //    @Positive(message = "не может быть отрицательным")
     private Double paid;
 
-    @Getter
-    @Setter
     @Valid
     @NotNull(message = "укажите суммму(или 0)")
     @DecimalMin(value = "0", message = "точночть 1 копейка: 0.01")
@@ -72,78 +59,47 @@ public class RepairDTO {
     @Getter
     private Double profit;
 
-    @Getter
-    @Setter
     @NotNull(message = "Выберите способ расчёта")
     private Boolean cash;
 
-    @Getter
-    @Setter
     @Valid
     @NotNull(message = "необходимо выбрать из списка")
     private Long clientId;
 
-    @Getter
-    @Setter
     private String clientName;
 
-    @Getter
-    @Setter
     private String clientPhone;
 
-    @Getter
-    @Setter
     @Valid
     @NotNull(message = "необходимо выбрать из списка")
     private Long deviceId;
 
-    @Getter
-    @Setter
     private String deviceName;
 
-    @Getter
-    @Setter
     @Valid
     @NotNull(message = "необходимо выбрать из списка")
     private Long repairTypeId;
 
-    @Getter
-    @Setter
     private String repairTypeName;
 
-    @Getter
-    @Setter
     private Long clientTypeId;
 
-    @Getter
-    @Setter
     private String clientTypeName;
 
-    @Getter
-    @Setter
     @Valid
     @NotNull(message = "необходимо выбрать из списка")
     private Long statusId;
 
-    @Getter
-    @Setter
     private String statusName;
 
-//    public Double calcArrears() {
-//        arrears = fullCost - paid;
-//        return arrears;
-//    }
-//
-//    public Double calcProfit() {
-//        profit = fullCost - outlay;
-//        return profit;
-//    }
-
-    public void setArrears() {
-        this.arrears = fullCost - paid;
+    public Double calcArrears() {
+        arrears = fullCost - paid;
+        return arrears;
     }
 
-    public void setProfit() {
-        this.profit = fullCost - outlay;
+    public Double calcProfit() {
+        profit = fullCost - outlay;
+        return profit;
     }
+
 }

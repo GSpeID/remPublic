@@ -2,6 +2,16 @@ $(document).ready(function () {
 
     const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
 
+    // $('#clientFiles').on('hidden.bs.modal', function (e) {
+    //     $(this)
+    //         .find("input,textarea,select")
+    //         .val('')
+    //         .end()
+    //         .find("input[type=checkbox], input[type=radio]")
+    //         .prop("checked", "")
+    //         .end();
+    // });
+
     $('#dropClientType0').on('change', function () {
         const TypeId = $(this).find('option:selected').attr('id');
         $('#clientTypeId0').val(TypeId);
@@ -13,22 +23,6 @@ $(document).ready(function () {
         $('#clientType').val(TypeId);
         console.log(TypeId)
     });
-
-    $('#message').off('change').on('change', function (e) {
-        const msg = $('#message').val();
-        console.log(msg)
-        // if(msg!=null){
-        //     e.preventDefault();
-        // }else {
-        //     return false;
-        // }
-    });
-
-    // if ('message') {
-    //     swal("Are you sure you want to do this?", {
-    //         buttons: ["OK", true],
-    //     });
-    // }
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
@@ -81,15 +75,11 @@ $(document).ready(function () {
         responsive: true
     });
 
-    $('#clientFilesTable').DataTable({
-        language: {
-            url: './localisation/ru.json'
-        },
-        rowReorder: {
-            selector: 'td:nth-child(2)'
-        },
-        responsive: true
-    });
+    // $('#clientFilesTable').DataTable({
+    //     language: {
+    //         url: './localisation/ru.json'
+    //     }
+    // });
 
     //полная информация о клиенте
     $('table .fullInfoClientBtn').on('click', function (event) {
@@ -112,30 +102,28 @@ $(document).ready(function () {
         });
     });
 
+
     //загрузка файлов
     $('table .clientFilesBtn').off("click").on("click", function () {
         $('#clients tbody').off("click").on('click', 'tr', function (event) {
             const clientDir = table.row($(this).closest('tr')).data()[1];
+            const url = '/rem/management/api/getFilesList/' + clientDir;
+            console.log(url);
+            $.getJSON(url, function (data) {
+                console.log(data);
+                $('#clientFilesTable').DataTable({
+                    destroy: true,
+                    data: data,
+                    columns: [
+                        {data: 'fileName'}
+                    ]
+                });
+            });
             $('#clientDir').val(clientDir)
-            console.log(clientDir);
-            // $.ajax({
-            //     headers: {
-            //         'Accept': 'application/json',
-            //         'Content-Type': 'application/json'
-            //     },
-            //     url: '/rem/events/api/saveEvent',
-            //     type: 'POST',
-            //     data: JSON.stringify({}),
-            //     dataType: 'json',
-            //     success: function (data) {
-            //         $('#addEvent').modal('hide');
-            //     },
-            //     error: function (error) {
-            //         alert('error:' + eval(error));
-            //     }
-            // });
+
         });
     });
+
 
     //редактирование клиента
     $('table .editClientBtn').on('click', function (event) {
