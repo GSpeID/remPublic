@@ -73,11 +73,6 @@ public class ObjectMapperUtils {
         return destination;
     }
 
-//    public static <S, D>List<D> mapAll2(final Collection<S> soursList, Class<D> outResult) {
-//        return soursList.stream()
-//                .map(sours -> map(sours, outResult))
-//                .collect(Collectors.toList());
-//    }
 }
 
 //List<PostDTO> listOfPostDTO = ObjectMapperUtils.mapAll(listOfPosts, PostDTO.class); usage//

@@ -14,23 +14,6 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/", "/authUser", "/login","/favicon.ico").permitAll()
-//                .antMatchers("/register","/stat", "/events").hasAnyRole("ADMIN")
-//                .antMatchers("/repair-service").hasAnyRole("ADMIN", "MANAGER", "USER")
-//                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .loginProcessingUrl("/authUser")
-//                .defaultSuccessUrl("/")
-//                .and()
-//                .logout()
-//                .logoutSuccessUrl("/");
-//    }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
