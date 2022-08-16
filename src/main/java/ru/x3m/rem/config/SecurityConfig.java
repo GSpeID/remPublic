@@ -13,7 +13,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
-
+//
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http

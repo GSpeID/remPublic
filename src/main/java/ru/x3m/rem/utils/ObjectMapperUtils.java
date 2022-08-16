@@ -75,4 +75,3 @@ public class ObjectMapperUtils {
 
 }
 
-//List<PostDTO> listOfPostDTO = ObjectMapperUtils.mapAll(listOfPosts, PostDTO.class); usage//
