@@ -141,11 +141,8 @@ $(document).ready(function () {
                 } else {
                     $('#fullInfoModal').find(':checkbox[name=cash]').prop('checked', false);
                 }
-
-                console.log(repair)
             }
         });
-
     });
 
 

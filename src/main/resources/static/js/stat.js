@@ -4,19 +4,13 @@ $(document).ready(function () {
         language: {
             url: './localisation/ru.json'
         },
-        rowReorder: {
-            selector: 'td:nth-child(2)'
-        },
-        responsive: true
+
     });
     $('#itms').DataTable({
         language: {
             url: './localisation/ru.json'
         },
-        rowReorder: {
-            selector: 'td:nth-child(2)'
-        },
-        responsive: true
+
     });
     const groupColumn = 2;
     const table = $('#subitms').DataTable({
@@ -44,11 +38,8 @@ $(document).ready(function () {
         language: {
             url: './localisation/ru.json'
         },
-        rowReorder: {
-            selector: 'td:nth-child(2)'
-        },
-        responsive: true
     });
+
     // Order by the grouping
     $('#subitms tbody').on('click', 'tr.group', function () {
         const currentOrder = table.order()[0];
@@ -79,8 +70,6 @@ $(document).ready(function () {
             if (!_rel) return $subcat.prop("disabled", true);
             $subcat.find("[rel~='" + _rel + "']").show();
             $subcat.prop("disabled", false);
-            console.log($cat)
-            console.log($subcat)
         });
     });
 
@@ -95,7 +84,6 @@ $(document).ready(function () {
             success: function (item) {
                 $('#itemEdit #itemId').val(item.itemId);
                 $('#itemEdit #itemName').val(item.itemName);
-                console.log(item)
             }
         });
 
@@ -112,8 +100,7 @@ $(document).ready(function () {
                 $('#subItemEdit #subitemId').val(item.subitemId);
                 $('#subItemEdit #subitemName').val(item.subitemName);
                 $('#subItemEdit #itemsItemId').val(item.itemsItemId);
-                $('#subItemEdit #dropItems').val(item.itemsItemId);
-                console.log(item)
+                $('#subItemEdit #dropItemsForSub0').val(item.itemsItemId);
             }
         });
 
@@ -138,41 +125,34 @@ $(document).ready(function () {
                 $('#outlayEdit #date').val(outlay.date);
                 $('#outlayEdit #dropItemsId').val(outlay.date);
                 $('#outlayEdit #dropSubItemsId').val(outlay.date);
-                console.log(outlay)
             }
         });
     });
 
     $('#dropItemsEdit').on('change', function () {
         const dropId = $(this).find('option:selected').attr('value');
-        console.log(dropId);
         $('#itemsItemIdEditSub').val(dropId);
     });
 
-    $('#dropItemsForSub').on('change', function () {
-        const dropId = $(this).find('option:selected').attr('value');
-        console.log(dropId);
-        $('#itemsItemIdForSub').val(dropId);
+    $('#dropItemsForSub0').on('change', function () {
+        const dropId = $(this).find('option:selected').attr('id');
+        $('#itemsItemIdForSub0').val(dropId);
     });
 
     $('#dropItemsId').on('change', function () {
         const dropId = $(this).find('option:selected').attr('value');
-        console.log(dropId);
         $('#itemsItemId0').val(dropId);
         $.ajax({
             type: 'GET',
             url: '/rem/statistic/api/findOutlayById/' + id,
             success: function (subItems) {
                 $('#dropSubItemsId #outlayId').val(subItems.subitemName);
-
-                console.log(subItems)
             }
         });
     });
 
     $('#dropSubItemsId').on('change', function () {
         const dropId = $(this).find('option:selected').attr('value');
-        console.log(dropId);
         $('#subitemsSubitemId').val(dropId);
     });
 

@@ -37,25 +37,21 @@ public class StatisticRestController {
     }
 
     @GetMapping("/finAllOutlays")
-    @ResponseBody
     public List<OutlayDTO> getAllOutlays() {
         return statisticService.findAllOutlay();
     }
 
     @GetMapping("/findOutlayByItem")
-    @ResponseBody
     public List<OutlayDTO> getAllOutlaysByItem(@RequestParam("itemId") Long itemId) {
         return statisticService.findAllOutlaysByItemId(itemId);
     }
 
     @GetMapping("/findOutlayBySubitem")
-    @ResponseBody
     public List<OutlayDTO> getAllOutlaysBySubitem(@RequestParam("subitemId") Long subitemId) {
         return statisticService.findOutlayBySubItemId(subitemId);
     }
 
     @GetMapping("/findOutlayById/{id}")
-    @ResponseBody
     public OutlayDTO getOutlayById(@PathVariable("id") Long id) {
         return statisticService.findOutlayById(id);
     }
@@ -83,7 +79,6 @@ public class StatisticRestController {
     }
 
     @GetMapping(value = "/subItemsByItem")
-    @ResponseBody
     public List<SubItemDTO> getSubByItemsByItem(@RequestParam("itemsItemId") Long itemsItemId) {
         return statisticService.findAllSubByItemsItemId(itemsItemId);
     }

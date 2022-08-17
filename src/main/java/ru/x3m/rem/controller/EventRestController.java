@@ -22,34 +22,29 @@ public class EventRestController {
     }
 
     @GetMapping("/findAllEvents")
-    @ResponseBody
 //    @JsonView(EventDTO.TestFull.class)
     public List<EventDTO> getEvents(){
         return eventService.findAllEvents();
     }
 
     @GetMapping("/findEventById/{id}")
-    @ResponseBody
     public EventDTO findEvent(@PathVariable("id") Long id) {
         return eventService.findEventById(id);
     }
 
     @PostMapping("/findInDateRange")
-    @ResponseBody
     public List<EventDTO> findInDateRange(@RequestParam("start") String start, @RequestParam("end") String end) {
         return eventService.findEventsInDateRange(start, end);
 
     }
 
     @PostMapping("/saveEvent")
-    @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     public EventDTO createEvent(@RequestBody @Valid EventDTO eventDTO, BindingResult result) {
         return eventService.saveEventRest(eventDTO);
     }
 
     @DeleteMapping("/deleteEvent/{id}")
-    @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public EventDTO deleteEvent(@PathVariable("id") Long id) {
         eventService.deleteEvent(id);

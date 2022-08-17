@@ -117,14 +117,16 @@
                         <form class="row" method="post" th:action="@{/stat/saveSubItem}" th:object="${subItemDTO}">
                             <div class="col">
                                 <select class="form-select"
-                                        id="dropItemsForSub"
+                                        id="dropItemsForSub0"
                                         required
                                         th:object="${items}"
                                 >
                                     <option value="">Выбрать статью</option>
                                     <option th:each="item : ${items}"
                                             th:text="${item.itemName}"
-                                            th:value="${item.itemId}"></option>
+                                            th:id="${item.itemId}"
+                                            th:value="${item.itemId}"
+                                    ></option>
                                 </select>
                                 <div class="error" th:errors="*{itemsItemId}"
                                      th:if="${#fields.hasErrors('itemsItemId')}"/>
@@ -146,7 +148,7 @@
                                 <div class="error" th:errors="*{subitemName}"
                                      th:if="${#fields.hasErrors('subitemName')}"/>
                             </div>
-                            <input class="form-control" id="itemsItemIdForSub"
+                            <input class="form-control" id="itemsItemIdForSub0"
                                    name="itemsItemId" type="hidden" value=""/>
                             <input class="form-control" id="subitemId"
                                    name="subitemId" type="hidden" value=""/>

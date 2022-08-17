@@ -15,13 +15,11 @@ $(document).ready(function () {
     $('#dropClientType0').on('change', function () {
         const TypeId = $(this).find('option:selected').attr('id');
         $('#clientTypeId0').val(TypeId);
-        console.log(TypeId)
     });
 
     $('#dropClientType1').on('change', function () {
         const TypeId = $(this).find('option:selected').attr('value');
         $('#clientType').val(TypeId);
-        console.log(TypeId)
     });
 
     $(function () {
@@ -85,8 +83,6 @@ $(document).ready(function () {
     $('table .fullInfoClientBtn').on('click', function (event) {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
-        console.log(csrfToken);
-        console.log(id);
         $.ajax({
             // headers: {
             //     'X-CSRF-TOKEN': csrfToken,
@@ -108,9 +104,7 @@ $(document).ready(function () {
         $('#clients tbody').off("click").on('click', 'tr', function (event) {
             const clientDir = table.row($(this).closest('tr')).data()[1];
             const url = '/rem/management/api/getFilesList/' + clientDir;
-            console.log(url);
             $.getJSON(url, function (data) {
-                console.log(data);
                 $('#clientFilesTable').DataTable({
                     destroy: true,
                     data: data,
@@ -140,7 +134,6 @@ $(document).ready(function () {
                 $('#editClientModal #clientName0').val(client.clientName);
                 $('#editClientModal #clientTypeId0').val(client.clientTypeId);
                 $('#editClientModal #dropClientType0').val(client.clientTypeId);
-                console.log(client);
             }
         });
 

@@ -1,84 +1,54 @@
-$(document).ready(function () {
+Highcharts.chart('container', {
 
-    $.getJSON('/rem/statistic/api/finAllOutlays', function (data) {
-        const
-            categoriesJ = [],
-            nameJ = [],
-            dataJ = [];
+    chart: {
+        type: 'column'
+    },
 
-        $.each(data, function (i, el) {
-            categoriesJ.push(el.itemName);
-            dataJ.push(parseFloat(el.price));
-            nameJ.push(el.subitemName);
-        });
-        console.log(categoriesJ)
-        console.log(dataJ)
-        console.log(nameJ)
+    title: {
+        text: 'Для демонстрации'
+    },
 
-        options.series[0].data = dataJ;
-        options.series[0].name = nameJ;
-        const chart = new Highcharts.Chart(options);
+    xAxis: {
+        categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
+    },
 
-        Highcharts.chart('container', {
+    yAxis: {
+        allowDecimals: false,
+        min: 0,
+        title: {
+            text: 'Number of fruits'
+        }
+    },
 
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'Stacked column chart'
-            },
-            xAxis: {
-                categories: categoriesJ
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Total fruit consumption'
-                },
-                stackLabels: {
-                    enabled: true,
-                    style: {
-                        fontWeight: 'bold',
-                        color: ( // theme
-                            Highcharts.defaultOptions.title.style &&
-                            Highcharts.defaultOptions.title.style.color
-                        ) || 'gray',
-                        textOutline: 'none'
-                    }
-                }
-            },
-            legend: {
-                align: 'right',
-                x: -30,
-                verticalAlign: 'top',
-                y: 25,
-                floating: true,
-                backgroundColor:
-                    Highcharts.defaultOptions.legend.backgroundColor || 'white',
-                borderColor: '#CCC',
-                borderWidth: 1,
-                shadow: false
-            },
-            tooltip: {
-                headerFormat: '<b>{point.x}</b><br/>',
-                pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
-            },
-            plotOptions: {
-                column: {
-                    stacking: 'normal',
-                    dataLabels: {
-                        enabled: true
-                    }
-                }
-            },
-            series: []
-        });
+    tooltip: {
+        formatter: function () {
+            return '<b>' + this.x + '</b><br/>' +
+                this.series.name + ': ' + this.y + '<br/>' +
+                'Total: ' + this.point.stackTotal;
+        }
+    },
 
-        // options.xAxis.categories = categoriesJ;
+    plotOptions: {
+        column: {
+            stacking: 'normal'
+        }
+    },
 
-
-    });
-
-
+    series: [{
+        name: 'John',
+        data: [5, 3, 4, 7, 2],
+        stack: 'male'
+    }, {
+        name: 'Joe',
+        data: [3, 4, 4, 2, 5],
+        stack: 'male'
+    }, {
+        name: 'Jane',
+        data: [2, 5, 6, 2, 1],
+        stack: 'female'
+    }, {
+        name: 'Janet',
+        data: [3, 0, 4, 4, 3],
+        stack: 'female'
+    }]
 });
-

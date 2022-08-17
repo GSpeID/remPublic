@@ -5,8 +5,6 @@ $(document).ready(function () {
         const groupId = $(this).find('option:selected').attr('value');
         $('#backgroundColor').val(color);
         $('#groupId').val(groupId);
-        console.log(color);
-        console.log(groupId);
     });
     $('#addEvent').on('hidden.bs.modal', function (e) {
         $(this)
@@ -72,7 +70,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 const backgroundColor = $('#backgroundColor').val();
                 const url = $('#url').val();
                 const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
-                console.log(csrfToken);
                 $.ajax({
                     headers: {
                         'X-XSRF-TOKEN': csrfToken,
@@ -141,8 +138,6 @@ document.addEventListener('DOMContentLoaded', function () {
         eventClick: function (info) {
             const eventId = info.event.id;
             const eventObjUrl = info.event.url;
-            console.log(eventId);
-            console.log(eventObjUrl);
             if (eventObjUrl) {
                 info.jsEvent.preventDefault();
                     $.ajax({
