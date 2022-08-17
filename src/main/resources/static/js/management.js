@@ -73,20 +73,17 @@ $(document).ready(function () {
         responsive: true
     });
 
-    // $('#clientFilesTable').DataTable({
-    //     language: {
-    //         url: './localisation/ru.json'
-    //     }
-    // });
+    $('#clientFilesTable').DataTable({
+        language: {
+            url: './localisation/ru.json'
+        }
+    });
 
     //полная информация о клиенте
     $('table .fullInfoClientBtn').on('click', function (event) {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
         $.ajax({
-            // headers: {
-            //     'X-CSRF-TOKEN': csrfToken,
-            // },
             type: 'GET',
             url: '/rem/management/api/findClient/' + id,
             success: function (client) {
@@ -124,9 +121,6 @@ $(document).ready(function () {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
         $.ajax({
-            // headers: {
-            //     'X-CSRF-TOKEN': csrfToken,
-            // },
             type: 'GET',
             url: '/rem/management/api/findClient/' + id,
             success: function (client) {
@@ -144,9 +138,6 @@ $(document).ready(function () {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
         $.ajax({
-            // headers: {
-            //     'X-CSRF-TOKEN': csrfToken,
-            // },
             type: 'GET',
             url: '/rem/management/api/findDevice/' + id,
             success: function (device) {
@@ -162,9 +153,6 @@ $(document).ready(function () {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
         $.ajax({
-            // headers: {
-            //     'X-CSRF-TOKEN': csrfToken,
-            // },
             type: 'GET',
             url: '/rem/management/api/findClientType/' + id,
             success: function (clientType) {
@@ -180,9 +168,6 @@ $(document).ready(function () {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
         $.ajax({
-            // headers: {
-            //     'X-CSRF-TOKEN': csrfToken,
-            // },
             type: 'GET',
             url: '/rem/management/api/findRepairType/' + id,
             success: function (repairType) {
@@ -197,9 +182,6 @@ $(document).ready(function () {
         event.preventDefault();
         const id = (this.href.substring(this.href.lastIndexOf('?') + 1));
         $.ajax({
-            // headers: {
-            //     'X-CSRF-TOKEN': csrfToken,
-            // },
             type: 'GET',
             url: '/rem/management/api/findStatus/' + id,
             success: function (status) {
