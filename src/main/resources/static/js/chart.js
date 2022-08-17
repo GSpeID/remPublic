@@ -1,54 +1,34 @@
-Highcharts.chart('container', {
-
-    chart: {
-        type: 'column'
-    },
-
-    title: {
-        text: 'Для демонстрации'
-    },
-
-    xAxis: {
-        categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
-    },
-
-    yAxis: {
-        allowDecimals: false,
-        min: 0,
+document.addEventListener('DOMContentLoaded', function () {
+    const chart = Highcharts.chart('container', {
+        chart: {
+            type: 'bar'
+        },
         title: {
-            text: 'Number of fruits'
-        }
-    },
-
-    tooltip: {
-        formatter: function () {
-            return '<b>' + this.x + '</b><br/>' +
-                this.series.name + ': ' + this.y + '<br/>' +
-                'Total: ' + this.point.stackTotal;
-        }
-    },
-
-    plotOptions: {
-        column: {
-            stacking: 'normal'
-        }
-    },
-
-    series: [{
-        name: 'John',
-        data: [5, 3, 4, 7, 2],
-        stack: 'male'
-    }, {
-        name: 'Joe',
-        data: [3, 4, 4, 2, 5],
-        stack: 'male'
-    }, {
-        name: 'Jane',
-        data: [2, 5, 6, 2, 1],
-        stack: 'female'
-    }, {
-        name: 'Janet',
-        data: [3, 0, 4, 4, 3],
-        stack: 'female'
-    }]
+            text: 'Будут несколько поддобных графиков, пока дэмо для красоты'
+        },
+        xAxis: {
+            categories: ['Закупки', 'Расходники', 'Инструменты', 'Обслуживание транспорта']
+        },
+        yAxis: {
+            title: {
+                text: 'Потрачено средств'
+            }
+        },
+        series: [{
+            name: 'Апрель',
+            data: [11256, 56786, 13264, 75253]
+        }, {
+            name: 'Май',
+            data: [45345, 89078, 33765, 34951]
+        }, {
+            name: 'Июнь',
+            data: [7562, 74633, 16358, 105688]
+        }, {
+            name: 'Июль',
+            data: [75322, 41025, 34222, 76522]
+        }, {
+            name: 'Август',
+            data: [12577, 65333, 64123, 21000]
+        }]
+    });
 });

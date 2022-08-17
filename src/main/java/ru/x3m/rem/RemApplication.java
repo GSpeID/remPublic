@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 //TODO:
 // - !при пустой DB возникают ошибки в работе скриптов выпадающих списков, если на странице одна из таблиц пустая
-// - !загрузка файлов - Invalid CSRF token found for /rem/management/upload
+// - !загрузка файлов - Invalid CSRF token found for /rem/management/upload - настройки CSRF, найти причину
 // -
 // - пользователи\роли:
 // -                    для пользователя видны только (заказчик, техника, адрес, дата)
