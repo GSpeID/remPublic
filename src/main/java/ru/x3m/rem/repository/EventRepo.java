@@ -11,3 +11,4 @@ public interface EventRepo extends CrudRepository<Event, Long> {
     List<Event> findAllByStartAfterAndEndBefore(String start, String end);
 
 }
+

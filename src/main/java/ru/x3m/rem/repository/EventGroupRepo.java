@@ -6,3 +6,5 @@ import ru.x3m.rem.entity.EventGroup;
 public interface EventGroupRepo extends CrudRepository<EventGroup, Long> {
     EventGroup findByGroupId(Long id);
 }
+
+

@@ -3,16 +3,15 @@ package ru.x3m.rem.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import ru.x3m.rem.dto.*;
 import ru.x3m.rem.service.ManagementService;
 
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -60,22 +59,22 @@ public class ManagementController {
         return modelsList(model);
     }
 
-    @PostMapping("/management/upload")
-    public String fileUpload(@RequestParam MultipartFile file, @RequestParam String clientDir,
-                             RedirectAttributes redirectAttributes, ModelMap modelMap) {
-        String fileName = file.getOriginalFilename();
-
-        modelMap.addAttribute("clientDir", clientDir.toLowerCase());
-        String uploadUrl = "/home/x3m/Downloads/rem/clientFiles/" + clientDir + "/" + fileName;
-        try {
-            file.transferTo(new File(uploadUrl));
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("message", "Не удвлось загрузить файл " +
-                    file.getOriginalFilename());
-        }
-        redirectAttributes.addFlashAttribute("message", "Файл " + file.getOriginalFilename() + " успешно загружен");
-        return "redirect:/management";
-    }
+//    @PostMapping("/management/upload")
+//    public String fileUpload(@RequestParam MultipartFile file, @RequestParam String clientDir,
+//                             RedirectAttributes redirectAttributes, ModelMap modelMap) {
+//        String fileName = file.getOriginalFilename();
+//
+//        modelMap.addAttribute("clientDir", clientDir.toLowerCase());
+//        String uploadUrl = "/home/x3m/Downloads/rem/clientFiles/" + clientDir + "/" + fileName;
+//        try {
+//            file.transferTo(new File(uploadUrl));
+//        } catch (Exception e) {
+//            redirectAttributes.addFlashAttribute("message", "Не удвлось загрузить файл " +
+//                    file.getOriginalFilename());
+//        }
+//        redirectAttributes.addFlashAttribute("message", "Файл " + file.getOriginalFilename() + " успешно загружен");
+//        return "redirect:/management";
+//    }
 
     @GetMapping("/getFilesList/{clientName}")
     public Model filesList(@PathVariable("clientName") String clientName, Model model) {

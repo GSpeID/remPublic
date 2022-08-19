@@ -1,27 +1,34 @@
 package ru.x3m.rem.controller;
 
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.File;
 
 @Controller
 public class UploadController {
 
-//    @PostMapping("/upload")
-//    public ResponseEntity<?> handleFileUpload (@RequestParam MultipartFile file, @RequestParam String clientDir,
-////                                               @RequestParam String fileName,
-//                                               RedirectAttributes redirectAttributes, ModelMap modelMap){
-//        String fileName = file.getOriginalFilename();
-//
-//        modelMap.addAttribute("clientDir", clientDir);
-//        try{
-//            file.transferTo(new File("/home/x3m/Downloads/rem/clientFiles/"+clientDir+"/"+fileName));
-//        }catch (Exception e){
-//            redirectAttributes.addFlashAttribute("message", "Не удвлось загрузить файл " +
-//                    file.getOriginalFilename());
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//        }
-//        redirectAttributes.addFlashAttribute("message", "Файл "+file.getOriginalFilename()+" успешно загружен");
-//        return ResponseEntity.ok("Файл "+file.getOriginalFilename()+" успешно загружен");
-//    }
+    @PostMapping("/upload")
+    public String fileUpload(@RequestParam MultipartFile file, @RequestParam String clientDir,
+                             RedirectAttributes redirectAttributes, ModelMap modelMap) {
+        String fileName = file.getOriginalFilename();
+
+        modelMap.addAttribute("clientDir", clientDir.toLowerCase());
+        String uploadUrl = "/home/x3m/Downloads/rem/clientFiles/" + clientDir + "/" + fileName;
+        try {
+            file.transferTo(new File(uploadUrl));
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", "Не удалось загрузить файл " +
+                    file.getOriginalFilename());
+        }
+        redirectAttributes.addFlashAttribute("message", "Файл " + file.getOriginalFilename() + " успешно загружен");
+        return "redirect:/management";
+    }
 
 
 }

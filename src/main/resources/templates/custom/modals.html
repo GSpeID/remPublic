@@ -204,7 +204,8 @@
                     </div>
                     <br>
                     <div class="container">
-                        <form enctype="multipart/form-data" method="post" th:action="@{/management/upload}">
+                        <form enctype="multipart/form-data" method="post"
+                              th:action="@{/upload(${_csrf.parameterName}=${_csrf.token})}">
                             <div class="input-group mb-3">
                                 <input aria-describedby="uploadBtn" aria-label="client file"
                                        class="form-control"
