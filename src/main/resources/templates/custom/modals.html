@@ -185,25 +185,30 @@
 <!--client files list-->
 <div th:fragment="clientFiles">
     <div class="modal" tabindex="-1" id="clientFiles">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Файлы</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="container">
+                    <div class="container" id="fileTableList">
+                        <br>
                         <table class="table table-hover" id="clientFilesTable">
                             <thead>
                             <tr class="bg-light">
                                 <th>Файл</th>
-                                <th></th>
+                                <th style="min-width: 85px">Тип фала</th>
+                                <th style="min-width: 85px">Действия</th>
                             </tr>
                             </thead>
                         </table>
+                        <br>
                     </div>
                     <br>
-                    <div class="container">
+                    <div class="container" id="fileUpload">
+                        <p>Загрузить файл</p>
+                        <br>
                         <form enctype="multipart/form-data" method="post"
                               th:action="@{/upload(${_csrf.parameterName}=${_csrf.token})}">
                             <div class="input-group mb-3">
@@ -212,6 +217,7 @@
                                        id="file" name="file" placeholder="Выберите файл для загрузки"
                                        type="file"
                                        value=""
+                                       required
                                 />
                                 <input type="hidden" class="form-control"
                                        id="clientDir" name="clientDir" value=""/>
@@ -221,7 +227,9 @@
                             <input class="form-control" id="message" name="message"
                                    th:text="${message}" type="hidden" value=""/>
                         </form>
+                        <br>
                     </div>
+                    <br>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>

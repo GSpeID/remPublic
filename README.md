@@ -15,12 +15,12 @@
 <li>работы ещё много, ещё больше информации которую надо изучить, что достаточно интересно</li>
 </ul>
 <ul>
-<b>Приложение на Spring boot и:</b>
+<b>Приложение  Spring boot + :</b>
 <li>Spring Data JPA</li>
 <li>Hibernate</li>
 <li>Thymeleaf</li>
 <li>REST API</li>
-<li>SQL(MySQL)</li>
+<li>SQL(MariaDB)</li>
 <li>JS(JQuery)</li>
 <li>HTML</li>
 <li>CSS</li>

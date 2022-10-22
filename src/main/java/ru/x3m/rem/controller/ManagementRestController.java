@@ -64,12 +64,17 @@ public class ManagementRestController {
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
                 if (!Files.isDirectory(file)) {
-                    String fileName = file.getFileName().toString();
-                    fileDTOS.add(new FileDTO(fileName));
+                    String str = file.getFileName().toString();
+                    String fileName = str.substring(0, str.lastIndexOf('.'));
+                    String fileURI = String.valueOf(file.toAbsolutePath());
+                    String fileExt = str.substring(str.lastIndexOf(".") + 1);
+                    fileDTOS.add(new FileDTO(fileName, fileURI, fileExt));
                 }
                 return FileVisitResult.CONTINUE;
             }
         });
         return fileDTOS;
     }
+
+//    @GetMapping("/getFile/{clientDir}{fileName}")
 }

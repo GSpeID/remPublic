@@ -38,9 +38,26 @@
 }
 
 #r-table {
-    border: 1px solid black;
+    border: 1px solid #938181;
 }
 
 #createRepairContainer {
-    border: 1px solid black;
+    border: 1px solid #938181;
+}
+
+#fileTableList {
+    border: 1px solid #938181;
+}
+
+#fileUpload {
+    border: 1px solid #938181;
+}
+
+#estCreate {
+    border: 1px solid #938181;
+}
+
+p {
+    font-size: 15px;
+    text-align: center;
 }

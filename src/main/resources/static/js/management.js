@@ -2,15 +2,6 @@ $(document).ready(function () {
 
     const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
 
-    // $('#clientFiles').on('hidden.bs.modal', function (e) {
-    //     $(this)
-    //         .find("input,textarea,select")
-    //         .val('')
-    //         .end()
-    //         .find("input[type=checkbox], input[type=radio]")
-    //         .prop("checked", "")
-    //         .end();
-    // });
 
     $('#dropClientType0').on('change', function () {
         const TypeId = $(this).find('option:selected').attr('id');
@@ -96,23 +87,47 @@ $(document).ready(function () {
     });
 
 
-    //загрузка файлов
+    //загрузка\скачивание файлов
     $('table .clientFilesBtn').off("click").on("click", function () {
         $('#clients tbody').off("click").on('click', 'tr', function (event) {
             const clientDir = table.row($(this).closest('tr')).data()[1];
             const url = '/rem/management/api/getFilesList/' + clientDir;
+
+
             $.getJSON(url, function (data) {
+                const URI = data[0].fileURI;
+                const fileName = data[0].fileName;
+
                 $('#clientFilesTable').DataTable({
                     destroy: true,
                     data: data,
                     columns: [
-                        {data: 'fileName'}
+                        {data: 'fileName'},
+                        {data: 'fileExt'}
+
+                    ],
+                    columnDefs: [
+                        {
+                            targets: 2,
+                            render: function (data, type, row, meta) {
+                                return '<a class="btn btn-outline-secondary fileDownloadBtn" id="fileDownloadBtn" ' +
+                                    'data-placement="top" data-toggle="tooltip" title="Скачать">' +
+                                    '<i class="fa-solid fa-download"></i></a>' +
+                                    '<a class="btn btn-outline-danger" data-placement="top" ' +
+                                    'data-toggle="tooltip" title="Удалить">' +
+                                    '<i class="fa-solid fa-folder-minus"></i></a>';
+                            }
+
+                        }
                     ]
                 });
             });
             $('#clientDir').val(clientDir)
-
         });
+    });
+
+    $('table .fileDownloadBtn').on('click', function () {
+        alert("!!!")
     });
 
 

@@ -13,4 +13,9 @@ public class FileDTO {
 
     private String fileName;
 
+    private String fileURI;
+
+    private String fileExt;
+
+
 }

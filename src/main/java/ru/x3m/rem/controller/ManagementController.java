@@ -12,12 +12,7 @@ import ru.x3m.rem.dto.*;
 import ru.x3m.rem.service.ManagementService;
 
 import javax.validation.Valid;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Controller
 public class ManagementController {
@@ -43,7 +38,7 @@ public class ManagementController {
         model.addAttribute("repairStatuses", repairStatuses);
     }
 
-    //---возыращения моделей для страницы с валидацией
+    //---возвращения моделей для страницы с валидацией
     private String modelsList(Model model) {
         globalModelsList(model, managementService);
         return "management";
@@ -56,39 +51,10 @@ public class ManagementController {
         model.addAttribute("clientTypeDTO", new ClientTypeDTO());
         model.addAttribute("repairTypeDTO", new RepairTypeDTO());
         model.addAttribute("repairStatusDTO", new RepairStatusDTO());
+
         return modelsList(model);
     }
 
-//    @PostMapping("/management/upload")
-//    public String fileUpload(@RequestParam MultipartFile file, @RequestParam String clientDir,
-//                             RedirectAttributes redirectAttributes, ModelMap modelMap) {
-//        String fileName = file.getOriginalFilename();
-//
-//        modelMap.addAttribute("clientDir", clientDir.toLowerCase());
-//        String uploadUrl = "/home/x3m/Downloads/rem/clientFiles/" + clientDir + "/" + fileName;
-//        try {
-//            file.transferTo(new File(uploadUrl));
-//        } catch (Exception e) {
-//            redirectAttributes.addFlashAttribute("message", "Не удвлось загрузить файл " +
-//                    file.getOriginalFilename());
-//        }
-//        redirectAttributes.addFlashAttribute("message", "Файл " + file.getOriginalFilename() + " успешно загружен");
-//        return "redirect:/management";
-//    }
-
-    @GetMapping("/getFilesList/{clientName}")
-    public Model filesList(@PathVariable("clientName") String clientName, Model model) {
-        String pathUrl = "/home/x3m/Downloads/rem/clientFiles/" + clientName;
-        try (Stream<Path> paths = Files.walk(Paths.get(pathUrl))) {
-            paths
-                    .filter(Files::isRegularFile)
-                    .forEach(System.out::println);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-//        model.addAttribute("files", filesList);
-        return model;
-    }
 
     //----- Save\Delete Client
 
